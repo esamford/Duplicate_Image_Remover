@@ -1,25 +1,3 @@
-/*
-    Things to work on:
-    1. Resizing images. When the user deliberatly chooses two images with different size ratios, an error is thrown and it cannot
-        display the file sizes. Here's what I'm getting:
-        
-        "SOMETHING WENT WRONG WHILE TRYING TO DISPLAY THE IMAGES AND AN EXCEPTION WAS THROWN.
-		Images are not proportional.
-        Error when comparing two single images: String index out of range: 5
-        Something went wrong and the comparison had to be canceled.
-        Error type: class java.lang.StringIndexOutOfBoundsException
-        Message: String index out of range: 5"
-
-    2. Getting the image proportions. Something is off, and I don't know what, but there is never a "true" for similar proportions.
-        Also, files are showing different size ratios, but are still the same image. For example, Image A is a copy of Image B, but
-        Image A's size ratio is 0.466, while Image B's size ratio is 1.6. I have no idea why it's doing this, and it should be
-        looked into.
-        
-        Now that I've tinkered with the code, I think resizing the images while importing them may be causing the size ratio problem.
-        It may not be resizing 100% correctly, which is probably due to the Math.round() that I'm using. I'm not sure what else I can
-        use though.
-*/
-
 package duplicate_image_remover;
 
 import java.awt.Color;
@@ -47,14 +25,6 @@ public class CompareImages {
         return !(rawImgWidth[0] != rawImgWidth[1] || rawImgHeight[0] != rawImgHeight[1]);
     }
     public boolean imagesAreProportional() {
-        /*
-            The program must have room for error when determining if the images are proportional. I have come across 
-            identical, but resized, images that do not have the same exact size ratios. The larger one was 
-            3,951 x 5,926 pixels (SR = 0.6667), while the smaller one was 159 x 240 (SR = 6625). Having between 
-            0.02 and 0.04 room for error should be enough to prevent the program from thinking that these images are
-            not the same and excluding them from being compared.
-        */
-        
         double roomForError = 0.03;
         float result = ((float) rawImgHeight[0] / rawImgWidth[0]) -
                        ((float) rawImgHeight[1] / rawImgWidth[1]);
@@ -100,27 +70,21 @@ public class CompareImages {
         red = col1.getRed() - col2.getRed();
         green = col1.getGreen() - col2.getGreen();
         blue = col1.getBlue() - col2.getBlue();
-        if (red < 0) {
-            red *= -1;
-        }
-        if (green < 0) {
-            green *= -1;
-        }
-        if (blue < 0) {
-            blue *= -1;
-        }
+        if (red < 0) { red *= -1; }
+        if (green < 0) { green *= -1; }
+        if (blue < 0) { blue *= -1; }
         return new Color(red, green, blue);
     }
-    private Image getScaledImage(Image srcImg, int w, int h){
+    private Image getScaledImage(Image srcImg, int w, int h){ //https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = resizedImg.createGraphics();
-
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g2.drawImage(srcImg, 0, 0, w, h, null);
-        g2.dispose();
-
+        Graphics2D graphics = resizedImg.createGraphics();
+        
+        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics.drawImage(srcImg, 0, 0, w, h, null);
+        graphics.dispose();
+        
         return resizedImg;
-    } //https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
+    } 
     
     // === === === PUBLIC ENUMS AND FUNCTIONS === === ===
     

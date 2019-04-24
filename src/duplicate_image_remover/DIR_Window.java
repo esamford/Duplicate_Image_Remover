@@ -1,18 +1,3 @@
-/*
-    Things to work on:
-    1. Making sure the user cannot select two duplicate folders, or subfolders, when comparing. This is to prevent comparing the same
-            image with itself. This should be done when the user selects the file, in the "Get folder one" or "Get folder two" buttons.
-    
-    2. Maybe try to make it faster. Comparing more than 200 large images (on single folder settings) takes a few hours, which seems too long.
-        I want to be able to compare at least 500 to 1,000 at a time, and I don't want it to take a day to do so.
-
-    3. I'll have to double-check, but I don't think the program is limiting itself to only comparing images that are the same size ratio.
-        If it's not, this means that it's comparing images of different size ratios, which shouldn't happen.
-        
-        If this is what is happening, and if I fix it, it may cut down on the time it takes to process the comparisons, since it will take
-        less time to reject the images based on size ratio than it would be to compare them.
-*/
-
 package duplicate_image_remover;
 
 import java.awt.Color;
@@ -312,7 +297,6 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_IMG_HighlightedDifferences.setIcon(new ImageIcon(blankImage));
         LBL_IMG_SubtractedDifferences.setIcon(new ImageIcon(blankImage));
     }
-    
     
     // === === === GENERATED CODE === === ===
     
@@ -1203,7 +1187,6 @@ public class DIR_Window extends javax.swing.JFrame {
             this.CHKBX_Settings_RepeatNotificationSound.setSelected(false);
         }
     }//GEN-LAST:event_CHKBX_Settings_SoundNotificationsActionPerformed
-    
     
     // === === === OTHER === === ===
     public static void main(String args[]) {

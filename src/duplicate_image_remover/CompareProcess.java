@@ -1,11 +1,3 @@
-/*
-    Things to work on:
-    1. For some reason, when I'm done comparing a folder, the "Number of files: " label on the Select Images and Compare page
-        shows a much higher number than what should be there. It's not showing the number of files. For example, the folder, 
-        when finished, ended up with 125 files, but the label showed that there were 110,835 files.
-    
-*/
-
 package duplicate_image_remover;
 
 import java.awt.Color;
