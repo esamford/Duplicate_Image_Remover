@@ -1,3 +1,4 @@
-# Duplicate_Image_Remover
+# Duplicate Image Remover
 
-Designed to compare images with each other and notify the user if they are potential duplicates, which can then be removed.
+Designed to compare folders for duplicate images and notify the user when a potential duplicate has been found.
+If a potential duplicate is found, the user will be able to see details about each image.
