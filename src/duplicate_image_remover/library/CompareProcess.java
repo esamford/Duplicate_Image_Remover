@@ -212,13 +212,6 @@ public class CompareProcess implements Runnable
             
             ArrayList<File> allImageFiles = getImagesInFolder(folder, this.parentFrame.getIncludeSubfolders());
             
-            if (allImageFiles.size() > 10000)
-            {
-                String errorMSG = "You cannot compare more than 10,000 images at a time.";
-                JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Max Image Limit Reached", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
             int progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
             int progressCurrent;
             
@@ -231,66 +224,9 @@ public class CompareProcess implements Runnable
             int[] startNum = {0, 0};
             if (progressMax >= 1000)
             {
-                String message = "There are " + String.format("%,d", progressMax) + " potential combinations to go through, which may take a while.";
-                message += "\nWould you like to skip some and start at a specific point?";
-                int result = JOptionPane.showConfirmDialog(this.parentFrame, message, "Skip Comparisons", JOptionPane.YES_NO_OPTION);
-                
-                boolean keepAsking = true;
-                while (keepAsking)
-                {
-                    if (result == JOptionPane.YES_OPTION)
-                    {
-                        
-                        try
-                        {
-                            message = "What number would you like to start at?\nYou can choose any number between 1 and " + String.format("%,d", progressMax) + ".";
-                            String userInput = JOptionPane.showInputDialog(this.parentFrame, message);
-                            userInput = userInput.replaceAll(",", "");
-                            
-                            long userNum = Long.parseUnsignedLong(userInput);
-                            if (userNum > progressMax || userNum < 1)
-                            {
-                                String errorMSG = "You entered a number that was either less than one or greater than the maximum number of comparisons (" + String.format("%,d", progressMax) + ").";
-                                errorMSG += "\nThe text you entered was:\n\n" + userInput;
-                                errorMSG += "\n\nWould you like to try again?";
-                                if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
-                                {
-                                    keepAsking = false;
-                                }
-                            }
-                            else
-                            {
-                                //Calculate the startNums here.
-                                //The maximum here is = (allImageFiles.size() - 1) * allImageFiles.size();
-                                
-                                //for (int y = 0; y < allImageFiles.size() - 1; y++)
-                                //{
-                                //    for (int x = 0; x < allImageFiles.size(); x++)
-                                //   {
-                                //        
-                                //    }
-                                //}
-                                
-                                startNum[0] = (int) userNum / (allImageFiles.size() - 1);
-                                startNum[1] = (int) userNum - (startNum[0] * (allImageFiles.size() - 1));
-                                keepAsking = false;
-                            }
-                        }
-                        catch (NumberFormatException ex)
-                        {
-                            String errorMSG = "You entered something that was not a number. Would you like to try again?";
-                            if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
-                            {
-                                keepAsking = false;
-                            }
-                        }
-                        catch (Exception ex) { }
-                    }
-                    else
-                    {
-                        keepAsking = false;
-                    }
-                }
+                long userNum = askUserForStartNum(progressMax);
+                startNum[0] = (int) userNum / (allImageFiles.size() - 1);
+                startNum[1] = (int) userNum % (allImageFiles.size() - 1);
             }
             
             for (imgInt[0] = startNum[0]; imgInt[0] < allImageFiles.size() - 1; imgInt[0]++)
@@ -410,13 +346,6 @@ public class CompareProcess implements Runnable
             ArrayList<File> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getIncludeSubfolders());
             ArrayList<File> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getIncludeSubfolders());
             
-            if (allFolderOneImages.size() + allFolderTwoImages.size() > 10000)
-            {
-                String errorMSG = "You cannot compare more than 10,000 images at a time.";
-                JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Max Image Limit Reached", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
             int progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
             int progressCurrent;
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMinimum(0);
@@ -428,69 +357,12 @@ public class CompareProcess implements Runnable
             int[] startNum = {0, 0};
             if (progressMax >= 1000)
             {
-                String message = "There are " + String.format("%,d", progressMax) + " potential combinations to go through, which may take a while.";
-                message += "\nWould you like to skip some and start at a specific point?";
-                int result = JOptionPane.showConfirmDialog(this.parentFrame, message, "Skip Comparisons", JOptionPane.YES_NO_OPTION);
-                
-                boolean keepAsking = true;
-                while (keepAsking)
-                {
-                    if (result == JOptionPane.YES_OPTION)
-                    {
-                        try
-                        {
-                            message = "What number would you like to start at?\nYou can choose any number between 1 and " + String.format("%,d", progressMax) + ".";
-                            String userInput = JOptionPane.showInputDialog(this.parentFrame, message);
-                            userInput = userInput.replaceAll(",", "");
-                            
-                            long userNum = Long.parseUnsignedLong(userInput);
-                            if (userNum > progressMax || userNum < 1)
-                            {
-                                String errorMSG = "You entered a number that was either less than one or greater than the maximum number of comparisons (" + String.format("%,d", progressMax) + ").";
-                                errorMSG += "\nThe text you entered was:\n\n" + userInput;
-                                errorMSG += "\n\nWould you like to try again?";
-                                if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
-                                {
-                                    keepAsking = false;
-                                }
-                            }
-                            else
-                            {
-                                //Calculate the startNums here.
-                                //The maximum here is = allFolderOneImages.size() * allFolderTwoImages.size()
-                                
-                                //for (int y = 0; y < allFolderOneImages.size() - 1; y++)
-                                //{
-                                //    for (int x = 0; x < allFolderTwoImages.size() - 1; x++)
-                                //    {
-                                //        
-                                //    }
-                                //}
-                                
-                                startNum[0] = (int) userNum / (allFolderTwoImages.size() - 1);
-                                startNum[1] = (int) userNum - startNum[0];
-                                keepAsking = false;
-                            }
-                        }
-                        catch (NumberFormatException ex)
-                        {
-                            String errorMSG = "You entered something that was not a number. Would you like to try again?";
-                            if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
-                            {
-                                keepAsking = false;
-                            }
-                        }
-                        catch (Exception ex) { }
-                    }
-                    else
-                    {
-                        keepAsking = false;
-                    }
-                }
+                long userNum = askUserForStartNum(progressMax);
+                startNum[0] = (int) userNum / allFolderTwoImages.size();
+                startNum[1] = (int) userNum % allFolderTwoImages.size();
             }
             
-            
-            for (imgInt[0] = startNum[0]; imgInt[0] < allFolderOneImages.size()/* - 1*/; imgInt[0]++)
+            for (imgInt[0] = startNum[0]; imgInt[0] < allFolderOneImages.size(); imgInt[0]++)
             {
                 if (stopThread) { break; }
                 
@@ -509,7 +381,7 @@ public class CompareProcess implements Runnable
                     try {
                         compare.setImage(this.targetFile[0], CompareImages.FileNum.FIRST);
 
-                        for (imgInt[1] = 0; imgInt[1] < allFolderTwoImages.size()/* - 1*/; imgInt[1]++)
+                        for (imgInt[1] = 0; imgInt[1] < allFolderTwoImages.size(); imgInt[1]++)
                         {
                             if (stopThread) { break; }
                             
@@ -532,7 +404,7 @@ public class CompareProcess implements Runnable
                             else
                             {
                                 try {
-                                    progressCurrent = allFolderOneImages.size() * imgInt[0] + imgInt[1];
+                                    progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
                                     this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(progressCurrent);
                                     this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(makeNumeric(progressCurrent++));
                                     
@@ -746,6 +618,55 @@ public class CompareProcess implements Runnable
         }
         return counter;
     }
+    private long askUserForStartNum(long maxNum) {
+        String message = "There are " + String.format("%,d", maxNum) + " potential combinations to go through, which may take a while.";
+        message += "\nWould you like to skip some and start at a specific point?";
+        int result = JOptionPane.showConfirmDialog(this.parentFrame, message, "Skip Comparisons", JOptionPane.YES_NO_OPTION);
+
+        while (true)
+        {
+            if (result == JOptionPane.YES_OPTION)
+            {
+
+                try
+                {
+                    message = "What number would you like to start at?\nYou can choose any number between 1 and " + String.format("%,d", maxNum) + ".";
+                    String userInput = JOptionPane.showInputDialog(this.parentFrame, message);
+                    userInput = userInput.replaceAll(",", "");
+
+                    long userNum = Long.parseUnsignedLong(userInput);
+                    if (userNum > maxNum || userNum < 1)
+                    {
+                        String errorMSG = "You entered a number that was either less than one or greater than the maximum number of comparisons (" + String.format("%,d", maxNum) + ").";
+                        errorMSG += "\nThe text you entered was:\n\n" + userInput;
+                        errorMSG += "\n\nWould you like to try again?";
+                        if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
+                        {
+                            return 0;
+                        }
+                    }
+                    else
+                    {
+                        return userNum;
+                    }
+                }
+                catch (NumberFormatException ex)
+                {
+                    String errorMSG = "You entered something that was not a number. Would you like to try again?";
+                    if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
+                    {
+                        return 0;
+                    }
+                }
+                catch (Exception ex) { }
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+    
     
     @Override
     public void run() {
