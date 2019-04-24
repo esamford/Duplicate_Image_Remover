@@ -659,7 +659,6 @@ public class CompareProcess implements Runnable
         }
     }
     
-    
     @Override
     public void run() {
         if (this.parentFrame != null)
