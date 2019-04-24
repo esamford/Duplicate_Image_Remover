@@ -704,7 +704,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="SLDR_MinimumSimilarityThreshold" alignment="1" max="32767" attributes="0"/>
@@ -712,11 +712,9 @@
                           <Component id="TXTBX_Settings_TextInName" alignment="1" max="32767" attributes="0"/>
                           <Component id="RDBTN_Settings_NameWhitelist" alignment="1" max="32767" attributes="0"/>
                           <Component id="RDBTN_Settings_NameBlacklist" alignment="0" max="32767" attributes="0"/>
-                          <Component id="RDBTN_Settings_CompareMethodSubtract" alignment="1" max="32767" attributes="0"/>
-                          <Component id="RDBTN_Settings_CompareMethodBasic" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" pref="271" max="32767" attributes="0"/>
                           <Component id="CHKBX_Settings_SoundNotifications" alignment="0" max="32767" attributes="0"/>
-                          <Component id="CHKBX_Settings_RepeatNotificationSound" alignment="0" max="32767" attributes="0"/>
+                          <Component id="CHKBX_Settings_RepeatNotificationSound" alignment="0" pref="271" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -730,14 +728,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="SLDR_MinimumSimilarityThreshold" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="RDBTN_Settings_CompareMethodSubtract" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="RDBTN_Settings_CompareMethodBasic" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="CHKBX_Settings_SoundNotifications" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="CHKBX_Settings_RepeatNotificationSound" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
                       <Component id="RDBTN_Settings_NameIgnore" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="RDBTN_Settings_NameWhitelist" min="-2" max="-2" attributes="0"/>
@@ -803,20 +797,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RDBTN_Settings_NameBlacklistActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="RDBTN_Settings_CompareMethodBasic">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Calculate percentage based on pixel matches."/>
-                <Property name="focusable" type="boolean" value="false"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="RDBTN_Settings_CompareMethodSubtract">
-              <Properties>
-                <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Calculate percentage by subtracting pixel colors."/>
-                <Property name="toolTipText" type="java.lang.String" value=""/>
-                <Property name="focusable" type="boolean" value="false"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="CHKBX_Settings_SoundNotifications">
               <Properties>

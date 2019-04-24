@@ -119,12 +119,6 @@ public class DIR_Window extends javax.swing.JFrame {
     public javax.swing.JLabel getLBL_IMG_SubtractedDifferences() {
         return this.LBL_IMG_SubtractedDifferences;
     }
-    public javax.swing.JRadioButton getRDBTN_Settings_CompareMethodBasic() {
-        return this.RDBTN_Settings_CompareMethodBasic;
-    }
-    public javax.swing.JRadioButton getRDBTN_Settings_CompareMethodSubtract() {
-        return this.RDBTN_Settings_CompareMethodSubtract;
-    }
     public javax.swing.JRadioButton getRDBTN_Settings_NameBlacklist() {
         return this.RDBTN_Settings_NameBlacklist;
     }
@@ -312,9 +306,6 @@ public class DIR_Window extends javax.swing.JFrame {
         this.BTNGRP_Settings_NamePrefs.add(this.RDBTN_Settings_NameWhitelist);
         this.BTNGRP_Settings_NamePrefs.add(this.RDBTN_Settings_NameBlacklist);
         
-        this.BTNGRP_Settings_CompareMethod.add(this.RDBTN_Settings_CompareMethodBasic);
-        this.BTNGRP_Settings_CompareMethod.add(this.RDBTN_Settings_CompareMethodSubtract);
-        
         LBL_SIaC_DataHeader1.setText("Image One Information:");
         LBL_SIaC_DataName2.setText("Name:");
         LBL_SIaC_DataPath1.setText("File path:");
@@ -391,8 +382,6 @@ public class DIR_Window extends javax.swing.JFrame {
         RDBTN_Settings_NameIgnore = new javax.swing.JRadioButton();
         RDBTN_Settings_NameWhitelist = new javax.swing.JRadioButton();
         RDBTN_Settings_NameBlacklist = new javax.swing.JRadioButton();
-        RDBTN_Settings_CompareMethodBasic = new javax.swing.JRadioButton();
-        RDBTN_Settings_CompareMethodSubtract = new javax.swing.JRadioButton();
         CHKBX_Settings_SoundNotifications = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         CHKBX_Settings_RepeatNotificationSound = new javax.swing.JCheckBox();
@@ -796,14 +785,6 @@ public class DIR_Window extends javax.swing.JFrame {
             }
         });
 
-        RDBTN_Settings_CompareMethodBasic.setText("Calculate percentage based on pixel matches.");
-        RDBTN_Settings_CompareMethodBasic.setFocusable(false);
-
-        RDBTN_Settings_CompareMethodSubtract.setSelected(true);
-        RDBTN_Settings_CompareMethodSubtract.setText("Calculate percentage by subtracting pixel colors.");
-        RDBTN_Settings_CompareMethodSubtract.setToolTipText("");
-        RDBTN_Settings_CompareMethodSubtract.setFocusable(false);
-
         CHKBX_Settings_SoundNotifications.setSelected(true);
         CHKBX_Settings_SoundNotifications.setText("Play a sound when a potential match is found.");
         CHKBX_Settings_SoundNotifications.setFocusable(false);
@@ -835,11 +816,9 @@ public class DIR_Window extends javax.swing.JFrame {
                     .addComponent(TXTBX_Settings_TextInName, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(RDBTN_Settings_NameWhitelist, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(RDBTN_Settings_NameBlacklist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RDBTN_Settings_CompareMethodSubtract, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RDBTN_Settings_CompareMethodBasic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                     .addComponent(CHKBX_Settings_SoundNotifications, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CHKBX_Settings_RepeatNotificationSound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(CHKBX_Settings_RepeatNotificationSound, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
                 .addContainerGap())
         );
         PNL_SettingsLayout.setVerticalGroup(
@@ -850,14 +829,10 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SLDR_MinimumSimilarityThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(RDBTN_Settings_CompareMethodSubtract)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RDBTN_Settings_CompareMethodBasic)
-                .addGap(18, 18, 18)
                 .addComponent(CHKBX_Settings_SoundNotifications)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CHKBX_Settings_RepeatNotificationSound)
-                .addGap(70, 70, 70)
+                .addGap(134, 134, 134)
                 .addComponent(RDBTN_Settings_NameIgnore)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RDBTN_Settings_NameWhitelist)
@@ -1253,8 +1228,6 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JLabel LBL_SIaC_ImageCount2;
     private javax.swing.JPanel PNL_CompareInfo;
     private javax.swing.JPanel PNL_Settings;
-    private javax.swing.JRadioButton RDBTN_Settings_CompareMethodBasic;
-    private javax.swing.JRadioButton RDBTN_Settings_CompareMethodSubtract;
     private javax.swing.JRadioButton RDBTN_Settings_NameBlacklist;
     private javax.swing.JRadioButton RDBTN_Settings_NameIgnore;
     private javax.swing.JRadioButton RDBTN_Settings_NameWhitelist;

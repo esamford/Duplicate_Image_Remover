@@ -160,11 +160,7 @@ public class CompareProcess implements Runnable
         
         CompareImages compare = new CompareImages();
         BufferedImage[] imgBuff = new BufferedImage[2];
-        CompareImages.CompareMethod compareMethod;
-        
-        if (this.parentFrame.getRDBTN_Settings_CompareMethodBasic().isSelected())
-        { compareMethod = CompareImages.CompareMethod.BASIC; }
-        else { compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR; }
+        CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
         
         try
         {
@@ -199,7 +195,7 @@ public class CompareProcess implements Runnable
         if (folder.isDirectory())
         {
             int[] imgInt = new int[2];
-            CompareImages.CompareMethod compareMethod;
+            CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
             
             ArrayList<File> allImageFiles = getImagesInFolder(folder, this.parentFrame.getIncludeSubfolders());
@@ -274,10 +270,6 @@ public class CompareProcess implements Runnable
                                     System.out.println("Image one name: " + this.targetFile[0].getName());
                                     System.out.println("Image two name: " + this.targetFile[1].getName());
                                     
-                                    if (this.parentFrame.getRDBTN_Settings_CompareMethodBasic().isSelected())
-                                    { compareMethod = CompareImages.CompareMethod.BASIC; }
-                                    else { compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR; }
-                                    
                                     long startTime = System.nanoTime();
                                     float percentSimilar = compare.getPercentSimilar(compareMethod, this.parentFrame.getSLDR_MinimumSimilarityThreshold());
                                     long endTime = System.nanoTime();
@@ -332,7 +324,7 @@ public class CompareProcess implements Runnable
         if (folderOne.isDirectory() && folderTwo.isDirectory())
         {
             int[] imgInt = new int[2];
-            CompareImages.CompareMethod compareMethod;
+            CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
             
             ArrayList<File> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getIncludeSubfolders());
@@ -408,10 +400,6 @@ public class CompareProcess implements Runnable
                                         System.out.println();
                                         System.out.println("Image one name: " + this.targetFile[0].getName());
                                         System.out.println("Image two name: " + this.targetFile[1].getName());
-                                        
-                                        if (this.parentFrame.getRDBTN_Settings_CompareMethodBasic().isSelected())
-                                        { compareMethod = CompareImages.CompareMethod.BASIC; }
-                                        else { compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR; }
                                         
                                         float percentSimilar = compare.getPercentSimilar(compareMethod, this.parentFrame.getSLDR_MinimumSimilarityThreshold());
 
