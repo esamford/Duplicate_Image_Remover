@@ -161,6 +161,7 @@ public class DIR_Window extends javax.swing.JFrame {
         
         clearDisplayedImages();
         clearCIFileInfo();
+        LBL_CompareInfo_NumberOfFiles.setText("Number of files: ");
         BTN_SIaC_Compare.setEnabled(false);
     }
     private void updateSIaCFolderInfoLabels() {
