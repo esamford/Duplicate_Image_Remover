@@ -27,7 +27,7 @@ public class CompareProcess implements Runnable
     DIR_Window parentFrame;
     volatile boolean waitingForUser;
     
-    long timeWaiting = 0;
+    long timeWaitingForUser = 0;
     int numFilesDeleted = 0;
     
     
@@ -136,7 +136,7 @@ public class CompareProcess implements Runnable
                 else { timeWaited++; }
             }
         } catch (InterruptedException ex) { }
-        this.timeWaiting += System.currentTimeMillis() - startTime;
+        this.timeWaitingForUser += System.currentTimeMillis() - startTime;
         
         clearFileInfo();
         clearDisplayedImages();
@@ -596,7 +596,8 @@ public class CompareProcess implements Runnable
         String message = "There are " + String.format("%,d", maxNum) + " potential combinations to go through, which may take a while.";
         message += "\nWould you like to skip some and start at a specific point?";
         int result = JOptionPane.showConfirmDialog(this.parentFrame, message, "Skip Comparisons", JOptionPane.YES_NO_OPTION);
-
+        
+        long startTime = System.currentTimeMillis();
         while (true)
         {
             if (result == JOptionPane.YES_OPTION)
@@ -616,11 +617,13 @@ public class CompareProcess implements Runnable
                         errorMSG += "\n\nWould you like to try again?";
                         if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
                         {
+                            timeWaitingForUser += System.currentTimeMillis() - startTime;
                             return 0;
                         }
                     }
                     else
                     {
+                        timeWaitingForUser += System.currentTimeMillis() - startTime;
                         return userNum;
                     }
                 }
@@ -629,6 +632,7 @@ public class CompareProcess implements Runnable
                     String errorMSG = "You entered something that was not a number. Would you like to try again?";
                     if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
                     {
+                        timeWaitingForUser += System.currentTimeMillis() - startTime;
                         return 0;
                     }
                 }
@@ -639,6 +643,23 @@ public class CompareProcess implements Runnable
                 return 0;
             }
         }
+    }
+    private String getTimeString(long totalSeconds) {
+        //totalSeconds = 3600 + 60 + 1;
+        long hours = totalSeconds / 3600;
+        long minutes = (totalSeconds % 3600) / 60;
+        long seconds = totalSeconds % 60;
+        
+        String returnString = String.format("%,d", seconds) + " seconds";
+        if (totalSeconds >= 3600)
+        {
+            returnString = String.format("%,d", hours) + " hours, " + String.format("%,d", minutes) + " minutes, and " + returnString;
+        }
+        else if (totalSeconds >= 60)
+        {
+            returnString = String.format("%,d", minutes) + " minutes and " + returnString;
+        }
+        return returnString;
     }
     
     @Override
@@ -726,9 +747,9 @@ public class CompareProcess implements Runnable
             
             if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected())
             {
-                long timeComparing = System.currentTimeMillis() - startTime - timeWaiting;
-                timeComparing /= 1000;
-                timeWaiting /= 1000;
+                long timeSpentComparing = System.currentTimeMillis() - startTime - timeWaitingForUser;
+                timeSpentComparing /= 1000;
+                timeWaitingForUser /= 1000;
 
                 String searchType = "";
                 switch (selectedSearchMethod)
@@ -745,8 +766,8 @@ public class CompareProcess implements Runnable
 
                 String message = "Here are the details about the last comparison:";
                 message += "\n\nComparison type: " + searchType;
-                message += "\nTime spent comparing (seconds): " + String.format("%,d", timeComparing);
-                message += "\nTime spent waiting for user (seconds): " + String.format("%,d", timeWaiting);
+                message += "\nTime spent comparing: " + getTimeString(timeSpentComparing);
+                message += "\nTime spent waiting for user: " + getTimeString(timeWaitingForUser);
                 message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
 
                 JOptionPane.showMessageDialog(this.parentFrame, message, "Compare Details", JOptionPane.INFORMATION_MESSAGE);
