@@ -643,7 +643,7 @@ public class CompareProcess implements Runnable
     
     @Override
     public void run() {
-        long startTime = System.currentTimeMillis();
+        
         
         if (this.parentFrame != null)
         {
@@ -684,6 +684,8 @@ public class CompareProcess implements Runnable
             
             this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
             
+            long startTime = System.currentTimeMillis();
+            
             try {
                 switch (selectedSearchMethod)
                 {
@@ -721,37 +723,39 @@ public class CompareProcess implements Runnable
             this.parentFrame.getTBDPN_UserInput().setEnabledAt(0, true);
             
             System.gc(); //Call the garbage collector
+            
+            if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected())
+            {
+                long timeComparing = System.currentTimeMillis() - startTime - timeWaiting;
+                timeComparing /= 1000;
+                timeWaiting /= 1000;
+
+                String searchType = "";
+                switch (selectedSearchMethod)
+                {
+                    case TWO_IMAGES:
+                        searchType = "Two images";
+                        break;
+                    case ONE_FOLDER:
+                        searchType = "Single folder";
+                        break;
+                    case TWO_FOLDERS:
+                        searchType = "Two folders";
+                }
+
+                String message = "Here are the details about the last comparison:";
+                message += "\n\nComparison type: " + searchType;
+                message += "\nTime spent comparing (seconds): " + String.format("%,d", timeComparing);
+                message += "\nTime spent waiting for user (seconds): " + String.format("%,d", timeWaiting);
+                message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
+
+                JOptionPane.showMessageDialog(this.parentFrame, message, "Compare Details", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
         else { System.out.println("Parent frame is null!"); }
         
         
-        if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected())
-        {
-            long timeComparing = System.currentTimeMillis() - startTime - timeWaiting;
-            timeComparing /= 1000;
-            timeWaiting /= 1000;
-            
-            String searchType = "";
-            switch (selectedSearchMethod)
-            {
-                case TWO_IMAGES:
-                    searchType = "Two images";
-                    break;
-                case ONE_FOLDER:
-                    searchType = "Single folder";
-                    break;
-                case TWO_FOLDERS:
-                    searchType = "Two folders";
-            }
-            
-            String message = "Here are the details about the last comparison:";
-            message += "\n\nComparison type: " + searchType;
-            message += "\nTime spent comparing (seconds): " + String.format("%,d", timeComparing);
-            message += "\nTime spent waiting for user (seconds): " + String.format("%,d", timeWaiting);
-            message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
-            
-            JOptionPane.showMessageDialog(this.parentFrame, message, "Compare Details", JOptionPane.INFORMATION_MESSAGE);
-        }
+        
         
         System.out.println("FINISHED WITH THE COMPAREPROCESS THREAD.");
     }

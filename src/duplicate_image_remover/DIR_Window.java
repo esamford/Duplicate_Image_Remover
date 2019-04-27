@@ -809,6 +809,7 @@ public class DIR_Window extends javax.swing.JFrame {
         });
 
         CHKBX_Settings_ShowCompareDetails.setText("Display compare details once finished (folders only)");
+        CHKBX_Settings_ShowCompareDetails.setFocusable(false);
 
         javax.swing.GroupLayout PNL_SettingsLayout = new javax.swing.GroupLayout(PNL_Settings);
         PNL_Settings.setLayout(PNL_SettingsLayout);

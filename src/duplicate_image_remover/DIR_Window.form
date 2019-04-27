@@ -828,6 +828,7 @@
             <Component class="javax.swing.JCheckBox" name="CHKBX_Settings_ShowCompareDetails">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Display compare details once finished (folders only)"/>
+                <Property name="focusable" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
