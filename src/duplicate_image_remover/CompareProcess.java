@@ -28,6 +28,7 @@ public class CompareProcess implements Runnable
     volatile boolean waitingForUser;
     
     long timeWaitingForUser = 0;
+    long timeWaitingForStartNum = 0;
     int numFilesDeleted = 0;
     
     
@@ -617,13 +618,13 @@ public class CompareProcess implements Runnable
                         errorMSG += "\n\nWould you like to try again?";
                         if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
                         {
-                            timeWaitingForUser += System.currentTimeMillis() - startTime;
+                            timeWaitingForStartNum = System.currentTimeMillis() - startTime;
                             return 0;
                         }
                     }
                     else
                     {
-                        timeWaitingForUser += System.currentTimeMillis() - startTime;
+                        timeWaitingForStartNum = System.currentTimeMillis() - startTime;
                         return userNum;
                     }
                 }
@@ -632,7 +633,7 @@ public class CompareProcess implements Runnable
                     String errorMSG = "You entered something that was not a number. Would you like to try again?";
                     if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
                     {
-                        timeWaitingForUser += System.currentTimeMillis() - startTime;
+                        timeWaitingForStartNum = System.currentTimeMillis() - startTime;
                         return 0;
                     }
                 }
@@ -747,7 +748,7 @@ public class CompareProcess implements Runnable
             
             if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected())
             {
-                long timeSpentComparing = System.currentTimeMillis() - startTime - timeWaitingForUser;
+                long timeSpentComparing = System.currentTimeMillis() - startTime - timeWaitingForUser - timeWaitingForStartNum;
                 timeSpentComparing /= 1000;
                 timeWaitingForUser /= 1000;
 
