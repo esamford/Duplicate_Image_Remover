@@ -31,7 +31,6 @@ public class CompareProcess implements Runnable
     long timeWaitingForStartNum = 0;
     int numFilesDeleted = 0;
     
-    
     // === === === SETTERS === === ===
     
     public void setParent(DIR_Window newParent) {
@@ -173,7 +172,12 @@ public class CompareProcess implements Runnable
                 System.out.println("\tFile 1 name: " + file1.getName());
                 System.out.println("\tFile 2 name: " + file2.getName()); 
             }
-            else { JOptionPane.showMessageDialog(this.parentFrame, "You cannot compare two images with different height/width ratios.", "Unequal Size Ratios", JOptionPane.ERROR_MESSAGE); }
+            else
+            {
+                long startTime = System.currentTimeMillis();
+                JOptionPane.showMessageDialog(this.parentFrame, "You cannot compare two images with different height/width ratios.", "Unequal Size Ratios", JOptionPane.ERROR_MESSAGE);
+                timeWaitingForStartNum += System.currentTimeMillis() - startTime;
+            }
         } 
         catch (Exception ex)
         {
@@ -183,26 +187,19 @@ public class CompareProcess implements Runnable
     }
     private void checkOneFolder(File folder) throws IOException {
         checkForCompareOneFolder();
-        
-        int numberOfFiles = countFilesInFolder(folder);
-        this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(numberOfFiles));
-        
         if (folder.isDirectory())
         {
+            int numberOfFiles = countFilesInFolder(folder);
+            this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + String.format("%,d", numberOfFiles));
+            
             int[] imgInt = new int[2];
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
             
             ArrayList<File> allImageFiles = getImagesInFolder(folder, this.parentFrame.getIncludeSubfolders());
             
-            int progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
-            int progressCurrent;
-            
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMinimum(0);
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-            this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText("0");
-            this.parentFrame.getLBL_CompareInfo_ProgressSplit().setText("/");
-            this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
+            int progressMax = (allImageFiles.size() - 1) * allImageFiles.size(), progressCurrent;
+            setInitialProgressInfo(progressMax);
             
             int[] startNum = {0, 0};
             if (progressMax >= 1000)
@@ -219,12 +216,9 @@ public class CompareProcess implements Runnable
                 this.targetFile[0] = allImageFiles.get((imgInt[0]));
                 if (!this.targetFile[0].exists())
                 {
-                    allImageFiles.remove(imgInt[0]);
-                    imgInt[0]--;
+                    allImageFiles.remove(imgInt[0]--);
                     progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
-                    this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-                    this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
-                    this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(--numberOfFiles));
+                    updateNumFiles(--numberOfFiles, progressMax);
                 }
                 else
                 {
@@ -234,7 +228,6 @@ public class CompareProcess implements Runnable
                         for (imgInt[1] = imgInt[0] + 1; imgInt[1] < allImageFiles.size(); imgInt[1]++)
                         {
                             if (stopThread) { break; }
-                            
                             if (startNum[1] > 0)
                             {
                                 imgInt[1] = startNum[1];
@@ -244,32 +237,19 @@ public class CompareProcess implements Runnable
                             this.targetFile[1] = allImageFiles.get((imgInt[1]));
                             if (!this.targetFile[1].exists())
                             {
-                                allImageFiles.remove(imgInt[1]);
-                                imgInt[1]--;
+                                allImageFiles.remove(imgInt[1]--);
                                 progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
-                                this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-                                this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
-                                this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(--numberOfFiles));
+                                updateNumFiles(--numberOfFiles, progressMax);
                             }
                             else
                             {
                                 try {
                                     progressCurrent = imgInt[0] * (allImageFiles.size() - 1) + imgInt[1];
-                                    this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(progressCurrent);
-                                    this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(makeNumeric(progressCurrent++));
+                                    updateProgress(progressCurrent);
 
                                     compare.setImage(this.targetFile[1], CompareImages.FileNum.SECOND);
                                     
-                                    System.out.println();
-                                    System.out.println();
-                                    System.out.println("Image one name: " + this.targetFile[0].getName());
-                                    System.out.println("Image two name: " + this.targetFile[1].getName());
-                                    
-                                    long startTime = System.nanoTime();
                                     float percentSimilar = compare.getPercentSimilar(compareMethod, this.parentFrame.getSLDR_MinimumSimilarityThreshold());
-                                    long endTime = System.nanoTime();
-                                    System.out.println("Compared images. Time taken (in nanoseconds): " + String.format("%,d", endTime-startTime));
-                                    
                                     if (percentSimilar >= 0 && percentSimilar * 100 >= this.parentFrame.getSLDR_MinimumSimilarityThreshold().getValue())
                                     {
                                         processUserDecision(compare.getImage(CompareImages.FileNum.FIRST),
@@ -278,22 +258,16 @@ public class CompareProcess implements Runnable
                                         
                                         if (!this.targetFile[0].exists())
                                         {
-                                            allImageFiles.remove(imgInt[0]);
-                                            imgInt[0]--;
+                                            allImageFiles.remove(imgInt[0]--);
                                             progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
-                                            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-                                            this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
-                                            this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(--numberOfFiles));
+                                            updateNumFiles(--numberOfFiles, progressMax);
                                             break;
                                         }
                                         else if (!this.targetFile[1].exists())
                                         {
-                                            allImageFiles.remove(imgInt[1]);
-                                            imgInt[1]--;
+                                            allImageFiles.remove(imgInt[1]--);
                                             progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
-                                            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-                                            this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
-                                            this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(--numberOfFiles));
+                                            updateNumFiles(--numberOfFiles, progressMax);
                                         }
                                     }
                                 }
@@ -314,7 +288,7 @@ public class CompareProcess implements Runnable
         
         int numberOfFiles = countFilesInFolder(folderOne);
         numberOfFiles += countFilesInFolder(folderTwo);
-        this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(numberOfFiles));
+        this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + String.format("%,d", numberOfFiles));
         
         if (folderOne.isDirectory() && folderTwo.isDirectory())
         {
@@ -325,13 +299,8 @@ public class CompareProcess implements Runnable
             ArrayList<File> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getIncludeSubfolders());
             ArrayList<File> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getIncludeSubfolders());
             
-            int progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
-            int progressCurrent;
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMinimum(0);
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-            this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText("0");
-            this.parentFrame.getLBL_CompareInfo_ProgressSplit().setText("/");
-            this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
+            int progressMax = allFolderOneImages.size() * allFolderTwoImages.size(), progressCurrent;
+            setInitialProgressInfo(progressMax);
             
             int[] startNum = {0, 0};
             if (progressMax >= 1000)
@@ -348,12 +317,9 @@ public class CompareProcess implements Runnable
                 this.targetFile[0] = allFolderOneImages.get((imgInt[0]));
                 if (!this.targetFile[0].exists())
                 {
-                    allFolderOneImages.remove(imgInt[0]);
-                    imgInt[0]--;
+                    allFolderOneImages.remove(imgInt[0]--);
                     progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
-                    this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-                    this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
-                    this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(--numberOfFiles));
+                    updateNumFiles(--numberOfFiles, progressMax);
                 }
                 else
                 {
@@ -373,31 +339,22 @@ public class CompareProcess implements Runnable
                             this.targetFile[1] = allFolderTwoImages.get((imgInt[1]));
                             if (!this.targetFile[1].exists())
                             {
-                                allFolderTwoImages.remove(imgInt[1]);
-                                imgInt[1]--;
+                                allFolderTwoImages.remove(imgInt[1]--);
                                 progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
-                                this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-                                this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
-                                this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(--numberOfFiles));
+                                updateNumFiles(--numberOfFiles, progressMax);
                             }
                             else
                             {
                                 try {
                                     progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
-                                    this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(progressCurrent);
-                                    this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(makeNumeric(progressCurrent++));
+                                    updateProgress(progressCurrent);
                                     
                                     if (!this.targetFile[0].equals(this.targetFile[1])) //Make sure not to compare an image with itself.
                                     {
                                         compare.setImage(this.targetFile[1], CompareImages.FileNum.SECOND);
                                         
-                                        System.out.println();
-                                        System.out.println();
-                                        System.out.println("Image one name: " + this.targetFile[0].getName());
-                                        System.out.println("Image two name: " + this.targetFile[1].getName());
-                                        
                                         float percentSimilar = compare.getPercentSimilar(compareMethod, this.parentFrame.getSLDR_MinimumSimilarityThreshold());
-
+                                        
                                         if (percentSimilar >= 0 && percentSimilar * 100 >= this.parentFrame.getSLDR_MinimumSimilarityThreshold().getValue())
                                         {
                                             processUserDecision(compare.getImage(CompareImages.FileNum.FIRST),
@@ -406,22 +363,16 @@ public class CompareProcess implements Runnable
 
                                             if (!this.targetFile[0].exists())
                                             {
-                                                allFolderOneImages.remove(imgInt[0]);
-                                                imgInt[0]--;
+                                                allFolderOneImages.remove(imgInt[0]--);
                                                 progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
-                                                this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-                                                this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
-                                                this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(--numberOfFiles));
+                                                updateNumFiles(--numberOfFiles, progressMax);
                                                 break;
                                             }
                                             else if (!this.targetFile[1].exists())
                                             {
-                                                allFolderTwoImages.remove(imgInt[1]);
-                                                imgInt[1]--;
+                                                allFolderTwoImages.remove(imgInt[1]--);
                                                 progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
-                                                this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
-                                                this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(makeNumeric(progressMax));
-                                                this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + makeNumeric(--numberOfFiles));
+                                                updateNumFiles(--numberOfFiles, progressMax);
                                             }
                                         }
                                     }
@@ -472,7 +423,7 @@ public class CompareProcess implements Runnable
     private void displayFileInfo(File file1, File file2, float percentSimilar) {
         this.parentFrame.getLBL_CompareInfo_IMGName1().setText("Name: " + file1.getName());
         this.parentFrame.getLBL_CompareInfo_FileType1().setText("File type: " + getFileExt(file1));
-        this.parentFrame.getLBL_CompareInfo_IMGFileSize1().setText("File size (bytes): " + makeNumeric((int) file1.length()));
+        this.parentFrame.getLBL_CompareInfo_IMGFileSize1().setText("File size (bytes): " + String.format("%,d", file1.length()));
         this.parentFrame.getLBL_CompareInfo_IMGParentFolder1().setText("Parent folder: " + getParentFolderName(file1));
         this.parentFrame.getLBL_CompareInfo_IMGFilePath1().setText("File path: " + file1.getPath());
         
@@ -482,7 +433,7 @@ public class CompareProcess implements Runnable
                 
         this.parentFrame.getLBL_CompareInfo_IMGName2().setText("Name: " + file2.getName());
         this.parentFrame.getLBL_CompareInfo_FileType2().setText("File type: " + getFileExt(file2));
-        this.parentFrame.getLBL_CompareInfo_IMGFileSize2().setText("File size (bytes): " + makeNumeric((int) file2.length()));
+        this.parentFrame.getLBL_CompareInfo_IMGFileSize2().setText("File size (bytes): " + String.format("%,d", file2.length()));
         this.parentFrame.getLBL_CompareInfo_IMGParentFolder2().setText("Parent folder: " + getParentFolderName(file2));
         this.parentFrame.getLBL_CompareInfo_IMGFilePath2().setText("File path: " + file2.getPath());
         
@@ -500,11 +451,11 @@ public class CompareProcess implements Runnable
             imgIcon[0] = new ImageIcon(file1.getAbsolutePath());
             imgIcon[1] = new ImageIcon(file2.getAbsolutePath());
             
-            this.parentFrame.getLBL_CompareInfo_ImageSize1().setText("Image size: " + makeNumeric(imgIcon[0].getIconWidth()) + 
-                             " x " + makeNumeric(imgIcon[0].getIconHeight()));
+            this.parentFrame.getLBL_CompareInfo_ImageSize1().setText("Image size: " + String.format("%,d", imgIcon[0].getIconWidth()) + 
+                             " x " + String.format("%,d", imgIcon[0].getIconHeight()));
             
-            this.parentFrame.getLBL_CompareInfo_ImageSize2().setText("Image size: " + makeNumeric(imgIcon[1].getIconWidth()) +
-                             " x " + makeNumeric(imgIcon[1].getIconHeight()));
+            this.parentFrame.getLBL_CompareInfo_ImageSize2().setText("Image size: " + String.format("%,d", imgIcon[1].getIconWidth()) +
+                             " x " + String.format("%,d", imgIcon[1].getIconHeight()));
         } catch (Exception ex) {
             this.parentFrame.getLBL_CompareInfo_IMGFileSize1().setText("Image size: [UNABLE TO READ HEIGHT AND WIDTH]");
             this.parentFrame.getLBL_CompareInfo_IMGFileSize2().setText("Image size: [UNABLE TO READ HEIGHT AND WIDTH]");
@@ -541,8 +492,34 @@ public class CompareProcess implements Runnable
         this.parentFrame.getBTN_CompareInfo_ChangeImage2().setEnabled(isEnabled);
         //this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(isEnabled);
     }
+    private void setInitialProgressInfo(int progressMax) {
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMinimum(0);
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
+        this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText("0");
+        this.parentFrame.getLBL_CompareInfo_ProgressSplit().setText("/");
+        this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(String.format("%,d", progressMax));
+    }
+    private void updateNumFiles(int numberOfFiles, int progressMax) {
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
+        this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(String.format("%,d", progressMax));
+        this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + String.format("%,d", numberOfFiles));
+    }
+    private void updateProgress(int progressCurrent) {
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(progressCurrent);
+        this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(String.format("%,d", progressCurrent));
+    }
+    private void resetFormToEndCompare() {
+        this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(" ");
+        this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(" ");
+        this.parentFrame.getLBL_CompareInfo_ProgressSplit().setText(" ");
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(0);
+        this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(false);
+        enableChoiceButtons(false);
+
+        this.parentFrame.getTBDPN_UserInput().setEnabledAt(0, true);
+    }
     
-    // === === === OTHER FUNCTIONS === === ===
+    // === === === MISCELLANEOUS FUNCTIONS === === ===
     
     private ArrayList<File> getImagesInFolder(File directory, boolean includeSubfolders) {
         System.out.println("Entered the 'getImagesInFolder' function.");
@@ -570,16 +547,6 @@ public class CompareProcess implements Runnable
         }
         return files;
     }
-    private String makeNumeric(int number) {
-        return String.format("%,d", number);
-    }
-    private String getParentFolderName(File tempFile) {
-        File parentFolder = tempFile.getParentFile();
-        return parentFolder.getName();
-    }
-    private String getFileExt(File tempFile) {
-        return tempFile.getName().substring(tempFile.getName().lastIndexOf("."));
-    }
     private int countFilesInFolder(File directory) {
         if (!directory.isDirectory()) { return 0; }
         
@@ -592,6 +559,13 @@ public class CompareProcess implements Runnable
             { counter++; }
         }
         return counter;
+    }
+    private String getParentFolderName(File tempFile) {
+        File parentFolder = tempFile.getParentFile();
+        return parentFolder.getName();
+    }
+    private String getFileExt(File tempFile) {
+        return tempFile.getName().substring(tempFile.getName().lastIndexOf("."));
     }
     private long askUserForStartNum(long maxNum) {
         String message = "There are " + String.format("%,d", maxNum) + " potential combinations to go through, which may take a while.";
@@ -641,6 +615,7 @@ public class CompareProcess implements Runnable
             }
             else
             {
+                timeWaitingForStartNum = System.currentTimeMillis() - startTime;
                 return 0;
             }
         }
@@ -665,8 +640,6 @@ public class CompareProcess implements Runnable
     
     @Override
     public void run() {
-        
-        
         if (this.parentFrame != null)
         {
             ActionListener skip = new ActionListener() {
@@ -735,15 +708,7 @@ public class CompareProcess implements Runnable
             this.parentFrame.getBTN_CompareInfo_ChangeImage2().removeActionListener(delete2);
             this.parentFrame.getBTN_CompareInfo_Cancel().removeActionListener(cancel);
             
-            this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(" ");
-            this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(" ");
-            this.parentFrame.getLBL_CompareInfo_ProgressSplit().setText(" ");
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(0);
-            this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(false);
-            enableChoiceButtons(false);
-            
-            this.parentFrame.getTBDPN_UserInput().setEnabledAt(0, true);
-            
+            resetFormToEndCompare();
             System.gc(); //Call the garbage collector
             
             if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected())
@@ -766,18 +731,18 @@ public class CompareProcess implements Runnable
                 }
 
                 String message = "Here are the details about the last comparison:";
-                message += "\n\nComparison type: " + searchType;
+                message += "\n";
+                message += "\nComparison type: " + searchType;
+                message += "\n";
                 message += "\nTime spent comparing: " + getTimeString(timeSpentComparing);
                 message += "\nTime spent waiting for user: " + getTimeString(timeWaitingForUser);
+                message += "\n";
                 message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
-
+                
                 JOptionPane.showMessageDialog(this.parentFrame, message, "Compare Details", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         else { System.out.println("Parent frame is null!"); }
-        
-        
-        
         
         System.out.println("FINISHED WITH THE COMPAREPROCESS THREAD.");
     }
