@@ -809,7 +809,8 @@ public class DIR_Window extends javax.swing.JFrame {
             }
         });
 
-        CHKBX_Settings_ShowCompareDetails.setText("Display compare details once finished (folders only)");
+        CHKBX_Settings_ShowCompareDetails.setText("Display compare details once finished");
+        CHKBX_Settings_ShowCompareDetails.setActionCommand("Display compare details once finished");
         CHKBX_Settings_ShowCompareDetails.setFocusable(false);
 
         javax.swing.GroupLayout PNL_SettingsLayout = new javax.swing.GroupLayout(PNL_Settings);
@@ -826,7 +827,7 @@ public class DIR_Window extends javax.swing.JFrame {
                     .addComponent(RDBTN_Settings_NameBlacklist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CHKBX_Settings_SoundNotifications, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CHKBX_Settings_RepeatNotificationSound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CHKBX_Settings_RepeatNotificationSound, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                     .addComponent(CHKBX_Settings_ShowCompareDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
