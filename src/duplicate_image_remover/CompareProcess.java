@@ -27,6 +27,10 @@ public class CompareProcess implements Runnable
     DIR_Window parentFrame;
     volatile boolean waitingForUser;
     
+    long timeWaiting = 0;
+    int numFilesDeleted = 0;
+    
+    
     // === === === SETTERS === === ===
     
     public void setParent(DIR_Window newParent) {
@@ -69,53 +73,41 @@ public class CompareProcess implements Runnable
     
     // === === === ACTION LISTENER FUNCTIONS === === ===
     
+    private void deleteFile(File deleteFile) {
+        try {
+            int result = JOptionPane.showConfirmDialog(this.parentFrame, "Warning: This will permenantly delete the image and you will not be able to restore it from the recycle bin.\n\nDo you wish to continue?");
+            if (result == JOptionPane.YES_OPTION)
+            {
+                if (deleteFile.delete())
+                {
+                    numFilesDeleted++;
+                    waitingForUser = false;
+                }
+                else
+                {
+                    String errorMSG = "The program was unable to delete the following file: " + deleteFile.getName();
+                    JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Unable to Delete Image", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            String errorMSG = "The program was unable to delete the following file: " + deleteFile.getName();
+            errorMSG += "\n\nThe exception that was thrown is: " + ex.toString();
+            errorMSG += "\nThe error message from that exception is: " + ex.getMessage();
+            JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Unable to Delete Image", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     private void deleteImageOneButtonClicked() {
         if (this.targetFile[0].exists())
         {
-            try {
-                int result = JOptionPane.showConfirmDialog(this.parentFrame, "Warning: This will permenantly delete the image and you will not be able to restore it from the recycle bin.\n\nDo you wish to continue?");
-                if (result == JOptionPane.YES_OPTION)
-                {
-                    //this.targetFile[0].setWritable(true);
-                    if (this.targetFile[0].delete()) { waitingForUser = false; }
-                    else
-                    {
-                        String errorMSG = "The program was unable to delete the following file: " + this.targetFile[0].getName();
-                        JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Unable to Delete Image", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                String errorMSG = "The program was unable to delete the following file: " + targetFile[0].getName();
-                errorMSG += "\n\nThe exception that was thrown is: " + ex.toString();
-                errorMSG += "\nThe error message from that exception is: " + ex.getMessage();
-                JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Unable to Delete Image", JOptionPane.ERROR_MESSAGE);
-            }
+            deleteFile(this.targetFile[0]);
         }
     }
     private void deleteImageTwoButtonClicked() {
         if (this.targetFile[1].exists())
         {
-            try {
-                int result = JOptionPane.showConfirmDialog(this.parentFrame, "Warning: This will permenantly delete the image and you will not be able to restore it from the recycle bin.\n\nDo you wish to continue?");
-                if (result == JOptionPane.YES_OPTION)
-                {
-                    //this.targetFile[1].setWritable(true);
-                    if (this.targetFile[1].delete()) { waitingForUser = false;  }
-                    else
-                    {
-                        String errorMSG = "The program was unable to delete the following file: " + this.targetFile[1].getName();
-                        JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Unable to Delete Image", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            } catch (Exception ex)
-            {
-                String errorMSG = "The program was unable to delete the following file: " + this.targetFile[1].getName();
-                errorMSG += "\n\nThe exception that was thrown is: " + ex.toString();
-                errorMSG += "\nThe error message from that exception is: " + ex.getMessage();
-                JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Unable to Delete Image", JOptionPane.ERROR_MESSAGE);
-            }
+            deleteFile(this.targetFile[1]);
         }
     }
     
@@ -132,6 +124,7 @@ public class CompareProcess implements Runnable
         { Toolkit.getDefaultToolkit().beep(); }
         waitingForUser = true;
         int timeWaited = 0, sleepTime = 500;
+        long startTime = System.currentTimeMillis();
         try {
             while (waitingForUser) {
                 Thread.sleep(sleepTime);
@@ -143,6 +136,7 @@ public class CompareProcess implements Runnable
                 else { timeWaited++; }
             }
         } catch (InterruptedException ex) { }
+        this.timeWaiting += System.currentTimeMillis() - startTime;
         
         clearFileInfo();
         clearDisplayedImages();
@@ -649,6 +643,8 @@ public class CompareProcess implements Runnable
     
     @Override
     public void run() {
+        long startTime = System.currentTimeMillis();
+        
         if (this.parentFrame != null)
         {
             ActionListener skip = new ActionListener() {
@@ -727,6 +723,35 @@ public class CompareProcess implements Runnable
             System.gc(); //Call the garbage collector
         }
         else { System.out.println("Parent frame is null!"); }
+        
+        
+        if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected())
+        {
+            long timeComparing = System.currentTimeMillis() - startTime - timeWaiting;
+            timeComparing /= 1000;
+            timeWaiting /= 1000;
+            
+            String searchType = "";
+            switch (selectedSearchMethod)
+            {
+                case TWO_IMAGES:
+                    searchType = "Two images";
+                    break;
+                case ONE_FOLDER:
+                    searchType = "Single folder";
+                    break;
+                case TWO_FOLDERS:
+                    searchType = "Two folders";
+            }
+            
+            String message = "Here are the details about the last comparison:";
+            message += "\n\nComparison type: " + searchType;
+            message += "\nTime spent comparing (seconds): " + String.format("%,d", timeComparing);
+            message += "\nTime spent waiting for user (seconds): " + String.format("%,d", timeWaiting);
+            message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
+            
+            JOptionPane.showMessageDialog(this.parentFrame, message, "Compare Details", JOptionPane.INFORMATION_MESSAGE);
+        }
         
         System.out.println("FINISHED WITH THE COMPAREPROCESS THREAD.");
     }

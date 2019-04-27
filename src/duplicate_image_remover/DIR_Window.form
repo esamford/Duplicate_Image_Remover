@@ -704,7 +704,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="SLDR_MinimumSimilarityThreshold" alignment="1" max="32767" attributes="0"/>
@@ -712,9 +712,10 @@
                           <Component id="TXTBX_Settings_TextInName" alignment="1" max="32767" attributes="0"/>
                           <Component id="RDBTN_Settings_NameWhitelist" alignment="1" max="32767" attributes="0"/>
                           <Component id="RDBTN_Settings_NameBlacklist" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" pref="271" max="32767" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                           <Component id="CHKBX_Settings_SoundNotifications" alignment="0" max="32767" attributes="0"/>
-                          <Component id="CHKBX_Settings_RepeatNotificationSound" alignment="0" pref="271" max="32767" attributes="0"/>
+                          <Component id="CHKBX_Settings_RepeatNotificationSound" alignment="0" max="32767" attributes="0"/>
+                          <Component id="CHKBX_Settings_ShowCompareDetails" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -731,7 +732,9 @@
                       <Component id="CHKBX_Settings_SoundNotifications" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="CHKBX_Settings_RepeatNotificationSound" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="134" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="CHKBX_Settings_ShowCompareDetails" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
                       <Component id="RDBTN_Settings_NameIgnore" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="RDBTN_Settings_NameWhitelist" min="-2" max="-2" attributes="0"/>
@@ -821,6 +824,11 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CHKBX_Settings_RepeatNotificationSoundActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="CHKBX_Settings_ShowCompareDetails">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Display compare details once finished (folders only)"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

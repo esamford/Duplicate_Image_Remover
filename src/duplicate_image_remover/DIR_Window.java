@@ -41,6 +41,9 @@ public class DIR_Window extends javax.swing.JFrame {
     public javax.swing.JCheckBox getCHKBX_Settings_RepeatNotificationSound() {
         return this.CHKBX_Settings_RepeatNotificationSound;
     }
+    public javax.swing.JCheckBox getCHKBX_Settings_ShowCompareDetails() {
+        return this.CHKBX_Settings_ShowCompareDetails;
+    }
     public javax.swing.JCheckBox getCHKBX_Settings_SoundNotifications() {
         return this.CHKBX_Settings_SoundNotifications;
     }
@@ -385,6 +388,7 @@ public class DIR_Window extends javax.swing.JFrame {
         CHKBX_Settings_SoundNotifications = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         CHKBX_Settings_RepeatNotificationSound = new javax.swing.JCheckBox();
+        CHKBX_Settings_ShowCompareDetails = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Duplicate Image Remover");
@@ -804,6 +808,8 @@ public class DIR_Window extends javax.swing.JFrame {
             }
         });
 
+        CHKBX_Settings_ShowCompareDetails.setText("Display compare details once finished (folders only)");
+
         javax.swing.GroupLayout PNL_SettingsLayout = new javax.swing.GroupLayout(PNL_Settings);
         PNL_Settings.setLayout(PNL_SettingsLayout);
         PNL_SettingsLayout.setHorizontalGroup(
@@ -816,9 +822,10 @@ public class DIR_Window extends javax.swing.JFrame {
                     .addComponent(TXTBX_Settings_TextInName, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(RDBTN_Settings_NameWhitelist, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(RDBTN_Settings_NameBlacklist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CHKBX_Settings_SoundNotifications, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CHKBX_Settings_RepeatNotificationSound, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
+                    .addComponent(CHKBX_Settings_RepeatNotificationSound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CHKBX_Settings_ShowCompareDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         PNL_SettingsLayout.setVerticalGroup(
@@ -832,7 +839,9 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addComponent(CHKBX_Settings_SoundNotifications)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CHKBX_Settings_RepeatNotificationSound)
-                .addGap(134, 134, 134)
+                .addGap(18, 18, 18)
+                .addComponent(CHKBX_Settings_ShowCompareDetails)
+                .addGap(93, 93, 93)
                 .addComponent(RDBTN_Settings_NameIgnore)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RDBTN_Settings_NameWhitelist)
@@ -1190,6 +1199,7 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JButton BTN_SIaC_Data2;
     private javax.swing.JCheckBox CHKBX_SIaC_IncludeSubfolders;
     private javax.swing.JCheckBox CHKBX_Settings_RepeatNotificationSound;
+    private javax.swing.JCheckBox CHKBX_Settings_ShowCompareDetails;
     private javax.swing.JCheckBox CHKBX_Settings_SoundNotifications;
     private javax.swing.JComboBox<String> CMBBX_SIaC_SearchType;
     private javax.swing.Box.Filler Filler_CompareInfo;
