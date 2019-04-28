@@ -730,9 +730,7 @@ public class CompareProcess implements Runnable
                         searchType = "Two folders";
                 }
 
-                String message = "Here are the details about the last comparison:";
-                message += "\n";
-                message += "\nComparison type: " + searchType;
+                String message = "\nComparison type: " + searchType;
                 message += "\n";
                 message += "\nTime spent comparing: " + getTimeString(timeSpentComparing);
                 message += "\nTime spent waiting for user: " + getTimeString(timeWaitingForUser);

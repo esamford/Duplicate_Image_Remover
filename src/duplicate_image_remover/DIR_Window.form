@@ -827,8 +827,8 @@
             </Component>
             <Component class="javax.swing.JCheckBox" name="CHKBX_Settings_ShowCompareDetails">
               <Properties>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Display compare details once finished"/>
-                <Property name="actionCommand" type="java.lang.String" value="Display compare details once finished"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
             </Component>
