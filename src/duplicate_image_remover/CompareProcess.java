@@ -30,6 +30,7 @@ public class CompareProcess implements Runnable
     long timeWaitingForUser = 0;
     long timeWaitingForStartNum = 0;
     int numFilesDeleted = 0;
+    long totalBytesRemoved = 0;
     
     // === === === SETTERS === === ===
     
@@ -78,8 +79,10 @@ public class CompareProcess implements Runnable
             int result = JOptionPane.showConfirmDialog(this.parentFrame, "Warning: This will permenantly delete the image and you will not be able to restore it from the recycle bin.\n\nDo you wish to continue?");
             if (result == JOptionPane.YES_OPTION)
             {
+                long tempByteCount = deleteFile.length();
                 if (deleteFile.delete())
                 {
+                    totalBytesRemoved += tempByteCount;
                     numFilesDeleted++;
                     waitingForUser = false;
                 }
@@ -736,6 +739,7 @@ public class CompareProcess implements Runnable
                 message += "\nTime spent waiting for user: " + getTimeString(timeWaitingForUser);
                 message += "\n";
                 message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
+                message += "\nTotal bytes freed: " + String.format("%,d", totalBytesRemoved);
                 
                 JOptionPane.showMessageDialog(this.parentFrame, message, "Compare Details", JOptionPane.INFORMATION_MESSAGE);
             }
