@@ -143,7 +143,6 @@
     </Container>
     <Container class="javax.swing.JTabbedPane" name="TBDPN_UserInput">
       <Properties>
-        <Property name="focusable" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
       <AccessibilityProperties>
@@ -709,13 +708,13 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="SLDR_MinimumSimilarityThreshold" alignment="1" max="32767" attributes="0"/>
                           <Component id="RDBTN_Settings_NameIgnore" max="32767" attributes="0"/>
-                          <Component id="TXTBX_Settings_TextInName" alignment="1" max="32767" attributes="0"/>
                           <Component id="RDBTN_Settings_NameWhitelist" alignment="1" max="32767" attributes="0"/>
                           <Component id="RDBTN_Settings_NameBlacklist" alignment="0" max="32767" attributes="0"/>
                           <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                           <Component id="CHKBX_Settings_SoundNotifications" alignment="0" max="32767" attributes="0"/>
-                          <Component id="CHKBX_Settings_RepeatNotificationSound" alignment="0" pref="271" max="32767" attributes="0"/>
+                          <Component id="CHKBX_Settings_RepeatNotificationSound" alignment="0" max="32767" attributes="0"/>
                           <Component id="CHKBX_Settings_ShowCompareDetails" alignment="0" max="32767" attributes="0"/>
+                          <Component id="JTXTFD_Settings_NameFilter" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -740,9 +739,9 @@
                       <Component id="RDBTN_Settings_NameWhitelist" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="RDBTN_Settings_NameBlacklist" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="TXTBX_Settings_TextInName" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="281" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="JTXTFD_Settings_NameFilter" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="276" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -761,20 +760,10 @@
                 <Property name="requestFocusEnabled" type="boolean" value="false"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="TXTBX_Settings_TextInName">
-              <Properties>
-                <Property name="enabled" type="boolean" value="false"/>
-                <Property name="focusable" type="boolean" value="false"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TXTBX_Settings_TextInNameActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JRadioButton" name="RDBTN_Settings_NameIgnore">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Ignore image name."/>
-                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -784,7 +773,6 @@
             <Component class="javax.swing.JRadioButton" name="RDBTN_Settings_NameWhitelist">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Whitelist images with this text in their name:"/>
-                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -794,7 +782,6 @@
             <Component class="javax.swing.JRadioButton" name="RDBTN_Settings_NameBlacklist">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Blacklist images with this text in their name:"/>
-                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -831,6 +818,14 @@
                 <Property name="text" type="java.lang.String" value="Display compare details once finished"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="JTXTFD_Settings_NameFilter">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JTXTFD_Settings_NameFilterFocusLost"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -1,5 +1,10 @@
 package duplicate_image_remover;
 
+Update everything that requires the name filter system. Follow the import rules that the user has set, and only count files they want to be counted.
+A lot of the work will have to be done in the CompareProcess and UpdateLBLImageCount classes. I do not think there is anything else in this class to work on,
+but I could be wrong.
+
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,7 +21,6 @@ public class DIR_Window extends javax.swing.JFrame {
     File[] targetFolder = new File[2];
     File[] imgFile = new File[2];
     ArrayList<String> nameFilter = new ArrayList<String>();
-    int[] numFiles = {0, 0};
     
     // === === === GETTERS === === ===
     
@@ -138,12 +142,21 @@ public class DIR_Window extends javax.swing.JFrame {
         return this.TBDPN_UserInput;
     }
     public javax.swing.JTextField getTXTBX_Settings_TextInName() {
-        return this.TXTBX_Settings_TextInName;
+        return this.JTXTFD_Settings_NameFilter;
     }
     public boolean getIncludeSubfolders() {
         System.out.println("Getting boolean for includeSubfolders: ");
         System.out.println(this.CHKBX_SIaC_IncludeSubfolders == null);
         return this.CHKBX_SIaC_IncludeSubfolders.isSelected();
+    }
+    public ArrayList<String> getNameFilter() {
+        return this.nameFilter;
+    }
+    public int getNameFilterType() {
+        if (RDBTN_Settings_NameIgnore.isSelected()) { return 0; }
+        else if (RDBTN_Settings_NameWhitelist.isSelected()) { return 1; }
+        else if (RDBTN_Settings_NameBlacklist.isSelected()) { return 2; }
+        else { return -1; }
     }
     
     // === === === FUNCTIONS === === ===
@@ -257,19 +270,6 @@ public class DIR_Window extends javax.swing.JFrame {
         CompareImages validate = new CompareImages();        
         return validate.isValidExtension(checkFile);
     }
-    private int countFilesInFolder(File directory) {
-        if (!directory.isDirectory()) { return 0; }
-        
-        int counter = 0;
-        for (File newFile : directory.listFiles())
-        {
-            if (newFile.isDirectory() && this.CHKBX_SIaC_IncludeSubfolders.isSelected())
-            { counter += countFilesInFolder(newFile); }
-            else if (!newFile.isDirectory() && checkImageValidity(newFile))
-            { counter++; }
-        }
-        return counter;
-    }
     private void clearCIFileInfo() {
         LBL_CompareInfo_IMGName1.setText("Name: "); //LBL_CompareInfo_IMGName1
         LBL_CompareInfo_ImageSize1.setText("Image size: "); //LBL_CompareInfo_ImageSize1
@@ -382,7 +382,6 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_CompareInfo_FileType1 = new javax.swing.JLabel();
         PNL_Settings = new javax.swing.JPanel();
         SLDR_MinimumSimilarityThreshold = new javax.swing.JSlider();
-        TXTBX_Settings_TextInName = new javax.swing.JTextField();
         RDBTN_Settings_NameIgnore = new javax.swing.JRadioButton();
         RDBTN_Settings_NameWhitelist = new javax.swing.JRadioButton();
         RDBTN_Settings_NameBlacklist = new javax.swing.JRadioButton();
@@ -390,6 +389,7 @@ public class DIR_Window extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         CHKBX_Settings_RepeatNotificationSound = new javax.swing.JCheckBox();
         CHKBX_Settings_ShowCompareDetails = new javax.swing.JCheckBox();
+        JTXTFD_Settings_NameFilter = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Duplicate Image Remover");
@@ -419,7 +419,6 @@ public class DIR_Window extends javax.swing.JFrame {
 
         TBDPN_Images.addTab("Subtracted Differences", SCRLPN_SubtractedDifferences);
 
-        TBDPN_UserInput.setFocusable(false);
         TBDPN_UserInput.setName(""); // NOI18N
 
         JPNL_SIaC.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -754,17 +753,8 @@ public class DIR_Window extends javax.swing.JFrame {
         SLDR_MinimumSimilarityThreshold.setFocusable(false);
         SLDR_MinimumSimilarityThreshold.setRequestFocusEnabled(false);
 
-        TXTBX_Settings_TextInName.setEnabled(false);
-        TXTBX_Settings_TextInName.setFocusable(false);
-        TXTBX_Settings_TextInName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TXTBX_Settings_TextInNameActionPerformed(evt);
-            }
-        });
-
         RDBTN_Settings_NameIgnore.setSelected(true);
         RDBTN_Settings_NameIgnore.setText("Ignore image name.");
-        RDBTN_Settings_NameIgnore.setEnabled(false);
         RDBTN_Settings_NameIgnore.setFocusable(false);
         RDBTN_Settings_NameIgnore.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -773,7 +763,6 @@ public class DIR_Window extends javax.swing.JFrame {
         });
 
         RDBTN_Settings_NameWhitelist.setText("Whitelist images with this text in their name:");
-        RDBTN_Settings_NameWhitelist.setEnabled(false);
         RDBTN_Settings_NameWhitelist.setFocusable(false);
         RDBTN_Settings_NameWhitelist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -782,7 +771,6 @@ public class DIR_Window extends javax.swing.JFrame {
         });
 
         RDBTN_Settings_NameBlacklist.setText("Blacklist images with this text in their name:");
-        RDBTN_Settings_NameBlacklist.setEnabled(false);
         RDBTN_Settings_NameBlacklist.setFocusable(false);
         RDBTN_Settings_NameBlacklist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -813,6 +801,13 @@ public class DIR_Window extends javax.swing.JFrame {
         CHKBX_Settings_ShowCompareDetails.setText("Display compare details once finished");
         CHKBX_Settings_ShowCompareDetails.setFocusable(false);
 
+        JTXTFD_Settings_NameFilter.setEnabled(false);
+        JTXTFD_Settings_NameFilter.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JTXTFD_Settings_NameFilterFocusLost(evt);
+            }
+        });
+
         javax.swing.GroupLayout PNL_SettingsLayout = new javax.swing.GroupLayout(PNL_Settings);
         PNL_Settings.setLayout(PNL_SettingsLayout);
         PNL_SettingsLayout.setHorizontalGroup(
@@ -822,13 +817,13 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addGroup(PNL_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SLDR_MinimumSimilarityThreshold, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(RDBTN_Settings_NameIgnore, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TXTBX_Settings_TextInName, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(RDBTN_Settings_NameWhitelist, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(RDBTN_Settings_NameBlacklist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(CHKBX_Settings_SoundNotifications, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CHKBX_Settings_RepeatNotificationSound, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
-                    .addComponent(CHKBX_Settings_ShowCompareDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(CHKBX_Settings_RepeatNotificationSound, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CHKBX_Settings_ShowCompareDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JTXTFD_Settings_NameFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         PNL_SettingsLayout.setVerticalGroup(
@@ -850,9 +845,9 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addComponent(RDBTN_Settings_NameWhitelist)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RDBTN_Settings_NameBlacklist)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TXTBX_Settings_TextInName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JTXTFD_Settings_NameFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(276, Short.MAX_VALUE))
         );
 
         TBDPN_UserInput.addTab("Settings", PNL_Settings);
@@ -971,18 +966,17 @@ public class DIR_Window extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_CMBBX_SIaC_SearchTypeActionPerformed
     private void RDBTN_Settings_NameIgnoreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDBTN_Settings_NameIgnoreActionPerformed
-        TXTBX_Settings_TextInName.setEnabled(false);
-        TXTBX_Settings_TextInName.setText("");
+        JTXTFD_Settings_NameFilter.setEnabled(false);
+        JTXTFD_Settings_NameFilter.setText("");
     }//GEN-LAST:event_RDBTN_Settings_NameIgnoreActionPerformed
     private void RDBTN_Settings_NameWhitelistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDBTN_Settings_NameWhitelistActionPerformed
-        TXTBX_Settings_TextInName.setEnabled(true);
+        JTXTFD_Settings_NameFilter.setEnabled(true);
     }//GEN-LAST:event_RDBTN_Settings_NameWhitelistActionPerformed
     private void RDBTN_Settings_NameBlacklistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDBTN_Settings_NameBlacklistActionPerformed
-        TXTBX_Settings_TextInName.setEnabled(true);
+        JTXTFD_Settings_NameFilter.setEnabled(true);
     }//GEN-LAST:event_RDBTN_Settings_NameBlacklistActionPerformed
     private void BTN_SIaC_Data1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SIaC_Data1ActionPerformed
         JFileChooser getData = new JFileChooser();
-        this.numFiles[0] = 0;
         switch (CMBBX_SIaC_SearchType.getSelectedIndex())
         {
             case 0: //Compare two images
@@ -996,7 +990,6 @@ public class DIR_Window extends javax.swing.JFrame {
                             CompareImages importIMG = new CompareImages();
                             BufferedImage imgBuff = importIMG.importImage(imgFile[0]);
                             LBL_IMG_Image1.setIcon(new ImageIcon(imgBuff));
-                            this.numFiles[0] = 1;
                         } catch (IOException ex) {
                             imgFile[0] = null;
                             clearDisplayedImages();
@@ -1027,10 +1020,6 @@ public class DIR_Window extends javax.swing.JFrame {
                             errorMSG += "If you would like to compare the images inside this folder, please change the search options.";
                             JOptionPane.showMessageDialog(this, errorMSG, "Invalid Folder Selection", JOptionPane.ERROR_MESSAGE);
                         }
-                        else
-                        {
-                            this.numFiles[0] = countFilesInFolder(targetFolder[0]);
-                        }
                     }
                 }
         }
@@ -1039,7 +1028,6 @@ public class DIR_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_BTN_SIaC_Data1ActionPerformed
     private void BTN_SIaC_Data2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SIaC_Data2ActionPerformed
         JFileChooser getData = new JFileChooser();
-        this.numFiles[1] = 0;
         switch (CMBBX_SIaC_SearchType.getSelectedIndex())
         {
             case 0: //Compare two images
@@ -1053,7 +1041,6 @@ public class DIR_Window extends javax.swing.JFrame {
                             CompareImages importIMG = new CompareImages();
                             BufferedImage imgBuff = importIMG.importImage(imgFile[1]);
                             LBL_IMG_Image2.setIcon(new ImageIcon(imgBuff));
-                            this.numFiles[1] = 1;
                         } catch (IOException ex) {
                             imgFile[1] = null;
                             clearDisplayedImages();
@@ -1084,10 +1071,6 @@ public class DIR_Window extends javax.swing.JFrame {
                             String errorMSG = "You cannot choose the same folder twice. ";
                             errorMSG += "If you would like to compare the images inside this folder, please change the search options.";
                             JOptionPane.showMessageDialog(this, errorMSG, "Invalid Folder Selection", JOptionPane.ERROR_MESSAGE);
-                        }
-                        else
-                        {
-                            this.numFiles[1] = countFilesInFolder(targetFolder[1]);
                         }
                     }
                 }
@@ -1143,24 +1126,6 @@ public class DIR_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_BTN_CompareInfo_ChangeImage2ActionPerformed
     private void BTN_CompareInfo_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CompareInfo_CancelActionPerformed
     }//GEN-LAST:event_BTN_CompareInfo_CancelActionPerformed
-    private void TXTBX_Settings_TextInNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTBX_Settings_TextInNameActionPerformed
-        nameFilter.clear();
-        String tempName = "";
-//        for (int x = 0; x < TXTBX_Settings_TextInName.getColumns() - 1; x++)
-//        {
-//            if (TXTBX_Settings_TextInName.get(x) == ",")
-//            {
-//                nameFilter.add(tempName);
-//                
-//            }
-//            else
-//            {
-//                tempName += nameFilter.TXTBX_Settings_TextInName;
-//            }
-//        }
-        
-        
-    }//GEN-LAST:event_TXTBX_Settings_TextInNameActionPerformed
     private void CHKBX_Settings_RepeatNotificationSoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHKBX_Settings_RepeatNotificationSoundActionPerformed
     }//GEN-LAST:event_CHKBX_Settings_RepeatNotificationSoundActionPerformed
     private void CHKBX_Settings_SoundNotificationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHKBX_Settings_SoundNotificationsActionPerformed
@@ -1174,6 +1139,23 @@ public class DIR_Window extends javax.swing.JFrame {
             this.CHKBX_Settings_RepeatNotificationSound.setSelected(false);
         }
     }//GEN-LAST:event_CHKBX_Settings_SoundNotificationsActionPerformed
+    private void JTXTFD_Settings_NameFilterFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTXTFD_Settings_NameFilterFocusLost
+        nameFilter.clear();
+        String tempString = JTXTFD_Settings_NameFilter.getText() + ",";
+        char[] nameList = tempString.toCharArray();
+        tempString = "";
+        for (char x : nameList)
+        {
+            if (x != ',') { tempString += x; }
+            else
+            {
+                tempString = tempString.trim();
+                nameFilter.add(tempString);
+                tempString = "";
+            }
+        }
+        for (String x : nameFilter) { System.out.println("Filter: " + x); }
+    }//GEN-LAST:event_JTXTFD_Settings_NameFilterFocusLost
     
     // === === === OTHER === === ===
     public static void main(String args[]) {
@@ -1208,6 +1190,7 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.Box.Filler Filler_CompareInfo;
     private javax.swing.JPanel JPNL_SIaC;
     private javax.swing.JProgressBar JPRGSBR_Choice_TotalProgress;
+    private javax.swing.JTextField JTXTFD_Settings_NameFilter;
     private javax.swing.JLabel LBL_Choice_DisplayPercentSimilar;
     private javax.swing.JLabel LBL_CompareInfo_FileType1;
     private javax.swing.JLabel LBL_CompareInfo_FileType2;
@@ -1252,7 +1235,6 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JSlider SLDR_MinimumSimilarityThreshold;
     private javax.swing.JTabbedPane TBDPN_Images;
     private javax.swing.JTabbedPane TBDPN_UserInput;
-    private javax.swing.JTextField TXTBX_Settings_TextInName;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
