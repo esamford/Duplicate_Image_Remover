@@ -8,8 +8,6 @@ public class UpdateLBLImageCount implements Runnable {
     File folder;
     boolean includeSubfolders = false;
     String prefix = "";
-    ArrayList<String> nameFilter;
-    int nameFilterType;
     
     public void setLabel(javax.swing.JLabel newLabel) {
         this.label = newLabel;
@@ -23,8 +21,6 @@ public class UpdateLBLImageCount implements Runnable {
     public void setPrefix(String newPrefix) {
         this.prefix = newPrefix;
     }
-    public void setNameFilter(ArrayList<String> newFilter) { nameFilter = newFilter; }
-    public void setNameFilterType(int typeInt) { nameFilterType = typeInt; }
     
     private boolean checkImageValidity(File checkFile) {
         if (!checkFile.exists()) { return false; }        
@@ -33,9 +29,6 @@ public class UpdateLBLImageCount implements Runnable {
     }
     private int countFilesInFolder(File directory) {
         if (!directory.isDirectory()) { return 0; }
-        
-        Make sure that the name filter applies to the image counter here.
-        
         int counter = 0;
         for (File newFile : directory.listFiles())
         {
