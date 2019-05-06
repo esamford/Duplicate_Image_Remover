@@ -201,7 +201,7 @@ public class CompareProcess implements Runnable
             
             ArrayList<File> allImageFiles = getImagesInFolder(folder, this.parentFrame.getIncludeSubfolders());
             
-            int progressMax = (allImageFiles.size() - 1) * allImageFiles.size(), progressCurrent;
+            int progressMax = getMaxProgressOneFolder(allImageFiles.size()), progressCurrent;
             setInitialProgressInfo(progressMax);
             
             int[] startNum = {0, 0};
@@ -220,7 +220,7 @@ public class CompareProcess implements Runnable
                 if (!this.targetFile[0].exists())
                 {
                     allImageFiles.remove(imgInt[0]--);
-                    progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
+                    progressMax = getMaxProgressOneFolder(allImageFiles.size());
                     updateNumFiles(--numberOfFiles, progressMax);
                 }
                 else
@@ -241,7 +241,7 @@ public class CompareProcess implements Runnable
                             if (!this.targetFile[1].exists())
                             {
                                 allImageFiles.remove(imgInt[1]--);
-                                progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
+                                progressMax = getMaxProgressOneFolder(allImageFiles.size());
                                 updateNumFiles(--numberOfFiles, progressMax);
                             }
                             else
@@ -262,14 +262,14 @@ public class CompareProcess implements Runnable
                                         if (!this.targetFile[0].exists())
                                         {
                                             allImageFiles.remove(imgInt[0]--);
-                                            progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
+                                            progressMax = getMaxProgressOneFolder(allImageFiles.size());
                                             updateNumFiles(--numberOfFiles, progressMax);
                                             break;
                                         }
                                         else if (!this.targetFile[1].exists())
                                         {
                                             allImageFiles.remove(imgInt[1]--);
-                                            progressMax = (allImageFiles.size() - 1) * allImageFiles.size();
+                                            progressMax = getMaxProgressOneFolder(allImageFiles.size());
                                             updateNumFiles(--numberOfFiles, progressMax);
                                         }
                                     }
@@ -571,13 +571,13 @@ public class CompareProcess implements Runnable
         return tempFile.getName().substring(tempFile.getName().lastIndexOf("."));
     }
     private long askUserForStartNum(long maxNum) {
-        String message = "There are " + String.format("%,d", maxNum) + " potential combinations to go through, which may take a while.";
-        message += "\nWould you like to skip some and start at a specific point?";
-        int result = JOptionPane.showConfirmDialog(this.parentFrame, message, "Skip Comparisons", JOptionPane.YES_NO_OPTION);
-        
         long startTime = System.currentTimeMillis();
         while (true)
         {
+            String message = "There are " + String.format("%,d", maxNum) + " potential combinations to go through, which may take a while.";
+            message += "\nWould you like to skip some and start at a specific point?";
+            int result = JOptionPane.showConfirmDialog(this.parentFrame, message, "Skip Comparisons", JOptionPane.YES_NO_OPTION);
+            
             if (result == JOptionPane.YES_OPTION)
             {
 
@@ -639,6 +639,9 @@ public class CompareProcess implements Runnable
             returnString = String.format("%,d", minutes) + " minutes and " + returnString;
         }
         return returnString;
+    }
+    private int getMaxProgressOneFolder(int imageCount) {
+        return (imageCount * (imageCount - 1)) / 2;
     }
     
     @Override

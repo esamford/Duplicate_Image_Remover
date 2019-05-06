@@ -137,6 +137,7 @@
     </Container>
     <Container class="javax.swing.JTabbedPane" name="TBDPN_UserInput">
       <Properties>
+        <Property name="focusable" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="" noResource="true"/>
       </Properties>
       <AccessibilityProperties>
@@ -769,7 +770,7 @@
             <Component class="javax.swing.JCheckBox" name="CHKBX_Settings_ShowCompareDetails">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Display compare details once finished"/>
+                <Property name="text" type="java.lang.String" value="Display compare details once finished."/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
             </Component>

@@ -381,6 +381,7 @@ public class DIR_Window extends javax.swing.JFrame {
 
         TBDPN_Images.addTab("Subtracted Differences", SCRLPN_SubtractedDifferences);
 
+        TBDPN_UserInput.setFocusable(false);
         TBDPN_UserInput.setName(""); // NOI18N
 
         JPNL_SIaC.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -735,7 +736,7 @@ public class DIR_Window extends javax.swing.JFrame {
         });
 
         CHKBX_Settings_ShowCompareDetails.setSelected(true);
-        CHKBX_Settings_ShowCompareDetails.setText("Display compare details once finished");
+        CHKBX_Settings_ShowCompareDetails.setText("Display compare details once finished.");
         CHKBX_Settings_ShowCompareDetails.setFocusable(false);
 
         javax.swing.GroupLayout PNL_SettingsLayout = new javax.swing.GroupLayout(PNL_Settings);
