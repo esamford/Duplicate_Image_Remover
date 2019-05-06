@@ -212,6 +212,8 @@ public class CompareProcess implements Runnable
                 startNum[1] = (int) userNum % (allImageFiles.size() - 1);
             }
             
+            JOptionPane.showMessageDialog(parentFrame, "IMPORTANT: Fix the current progress counter. The calculations are wrong.");
+            
             for (imgInt[0] = startNum[0]; imgInt[0] < allImageFiles.size() - 1; imgInt[0]++)
             {
                 if (stopThread) { break; }
