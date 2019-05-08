@@ -249,8 +249,9 @@ public class CompareProcess implements Runnable
                             else
                             {
                                 try {
-                                    progressCurrent = imgInt[0] * (allImageFiles.size() - 1) + imgInt[1];
+                                    progressCurrent = imgInt[0] * (allImageFiles.size() - 1) + (imgInt[1] - imgInt[0]);
                                     updateProgress(progressCurrent);
+                                    JOptionPane.showMessageDialog(parentFrame, "Now on comparison #" + String.format("%,d", progressCurrent));
 
                                     compare.setImage(this.targetFile[1], CompareImages.FileNum.SECOND);
                                     
