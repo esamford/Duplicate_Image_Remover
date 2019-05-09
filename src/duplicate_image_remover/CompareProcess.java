@@ -531,6 +531,7 @@ public class CompareProcess implements Runnable
         this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(String.format("%,d", progressCurrent));
     }
     private void resetFormToEndCompare() {
+        this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: ");
         this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(" ");
         this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(" ");
         this.parentFrame.getLBL_CompareInfo_ProgressSplit().setText(" ");
