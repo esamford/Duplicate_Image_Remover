@@ -21,7 +21,6 @@ public class CompareImages {
     BufferedImage[] imgBuffer = new BufferedImage[2];
     
     private boolean imagesAreEqualSize() {
-        System.out.println("Images are equal size: " + Boolean.toString(!(rawImgWidth[0] != rawImgWidth[1] || rawImgHeight[0] != rawImgHeight[1])));
         return !(rawImgWidth[0] != rawImgWidth[1] || rawImgHeight[0] != rawImgHeight[1]);
     }
     public boolean imagesAreProportional() {
@@ -30,7 +29,6 @@ public class CompareImages {
                        ((float) rawImgHeight[1] / rawImgWidth[1]);
         if (result < 0) { result *= -1; }
         
-        System.out.println("\tImages are proportional: " + Boolean.toString(result < roomForError));
         return result < roomForError;
     }
     private boolean firstImageIsLarger() {
@@ -48,14 +46,12 @@ public class CompareImages {
                 rawImgHeight[num] = reader.getHeight(0);
                 rawImgWidth[num] = reader.getWidth(0);
             }
-            System.out.println("\tGot the image height and width the fast way.");
         }
         catch (Exception ex) //If getting the image height and widht failed, try again using the slow method.
         {
             ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
             rawImgHeight[num] = imgIcon.getIconHeight();
             rawImgWidth[num] = imgIcon.getIconWidth();
-            System.out.println("\tUnable to get height and with the fast way, but did get it the slow way.");
         }
     }
     
@@ -214,7 +210,6 @@ public class CompareImages {
     }
     
     public BufferedImage getDifferenecs(CompareMethod methodOfComparison) {
-        System.out.println("=== GETTING IMAGE DIFFERENCES (" + methodOfComparison.name() + ") ===");
         BufferedImage returnImage;
         try
         {
@@ -255,21 +250,17 @@ public class CompareImages {
             }
             else //if (imagesAreProportional())
             {
-                System.out.println("\tImages were not the same size. Resizing images to get the difference image (" + methodOfComparison.toString() + ").");
                 CompareImages compare = new CompareImages();
                 
                 if (firstImageIsLarger()) {
-                    System.out.println("\t\tFirst image is larger.");
                     compare.setImage(resizeImageBuff(this.imgBuffer[0], this.imgBuffer[1].getWidth(), this.imgBuffer[1].getHeight()),
                             FileNum.FIRST);
                     compare.setImage(this.imgBuffer[1], FileNum.SECOND);
                 } else {
-                    System.out.println("\t\tSecond image is larger.");
                     compare.setImage(this.imgBuffer[0], FileNum.FIRST);
                     compare.setImage(resizeImageBuff(this.imgBuffer[1], this.imgBuffer[0].getWidth(), this.imgBuffer[0].getHeight()),
                             FileNum.SECOND);
                 }
-                System.out.println("\tGot the difference images after resizing the images.");
                 return compare.getDifferenecs(methodOfComparison);
             }
         } catch (Exception ex) {
@@ -280,8 +271,6 @@ public class CompareImages {
         return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     }
     public float getPercentSimilar(CompareMethod searchMethod) {
-        System.out.println("=== GETTING TWO IMAGE PERCENT SIMILAR (" + searchMethod.name() + ") ===");
-        
         float percentSimilar = 0;
         long counter, maxNum;
         try {
@@ -379,7 +368,6 @@ public class CompareImages {
                     compare.setImage(resizeImageBuff(this.imgBuffer[1], this.imgBuffer[0].getWidth(), this.imgBuffer[0].getHeight()),
                             FileNum.SECOND);
                 }
-                System.out.println("\tGot the percent similar after resizing the images.");
                 percentSimilar = compare.getPercentSimilar(searchMethod);
             }
             else
@@ -393,12 +381,9 @@ public class CompareImages {
             return -1;
         }
         
-        System.out.println("\tPercent similar: " + Float.toString(percentSimilar * 100) + "%");
         return percentSimilar;
     }
-    public float getPercentSimilar(CompareMethod searchMethod, javax.swing.JSlider percentRequired) {
-        System.out.println("=== GETTING MANY IMAGES PERCENT SIMILAR (" + searchMethod.name() + ") ===");
-        
+    public float getPercentSimilar(CompareMethod searchMethod, javax.swing.JSlider percentRequired) {        
         float percentSimilar = 0;
         long counter, maxNum;
         try {
@@ -416,11 +401,7 @@ public class CompareImages {
                         for (int yPos = 0; yPos < imgBuffer[0].getHeight(); yPos++)
                         {
                             if (((float) counter / maxNum) < ((float) percentRequired.getValue() / 100))
-                            {
-                                System.out.println("Images were not found to be similar enough. Exiting getPercentSimilar function early with 0%.");
-                                System.out.println("Exiting on line " + Integer.toString(yPos) + " / " + Integer.toString(imgBuffer[0].getHeight()));
-                                return 0;
-                            }
+                            { return 0; }
                             for (int xPos = 0; xPos < imgBuffer[0].getWidth(); xPos++)
                             {
                                 if (imgBuffer[0].getRGB(xPos, yPos) != imgBuffer[1].getRGB(xPos, yPos))
@@ -440,11 +421,7 @@ public class CompareImages {
                         for (int yPos = 0; yPos < imgBuffer[0].getHeight(); yPos++)
                         {
                             if (((float) counter / maxNum) < ((float) percentRequired.getValue() / 100))
-                            {
-                                System.out.println("Images were not found to be similar enough. Exiting getPercentSimilar function early with 0%.");
-                                System.out.println("Exiting on line " + Integer.toString(yPos) + " / " + Integer.toString(imgBuffer[0].getHeight()));
-                                return 0;
-                            }
+                            { return 0; }
                             for (int xPos = 0; xPos < imgBuffer[0].getWidth(); xPos++)
                             {
                                 pixColor[0] = getPixelColor(imgBuffer[0].getRGB(xPos, yPos));
@@ -473,7 +450,6 @@ public class CompareImages {
                     compare.setImage(resizeImageBuff(this.imgBuffer[1], this.imgBuffer[0].getWidth(), this.imgBuffer[0].getHeight()),
                             FileNum.SECOND);
                 }
-                System.out.println("Got the percent similar after resizing the images.");
                 percentSimilar = compare.getPercentSimilar(searchMethod, percentRequired);
             }
             else
@@ -487,7 +463,6 @@ public class CompareImages {
             return -1;
         }
         
-        System.out.println("\tPercent similar: " + Float.toString(percentSimilar * 100) + "%");
         return percentSimilar;
     }
 }
