@@ -207,25 +207,33 @@ public class CompareProcess implements Runnable
             int[] startNum = {0, 0};
             if (progressMax >= 1000)
             {
+                //I would like to calculate this with math to make it run faster, but this should work for now.
                 long userNum = askUserForStartNum(progressMax);
-                startNum[0] = (int) userNum / (allImageFiles.size() - 1);
-                startNum[1] = (int) userNum % (allImageFiles.size() - 1);
-                System.out.println("User-selected number: " + Long.toString(userNum)
-                                   + ", startNum[0] = " + Integer.toString(startNum[0])
-                                   + ", startNum[1] = " + Integer.toString(startNum[1])
-                                   + ", number of images = " + Integer.toString(allImageFiles.size()));
+                boolean exit = false;
+                for (int x = 0; x < allImageFiles.size() - 1; x++)
+                {
+                    if (exit) { break; }
+                    long adjustVal = 0;
+                    for (int y = x; y > 0; y--) { adjustVal += y; }
+                    for (int y = x + 1; y < allImageFiles.size(); y++)
+                    {
+                        if (exit) { break; }
+                        if (userNum == (x * (allImageFiles.size())) + y - x - adjustVal)
+                        {
+                            startNum[0] = x;
+                            startNum[1] = y;
+                            exit = true;
+                        }
+                    }
+                }
             }
-            
-            JOptionPane.showMessageDialog(parentFrame, "IMPORTANT: Fix the current progress counter. The calculations are wrong.");
-            
-            int TESTINT = 0;
             
             for (imgInt[0] = startNum[0]; imgInt[0] < allImageFiles.size() - 1; imgInt[0]++)
             {
                 if (stopThread) { break; }
                 
-                //int adjustVal = 0;
-                //for (int x = imgInt[0]; x > 0; x--) { adjustVal += x; }
+                int adjustVal = 0;
+                for (int x = imgInt[0]; x > 0; x--) { adjustVal += x; }
                 
                 this.targetFile[0] = allImageFiles.get((imgInt[0]));
                 if (!this.targetFile[0].exists())
@@ -258,29 +266,8 @@ public class CompareProcess implements Runnable
                             else
                             {
                                 try {
-                                    
-                                    progressCurrent = (imgInt[0] * (allImageFiles.size())) + imgInt[1] - imgInt[0];// - adjustVal;
+                                    progressCurrent = (imgInt[0] * (allImageFiles.size())) + imgInt[1] - imgInt[0] - adjustVal;
                                     updateProgress(progressCurrent);
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    if (progressCurrent - 1 != TESTINT)
-                                    {
-                                        System.out.println(String.format("%,d", progressCurrent) + "\t" + Integer.toString(imgInt[0]) + ", " + Integer.toString(imgInt[1]) + "\t\tTHIS VALUE IS NOT CORRECT!");
-                                    }
-                                    else
-                                    {
-                                        System.out.println(String.format("%,d", progressCurrent) + "\t" + Integer.toString(imgInt[0]) + ", " + Integer.toString(imgInt[1]));
-                                    }
-                                    TESTINT = progressCurrent;
-                                    
-                                    
-                                    
-                                    
-                                    
                                     
                                     compare.setImage(this.targetFile[1], CompareImages.FileNum.SECOND);
                                     

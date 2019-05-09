@@ -712,7 +712,7 @@ public class DIR_Window extends javax.swing.JFrame {
         SLDR_MinimumSimilarityThreshold.setPaintTicks(true);
         SLDR_MinimumSimilarityThreshold.setSnapToTicks(true);
         SLDR_MinimumSimilarityThreshold.setToolTipText("");
-        SLDR_MinimumSimilarityThreshold.setValue(100);
+        SLDR_MinimumSimilarityThreshold.setValue(90);
         SLDR_MinimumSimilarityThreshold.setFocusable(false);
         SLDR_MinimumSimilarityThreshold.setRequestFocusEnabled(false);
 
