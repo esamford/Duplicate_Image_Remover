@@ -421,6 +421,7 @@ public class DIR_Window extends javax.swing.JFrame {
 
         BTN_SIaC_Compare.setText("Compare");
         BTN_SIaC_Compare.setEnabled(false);
+        BTN_SIaC_Compare.setFocusable(false);
         BTN_SIaC_Compare.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTN_SIaC_CompareActionPerformed(evt);
