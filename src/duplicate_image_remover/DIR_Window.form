@@ -360,6 +360,7 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="LBL_CompareInfo_NumberOfFiles" alignment="1" max="32767" attributes="0"/>
                           <Component id="Filler_CompareInfo" alignment="1" max="32767" attributes="0"/>
                           <Component id="BTN_CompareInfo_ChangeImage2" alignment="1" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_IMG1Info" alignment="0" max="32767" attributes="0"/>
@@ -379,17 +380,18 @@
                           <Component id="LBL_CompareInfo_IMGFileSize2" alignment="0" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_IMGParentFolder2" alignment="0" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_IMGParentFolder1" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="LBL_CompareInfo_FileType2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="LBL_CompareInfo_FileType1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="LBL_CompareInfo_ComparisonDetails" alignment="0" max="32767" attributes="0"/>
+                          <Component id="LBL_CompareInfo_ComparisonType" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="LBL_CompareInfo_ProgressCurrent" min="-2" pref="125" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="LBL_CompareInfo_ProgressSplit" min="-2" pref="8" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="LBL_CompareInfo_ProgressMax" min="-2" pref="125" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="LBL_CompareInfo_NumberOfFiles" alignment="0" max="32767" attributes="0"/>
-                          <Component id="LBL_CompareInfo_FileType2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="LBL_CompareInfo_FileType1" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -398,59 +400,63 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="LBL_CompareInfo_ComparisonDetails" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="LBL_CompareInfo_ComparisonType" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_NumberOfFiles" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMG1Info" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMGName1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMGParentFolder1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMGFilePath1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_ImageSize1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMGFileSize1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_FileType1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMG2Info" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMGName2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMGParentFolder2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMGFilePath2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_ImageSize2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_IMGFileSize2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_FileType2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_Choice_DisplayPercentSimilar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Filler_CompareInfo" pref="85" max="32767" attributes="0"/>
+                      <Component id="Filler_CompareInfo" pref="52" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="BTN_CompareInfo_Skip" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="BTN_CompareInfo_ChangeImage1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="BTN_CompareInfo_ChangeImage2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="BTN_CompareInfo_Cancel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="LBL_CompareInfo_ProgressCurrent" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="LBL_CompareInfo_ProgressMax" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="LBL_CompareInfo_ProgressSplit" min="-2" pref="14" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JPRGSBR_Choice_TotalProgress" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Component id="JPRGSBR_Choice_TotalProgress" min="-2" pref="14" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -676,6 +682,19 @@
             <Component class="javax.swing.JLabel" name="LBL_CompareInfo_FileType1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="File type:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="LBL_CompareInfo_ComparisonDetails">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="11" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Comparison details:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="LBL_CompareInfo_ComparisonType">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Comparison type:"/>
               </Properties>
             </Component>
           </SubComponents>
