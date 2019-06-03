@@ -95,8 +95,48 @@ public class DIR_Window extends javax.swing.JFrame {
     public javax.swing.JLabel getLBL_CompareInfo_ImageSize2() {
         return this.LBL_CompareInfo_ImageSize2;
     }
-    public javax.swing.JLabel getLBL_CompareInfo_NumberOfFiles() {
-        return this.LBL_CompareInfo_NumberOfFiles;
+    public void setLBL_CompareInfo_NumberOfFilesInF1(int newFileCount) {
+        if (newFileCount != -1)
+        {
+            String numVal = String.format("%,d", newFileCount);
+            switch (CMBBX_SIaC_SearchType.getSelectedIndex())
+            {
+                case 0: //Two images
+                    //Break, because the label isn't shown in this comparison type.
+                    break;
+                case 1:
+                    LBL_CompareInfo_NumberOfFilesInF1.setText("Number of images: " + numVal);
+                    break;
+                case 2:
+                    LBL_CompareInfo_NumberOfFilesInF1.setText("Number of images in folder one: " + numVal);
+            }  
+        }
+        else
+        {
+            switch (CMBBX_SIaC_SearchType.getSelectedIndex())
+            {
+                case 0: //Two images
+                    //Break, because the label isn't shown in this comparison type.
+                    break;
+                case 1:
+                    LBL_CompareInfo_NumberOfFilesInF1.setText("Number of images: ");
+                    break;
+                case 2:
+                    LBL_CompareInfo_NumberOfFilesInF1.setText("Number of images in folder one: ");
+            }  
+        }
+        
+    }
+    public void setLBL_CompareInfo_NumberOfFilesInF2(int newFileCount) {
+        if (newFileCount != -1)
+        {
+            String numVal = String.format("%,d", newFileCount);
+            LBL_CompareInfo_NumberOfFilesInF2.setText("Number of images in folder two: " + numVal); 
+        }
+        else
+        {
+            LBL_CompareInfo_NumberOfFilesInF2.setText("Number of images in folder two: ");
+        }
     }
     public javax.swing.JLabel getLBL_CompareInfo_ProgressCurrent() {
         return this.LBL_CompareInfo_ProgressCurrent;
@@ -146,7 +186,7 @@ public class DIR_Window extends javax.swing.JFrame {
         
         clearDisplayedImages();
         clearCIFileInfo();
-        LBL_CompareInfo_NumberOfFiles.setText("Number of files: ");
+        LBL_CompareInfo_NumberOfFilesInF1.setText("Number of files: ");
         BTN_SIaC_Compare.setEnabled(false);
     }
     private void updateSIaCFolderInfoLabels() {
@@ -291,7 +331,8 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_SIaC_ImageCount2.setVisible(false);
         
         LBL_CompareInfo_ComparisonType.setText("Comparison type: Two images");
-        LBL_CompareInfo_NumberOfFiles.setVisible(false);
+        LBL_CompareInfo_NumberOfFilesInF1.setVisible(false);
+        LBL_CompareInfo_NumberOfFilesInF2.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -346,11 +387,12 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_CompareInfo_ProgressCurrent = new javax.swing.JLabel();
         LBL_CompareInfo_ProgressMax = new javax.swing.JLabel();
         LBL_CompareInfo_ProgressSplit = new javax.swing.JLabel();
-        LBL_CompareInfo_NumberOfFiles = new javax.swing.JLabel();
+        LBL_CompareInfo_NumberOfFilesInF1 = new javax.swing.JLabel();
         LBL_CompareInfo_FileType2 = new javax.swing.JLabel();
         LBL_CompareInfo_FileType1 = new javax.swing.JLabel();
         LBL_CompareInfo_ComparisonDetails = new javax.swing.JLabel();
         LBL_CompareInfo_ComparisonType = new javax.swing.JLabel();
+        LBL_CompareInfo_NumberOfFilesInF2 = new javax.swing.JLabel();
         PNL_Settings = new javax.swing.JPanel();
         SLDR_MinimumSimilarityThreshold = new javax.swing.JSlider();
         CHKBX_Settings_SoundNotifications = new javax.swing.JCheckBox();
@@ -608,7 +650,7 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_CompareInfo_ProgressSplit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LBL_CompareInfo_ProgressSplit.setText("/");
 
-        LBL_CompareInfo_NumberOfFiles.setText("Number of files: ");
+        LBL_CompareInfo_NumberOfFilesInF1.setText("Number of files in folder one: ");
 
         LBL_CompareInfo_FileType2.setText("File type:");
 
@@ -619,6 +661,8 @@ public class DIR_Window extends javax.swing.JFrame {
 
         LBL_CompareInfo_ComparisonType.setText("Comparison type:");
 
+        LBL_CompareInfo_NumberOfFilesInF2.setText("Number of files in folder two:");
+
         javax.swing.GroupLayout PNL_CompareInfoLayout = new javax.swing.GroupLayout(PNL_CompareInfo);
         PNL_CompareInfo.setLayout(PNL_CompareInfoLayout);
         PNL_CompareInfoLayout.setHorizontalGroup(
@@ -626,7 +670,7 @@ public class DIR_Window extends javax.swing.JFrame {
             .addGroup(PNL_CompareInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PNL_CompareInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LBL_CompareInfo_NumberOfFiles, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LBL_CompareInfo_NumberOfFilesInF1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Filler_CompareInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BTN_CompareInfo_ChangeImage2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LBL_CompareInfo_IMG1Info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -651,11 +695,14 @@ public class DIR_Window extends javax.swing.JFrame {
                     .addComponent(LBL_CompareInfo_ComparisonDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LBL_CompareInfo_ComparisonType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PNL_CompareInfoLayout.createSequentialGroup()
-                        .addComponent(LBL_CompareInfo_ProgressCurrent, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LBL_CompareInfo_ProgressSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LBL_CompareInfo_ProgressMax, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(PNL_CompareInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PNL_CompareInfoLayout.createSequentialGroup()
+                                .addComponent(LBL_CompareInfo_ProgressCurrent, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LBL_CompareInfo_ProgressSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LBL_CompareInfo_ProgressMax, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(LBL_CompareInfo_NumberOfFilesInF2))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -667,7 +714,9 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LBL_CompareInfo_ComparisonType)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LBL_CompareInfo_NumberOfFiles)
+                .addComponent(LBL_CompareInfo_NumberOfFilesInF1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LBL_CompareInfo_NumberOfFilesInF2)
                 .addGap(18, 18, 18)
                 .addComponent(LBL_CompareInfo_IMG1Info)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -699,7 +748,7 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(LBL_Choice_DisplayPercentSimilar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Filler_CompareInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(Filler_CompareInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BTN_CompareInfo_Skip)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -844,6 +893,9 @@ public class DIR_Window extends javax.swing.JFrame {
         
         System.out.println("Make sure to update the folder information labels on the CompareInfo page whenever you change the combobox! It's not finished yet.");
         
+        setLBL_CompareInfo_NumberOfFilesInF1(-1);
+        setLBL_CompareInfo_NumberOfFilesInF2(-1);
+        
         switch (CMBBX_SIaC_SearchType.getSelectedIndex())
         {
             case 0: //Compare two images
@@ -866,7 +918,7 @@ public class DIR_Window extends javax.swing.JFrame {
                 LBL_SIaC_ImageCount2.setVisible(false);
                 
                 LBL_CompareInfo_ComparisonType.setText("Comparison type: Two images");
-                LBL_CompareInfo_NumberOfFiles.setVisible(false);
+                LBL_CompareInfo_NumberOfFilesInF1.setVisible(false);
                 
                 break;
             case 1: //Compare all images in one folder
@@ -887,7 +939,7 @@ public class DIR_Window extends javax.swing.JFrame {
                 
                 
                 LBL_CompareInfo_ComparisonType.setText("Comparison type: Single folder");
-                LBL_CompareInfo_NumberOfFiles.setVisible(true);
+                LBL_CompareInfo_NumberOfFilesInF1.setVisible(true);
                 
                 
                 break;
@@ -913,8 +965,8 @@ public class DIR_Window extends javax.swing.JFrame {
                 
                 
                 LBL_CompareInfo_ComparisonType.setText("Comparison type: Two folders");
-                LBL_CompareInfo_NumberOfFiles.setVisible(true);
-                
+                LBL_CompareInfo_NumberOfFilesInF1.setVisible(true);
+                LBL_CompareInfo_NumberOfFilesInF2.setVisible(true);
         }
     }//GEN-LAST:event_CMBBX_SIaC_SearchTypeActionPerformed
     private void BTN_SIaC_Data1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_SIaC_Data1ActionPerformed
@@ -1130,7 +1182,8 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JLabel LBL_CompareInfo_IMGParentFolder2;
     private javax.swing.JLabel LBL_CompareInfo_ImageSize1;
     private javax.swing.JLabel LBL_CompareInfo_ImageSize2;
-    private javax.swing.JLabel LBL_CompareInfo_NumberOfFiles;
+    private javax.swing.JLabel LBL_CompareInfo_NumberOfFilesInF1;
+    private javax.swing.JLabel LBL_CompareInfo_NumberOfFilesInF2;
     private javax.swing.JLabel LBL_CompareInfo_ProgressCurrent;
     private javax.swing.JLabel LBL_CompareInfo_ProgressMax;
     private javax.swing.JLabel LBL_CompareInfo_ProgressSplit;

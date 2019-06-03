@@ -193,7 +193,7 @@ public class CompareProcess implements Runnable
         if (folder.isDirectory())
         {
             int numberOfFiles = countFilesInFolder(folder);
-            this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + String.format("%,d", numberOfFiles));
+            this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(numberOfFiles);
             
             int[] imgInt = new int[2];
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
@@ -240,7 +240,8 @@ public class CompareProcess implements Runnable
                 {
                     allImageFiles.remove(imgInt[0]--);
                     progressMax = getMaxProgressOneFolder(allImageFiles.size());
-                    updateNumFiles(--numberOfFiles, progressMax);
+                    updateProgressMaxFormInfo(progressMax);
+                    this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(--numberOfFiles);
                 }
                 else
                 {
@@ -261,7 +262,8 @@ public class CompareProcess implements Runnable
                             {
                                 allImageFiles.remove(imgInt[1]--);
                                 progressMax = getMaxProgressOneFolder(allImageFiles.size());
-                                updateNumFiles(--numberOfFiles, progressMax);
+                                updateProgressMaxFormInfo(progressMax);
+                                this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(--numberOfFiles);
                             }
                             else
                             {
@@ -282,14 +284,16 @@ public class CompareProcess implements Runnable
                                         {
                                             allImageFiles.remove(imgInt[0]--);
                                             progressMax = getMaxProgressOneFolder(allImageFiles.size());
-                                            updateNumFiles(--numberOfFiles, progressMax);
+                                            updateProgressMaxFormInfo(progressMax);
+                                            this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(--numberOfFiles);
                                             break;
                                         }
                                         else if (!this.targetFile[1].exists())
                                         {
                                             allImageFiles.remove(imgInt[1]--);
                                             progressMax = getMaxProgressOneFolder(allImageFiles.size());
-                                            updateNumFiles(--numberOfFiles, progressMax);
+                                            updateProgressMaxFormInfo(progressMax);
+                                            this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(--numberOfFiles);
                                         }
                                     }
                                 }
@@ -308,9 +312,11 @@ public class CompareProcess implements Runnable
     private void checkTwoFolders(File folderOne, File folderTwo) throws IOException {
         checkForCompareTwoFolders();
         
-        int numberOfFiles = countFilesInFolder(folderOne);
-        numberOfFiles += countFilesInFolder(folderTwo);
-        this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + String.format("%,d", numberOfFiles));
+        int[] numberOfFiles = new int[2];
+        numberOfFiles[0] = countFilesInFolder(folderOne);
+        numberOfFiles[1] = countFilesInFolder(folderTwo);
+        this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(numberOfFiles[0]);
+        this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(numberOfFiles[1]);
         
         if (folderOne.isDirectory() && folderTwo.isDirectory())
         {
@@ -341,7 +347,8 @@ public class CompareProcess implements Runnable
                 {
                     allFolderOneImages.remove(imgInt[0]--);
                     progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
-                    updateNumFiles(--numberOfFiles, progressMax);
+                    updateProgressMaxFormInfo(progressMax);
+                    this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(--numberOfFiles[0]);
                 }
                 else
                 {
@@ -363,7 +370,8 @@ public class CompareProcess implements Runnable
                             {
                                 allFolderTwoImages.remove(imgInt[1]--);
                                 progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
-                                updateNumFiles(--numberOfFiles, progressMax);
+                                updateProgressMaxFormInfo(progressMax);
+                                this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(--numberOfFiles[1]);
                             }
                             else
                             {
@@ -387,14 +395,16 @@ public class CompareProcess implements Runnable
                                             {
                                                 allFolderOneImages.remove(imgInt[0]--);
                                                 progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
-                                                updateNumFiles(--numberOfFiles, progressMax);
+                                                updateProgressMaxFormInfo(progressMax);
+                                                this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(--numberOfFiles[0]);
                                                 break;
                                             }
                                             else if (!this.targetFile[1].exists())
                                             {
                                                 allFolderTwoImages.remove(imgInt[1]--);
                                                 progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
-                                                updateNumFiles(--numberOfFiles, progressMax);
+                                                updateProgressMaxFormInfo(progressMax);
+                                                this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(--numberOfFiles[1]);
                                             }
                                         }
                                     }
@@ -521,17 +531,17 @@ public class CompareProcess implements Runnable
         this.parentFrame.getLBL_CompareInfo_ProgressSplit().setText("/");
         this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(String.format("%,d", progressMax));
     }
-    private void updateNumFiles(int numberOfFiles, int progressMax) {
+    private void updateProgressMaxFormInfo(int progressMax) {
         this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(progressMax);
         this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(String.format("%,d", progressMax));
-        this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: " + String.format("%,d", numberOfFiles));
     }
     private void updateProgress(int progressCurrent) {
         this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(progressCurrent);
         this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(String.format("%,d", progressCurrent));
     }
     private void resetFormToEndCompare() {
-        this.parentFrame.getLBL_CompareInfo_NumberOfFiles().setText("Number of files: ");
+        this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(-1);
+        this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(-1);
         this.parentFrame.getLBL_CompareInfo_ProgressCurrent().setText(" ");
         this.parentFrame.getLBL_CompareInfo_ProgressMax().setText(" ");
         this.parentFrame.getLBL_CompareInfo_ProgressSplit().setText(" ");
