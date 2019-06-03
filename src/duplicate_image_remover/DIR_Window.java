@@ -919,6 +919,7 @@ public class DIR_Window extends javax.swing.JFrame {
                 
                 LBL_CompareInfo_ComparisonType.setText("Comparison type: Two images");
                 LBL_CompareInfo_NumberOfFilesInF1.setVisible(false);
+                LBL_CompareInfo_NumberOfFilesInF2.setVisible(false);
                 
                 break;
             case 1: //Compare all images in one folder
@@ -937,10 +938,9 @@ public class DIR_Window extends javax.swing.JFrame {
                 LBL_SIaC_DataPath2.setVisible(false);
                 LBL_SIaC_ImageCount2.setVisible(false);
                 
-                
                 LBL_CompareInfo_ComparisonType.setText("Comparison type: Single folder");
                 LBL_CompareInfo_NumberOfFilesInF1.setVisible(true);
-                
+                LBL_CompareInfo_NumberOfFilesInF2.setVisible(false);
                 
                 break;
             case 2: //Compare all images between two folders
@@ -962,7 +962,6 @@ public class DIR_Window extends javax.swing.JFrame {
                 LBL_SIaC_DataName2.setVisible(true);
                 LBL_SIaC_DataPath2.setVisible(true);
                 LBL_SIaC_ImageCount2.setVisible(true);
-                
                 
                 LBL_CompareInfo_ComparisonType.setText("Comparison type: Two folders");
                 LBL_CompareInfo_NumberOfFilesInF1.setVisible(true);
