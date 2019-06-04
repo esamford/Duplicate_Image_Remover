@@ -385,18 +385,14 @@
                           <Component id="LBL_CompareInfo_ComparisonDetails" alignment="0" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_ComparisonType" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="LBL_CompareInfo_ProgressCurrent" min="-2" pref="125" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="LBL_CompareInfo_ProgressSplit" min="-2" pref="8" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="LBL_CompareInfo_ProgressMax" min="-2" pref="125" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="LBL_CompareInfo_NumberOfFilesInF2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="LBL_CompareInfo_ProgressCurrent" min="-2" pref="125" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="LBL_CompareInfo_ProgressSplit" min="-2" pref="8" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="LBL_CompareInfo_ProgressMax" min="-2" pref="125" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="LBL_CompareInfo_NumberOfFilesInF2" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -678,7 +674,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="LBL_CompareInfo_NumberOfFilesInF1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Number of files in folder one: "/>
+                <Property name="text" type="java.lang.String" value="Number of files: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="LBL_CompareInfo_FileType2">
@@ -706,7 +702,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="LBL_CompareInfo_NumberOfFilesInF2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Number of files in folder two:"/>
+                <Property name="text" type="java.lang.String" value="Number of files:"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -764,8 +760,9 @@
           <SubComponents>
             <Component class="javax.swing.JSlider" name="SLDR_MinimumSimilarityThreshold">
               <Properties>
-                <Property name="majorTickSpacing" type="int" value="10"/>
-                <Property name="minorTickSpacing" type="int" value="5"/>
+                <Property name="majorTickSpacing" type="int" value="5"/>
+                <Property name="minimum" type="int" value="75"/>
+                <Property name="minorTickSpacing" type="int" value="1"/>
                 <Property name="paintLabels" type="boolean" value="true"/>
                 <Property name="paintTicks" type="boolean" value="true"/>
                 <Property name="snapToTicks" type="boolean" value="true"/>
@@ -792,7 +789,7 @@
             </Component>
             <Component class="javax.swing.JCheckBox" name="CHKBX_Settings_RepeatNotificationSound">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Repeat sound every thirty seconds while waiting."/>
+                <Property name="text" type="java.lang.String" value="Repeat sound once per minute while waiting."/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
               <Events>

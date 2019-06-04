@@ -650,7 +650,7 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_CompareInfo_ProgressSplit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LBL_CompareInfo_ProgressSplit.setText("/");
 
-        LBL_CompareInfo_NumberOfFilesInF1.setText("Number of files in folder one: ");
+        LBL_CompareInfo_NumberOfFilesInF1.setText("Number of files: ");
 
         LBL_CompareInfo_FileType2.setText("File type:");
 
@@ -661,7 +661,7 @@ public class DIR_Window extends javax.swing.JFrame {
 
         LBL_CompareInfo_ComparisonType.setText("Comparison type:");
 
-        LBL_CompareInfo_NumberOfFilesInF2.setText("Number of files in folder two:");
+        LBL_CompareInfo_NumberOfFilesInF2.setText("Number of files:");
 
         javax.swing.GroupLayout PNL_CompareInfoLayout = new javax.swing.GroupLayout(PNL_CompareInfo);
         PNL_CompareInfo.setLayout(PNL_CompareInfoLayout);
@@ -695,15 +695,13 @@ public class DIR_Window extends javax.swing.JFrame {
                     .addComponent(LBL_CompareInfo_ComparisonDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LBL_CompareInfo_ComparisonType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PNL_CompareInfoLayout.createSequentialGroup()
-                        .addGroup(PNL_CompareInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PNL_CompareInfoLayout.createSequentialGroup()
-                                .addComponent(LBL_CompareInfo_ProgressCurrent, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LBL_CompareInfo_ProgressSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(LBL_CompareInfo_ProgressMax, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(LBL_CompareInfo_NumberOfFilesInF2))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(LBL_CompareInfo_ProgressCurrent, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LBL_CompareInfo_ProgressSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LBL_CompareInfo_ProgressMax, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(LBL_CompareInfo_NumberOfFilesInF2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         PNL_CompareInfoLayout.setVerticalGroup(
@@ -772,8 +770,9 @@ public class DIR_Window extends javax.swing.JFrame {
 
         PNL_Settings.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        SLDR_MinimumSimilarityThreshold.setMajorTickSpacing(10);
-        SLDR_MinimumSimilarityThreshold.setMinorTickSpacing(5);
+        SLDR_MinimumSimilarityThreshold.setMajorTickSpacing(5);
+        SLDR_MinimumSimilarityThreshold.setMinimum(75);
+        SLDR_MinimumSimilarityThreshold.setMinorTickSpacing(1);
         SLDR_MinimumSimilarityThreshold.setPaintLabels(true);
         SLDR_MinimumSimilarityThreshold.setPaintTicks(true);
         SLDR_MinimumSimilarityThreshold.setSnapToTicks(true);
@@ -793,7 +792,7 @@ public class DIR_Window extends javax.swing.JFrame {
 
         jLabel1.setText("Minimum percent similarity required for manual review:");
 
-        CHKBX_Settings_RepeatNotificationSound.setText("Repeat sound every thirty seconds while waiting.");
+        CHKBX_Settings_RepeatNotificationSound.setText("Repeat sound once per minute while waiting.");
         CHKBX_Settings_RepeatNotificationSound.setFocusable(false);
         CHKBX_Settings_RepeatNotificationSound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

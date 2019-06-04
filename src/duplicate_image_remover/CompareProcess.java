@@ -126,12 +126,12 @@ public class CompareProcess implements Runnable
         if (this.parentFrame.getCHKBX_Settings_SoundNotifications().isSelected())
         { Toolkit.getDefaultToolkit().beep(); }
         waitingForUser = true;
-        int timeWaited = 0, sleepTime = 500;
+        int timeWaited = 0, sleepTime = 500, notificationSeconds = 60;
         long startTime = System.currentTimeMillis();
         try {
             while (waitingForUser) {
                 Thread.sleep(sleepTime);
-                if (this.parentFrame.getCHKBX_Settings_RepeatNotificationSound().isSelected() && timeWaited * sleepTime >= 30000)
+                if (this.parentFrame.getCHKBX_Settings_RepeatNotificationSound().isSelected() && timeWaited * sleepTime >= notificationSeconds * 1000)
                 {
                     Toolkit.getDefaultToolkit().beep();
                     timeWaited = 0;
