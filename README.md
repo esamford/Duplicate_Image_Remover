@@ -16,9 +16,8 @@ Differences" and "Subtracted Differences" tabs on the right.
 Displays how similar the two images are in a percentage format.
 
 # Limitations
-The program cannot match an image with a cropped, rotated, or otherwise distorted version of itself. If, 
-and only if, the images look the same or similar to a human, the program will notify the user of a 
-potential duplicate.
+The program cannot match an image with a cropped, rotated, or otherwise highly distorted version of itself.
+If, and only if, the images look the similar to a human, the program will notify the user of a potential duplicate.
 
 If you are working with a lot of images that have the same background color, the program may come up with
 a lot of false positives and display images that are not supposed to be paired. This is because the 
