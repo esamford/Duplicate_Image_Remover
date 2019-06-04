@@ -7,16 +7,16 @@ one to remove, if either.
 Displays information about each image, including the name of the image, the image path, the image
 dimensions, the amount of storage space used by the image, and the file extension.
 
-Shows where differences between the two matching images are found, both by highlighting pixels 
-that are not exactly the same and by subtracting the images from each other. This can be seen in the "Pixel
-Differences" and "Subtracted Differences" tabs on the right.
+Shows where differences between the two matching images are found, both by highlighting pixels that are not 
+exactly the same and by subtracting the images from each other. These can be seen in the "Pixel Differences" 
+and "Subtracted Differences" tabs on the right.
 
-Has the option to make a noise to notify the user when a potential match is found, and another option to
-periodically repeat this notification noise if the user is AFK and wishes to hear it when they return.
+The program can compare images of different sizes with each other.
 
 Displays how similar the two images are in a percentage format.
 
-Can compare images of different sizes with each other.
+Has an option to beep when a potential match is found to notify the user, and another option to
+periodically repeat this notification noise if the user is AFK and wishes to hear it when they return.
 
 # Limitations
 The program cannot match an image with a cropped, rotated, or otherwise highly distorted version of itself.
