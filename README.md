@@ -15,6 +15,9 @@ Differences" and "Subtracted Differences" tabs on the right.
 
 Displays how similar the two images are in a percentage format.
 
+Has the option to make a noise to notify the user when a potential match is found, and another option to
+periodically repeat this notification noise if the user is AFK and wishes to hear it when they return.
+
 # Limitations
 The program cannot match an image with a cropped, rotated, or otherwise highly distorted version of itself.
 If, and only if, the images look the similar to a human, the program will notify the user of a potential duplicate.
