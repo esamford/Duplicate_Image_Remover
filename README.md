@@ -11,29 +11,30 @@ Shows where differences between the two matching images are found, both by highl
 exactly the same and by subtracting the images from each other. These can be seen in the "Pixel Differences" 
 and "Subtracted Differences" tabs on the right.
 
-The program can compare images of different sizes with each other.
+The program can compare images of different sizes with each other, but only as long as they both have the same
+height/width ratio.
 
-Displays how similar the two images are in a percentage format.
+Displays how similar the two images are in a percentage.
 
-Has an option to beep when a potential match is found to notify the user, and another option to
-periodically repeat this notification noise if the user is AFK and wishes to hear it when they return.
+Has an option to notify the user when a potential match is found with a beeping noise, and another option to
+periodically repeat this notification sound if the user is AFK and wishes to hear it when they return.
 
 # Limitations
-The program cannot match an image with a cropped, rotated, or otherwise highly distorted version of itself.
+The program cannot match an image with a cropped, rotated, or otherwise distorted version of itself.
 If, and only if, the images look the similar to a human, the program will notify the user of a potential duplicate.
 
 If you are working with a lot of images that have the same background color, the program may come up with
 a lot of false positives and display images that are not supposed to be paired. This is because the 
-majority of the image has the same color in it, which means a higher percentage of similarity. The best
+majority of the image has the same color in it, which results in a higher percentage of similarity. The best
 solution to this is to increase the percent similarity threshold, which should reduce the number of false
 positives.
 
 The user cannot set the percent similarity threshold to 100% if they want the program to compare images of
 different sizes. The reason for this is that the program must resize these images (not the originals, just 
-a copy of them) so that they have the same height and width before it can compare them. The program cannot
-scale these images perfectly without distorting the image slightly. These distortions are too small to notice,
-but they do reduce the percentage of similarity between the images so that they are always below 100%, which
-is why they do not get shown to the user.
+a copy of them) so that they have the same height and width before it can compare them pixel-by-pixel.
+Unfortunately, the program cannot scale these images without distorting the image slightly. These distortions
+are too small to notice, but they do reduce the percentage of similarity between the images so that they are
+always below 100%, which is why they do not get shown to the user.
 
 # Requirements
 ...
