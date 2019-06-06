@@ -21,7 +21,7 @@ periodically repeat this notification sound if the user is AFK and wishes to hea
 
 # Limitations
 The program cannot match an image with a cropped, rotated, or otherwise distorted version of itself.
-If, and only if, the images look the similar to a human, the program will notify the user of a potential duplicate.
+If, and only if, the images look similar to a human, the program will notify the user of a potential duplicate.
 
 If you are working with a lot of images that have the same background color, the program may come up with
 a lot of false positives and display images that are not supposed to be paired. This is because the 
@@ -39,7 +39,7 @@ always below 100%, which is why they do not get shown to the user at a 100% simi
 The image in the Pixel Differences tab on the right does not accurately show pixel differences when the program
 is comparing images of different sizes. This is because of the previously mentioned resizing issue, where 
 resizing the image slightly changes the copy the program is comparing. This is enough to make the pixels between 
-the two images different from each other, resulting in the moslty-white image the user sees. If this happens,
+the two images different from each other, resulting in the mostly-white image the user sees. If this happens,
 just use the image generated on the Subtracted Differences tab instead.
 
 # Requirements
