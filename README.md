@@ -1,7 +1,7 @@
 # Duplicate Image Remover
-Designed to search folders for duplicate images and notify the user when a potential duplicate has been found. 
-The user will then be able to see details about each image, as well as the images themselves, and choose which 
-one to remove, if either.
+This program is designed to search folders for duplicate images and notify the user when a potential duplicate 
+has been found. The user will then be able to see details about each image, as well as the images themselves, 
+and choose which one to remove, if either.
 
 # Features
 Displays information about each image, including the name of the image, the image path, the image
