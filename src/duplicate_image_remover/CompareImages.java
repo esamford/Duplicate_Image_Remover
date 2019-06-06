@@ -47,7 +47,7 @@ public class CompareImages {
                 rawImgWidth[num] = reader.getWidth(0);
             }
         }
-        catch (Exception ex) //If getting the image height and widht failed, try again using the slow method.
+        catch (Exception ex) //If getting the image height and width failed, try again using the slow, more reliable method.
         {
             ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
             rawImgHeight[num] = imgIcon.getIconHeight();
@@ -71,13 +71,16 @@ public class CompareImages {
         if (blue < 0) { blue *= -1; }
         return new Color(red, green, blue);
     }
-    private Image getScaledImage(Image srcImg, int w, int h){ //https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
-        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D graphics = resizedImg.createGraphics();
+    private Image getScaledImage(Image srcImg, int w, int h) {
+        //This function's code is by user Suken Shah on StackOverflow.
+        //https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
         
-        graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics.drawImage(srcImg, 0, 0, w, h, null);
-        graphics.dispose();
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+        
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
         
         return resizedImg;
     } 
@@ -151,7 +154,6 @@ public class CompareImages {
             setHeight = (int) Math.round(tempHeight);
             imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
         }
-        
         
         BufferedImage newIMGBuff = new BufferedImage(setWidth, setHeight, BufferedImage.TYPE_INT_RGB);
         Graphics convert = newIMGBuff.createGraphics();
@@ -282,40 +284,6 @@ public class CompareImages {
             
             if (imagesAreEqualSize())
             {
-                
-
-//                switch (searchMethod) {
-//                    case BASIC:
-//                        counter = 0;
-//                        for (int yPos = 0; yPos < imgBuffer[0].getHeight(); yPos++) {
-//                            for (int xPos = 0; xPos < imgBuffer[0].getWidth(); xPos++) {
-//                                if (imgBuffer[0].getRGB(xPos, yPos) == imgBuffer[1].getRGB(xPos, yPos)) {
-//                                    counter++;
-//                                }
-//                            }
-//                        }
-//                        percentSimilar = (float) counter / (imgBuffer[0].getWidth() * imgBuffer[0].getHeight());
-//                        break;
-//                    case SUBTRACT_COLOR:
-//                        long maxNum = 3 * 255 * imgBuffer[0].getWidth() * imgBuffer[0].getHeight();
-//                        counter = maxNum;
-//                        Color[] pixColor = new Color[2];
-//                        Color subtractColor;
-//                        for (int yPos = 0; yPos < imgBuffer[0].getHeight(); yPos++) {
-//                            for (int xPos = 0; xPos < imgBuffer[0].getWidth(); xPos++) {
-//                                pixColor[0] = getPixelColor(imgBuffer[0].getRGB(xPos, yPos));
-//                                pixColor[1] = getPixelColor(imgBuffer[1].getRGB(xPos, yPos));
-//
-//                                subtractColor = getSubtractedColor(pixColor[0], pixColor[1]);
-//
-//                                counter -= subtractColor.getRed();
-//                                counter -= subtractColor.getGreen();
-//                                counter -= subtractColor.getBlue();
-//                            }
-//                        }
-//
-//                        percentSimilar = (float) counter / maxNum;
-//                }
                 switch (searchMethod) {
                     case BASIC:
                         maxNum = (imgBuffer[0].getWidth() * imgBuffer[0].getHeight());
