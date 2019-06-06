@@ -774,7 +774,7 @@ public class CompareProcess implements Runnable
                 message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
                 message += "\nTotal bytes freed: " + String.format("%,d", totalBytesRemoved);
                 
-                JOptionPane.showMessageDialog(this.parentFrame, message, "Compare Details", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this.parentFrame, message, "Details", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         else { System.out.println("Parent frame is null!"); }

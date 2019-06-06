@@ -730,7 +730,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="SLDR_MinimumSimilarityThreshold" alignment="1" min="-2" pref="271" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
+                          <Component id="LBL_Settings_SimilarityThresholdInstructionLabel" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="CHKBX_Settings_SoundNotifications" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="CHKBX_Settings_RepeatNotificationSound" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="CHKBX_Settings_ShowCompareDetails" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
@@ -743,7 +743,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="LBL_Settings_SimilarityThresholdInstructionLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="SLDR_MinimumSimilarityThreshold" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -782,7 +782,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CHKBX_Settings_SoundNotificationsActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel1">
+            <Component class="javax.swing.JLabel" name="LBL_Settings_SimilarityThresholdInstructionLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Minimum percent similarity required for manual review:"/>
               </Properties>

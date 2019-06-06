@@ -396,7 +396,7 @@ public class DIR_Window extends javax.swing.JFrame {
         PNL_Settings = new javax.swing.JPanel();
         SLDR_MinimumSimilarityThreshold = new javax.swing.JSlider();
         CHKBX_Settings_SoundNotifications = new javax.swing.JCheckBox();
-        jLabel1 = new javax.swing.JLabel();
+        LBL_Settings_SimilarityThresholdInstructionLabel = new javax.swing.JLabel();
         CHKBX_Settings_RepeatNotificationSound = new javax.swing.JCheckBox();
         CHKBX_Settings_ShowCompareDetails = new javax.swing.JCheckBox();
 
@@ -790,7 +790,7 @@ public class DIR_Window extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Minimum percent similarity required for manual review:");
+        LBL_Settings_SimilarityThresholdInstructionLabel.setText("Minimum percent similarity required for manual review:");
 
         CHKBX_Settings_RepeatNotificationSound.setText("Repeat sound once per minute while waiting.");
         CHKBX_Settings_RepeatNotificationSound.setFocusable(false);
@@ -812,7 +812,7 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PNL_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(SLDR_MinimumSimilarityThreshold, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LBL_Settings_SimilarityThresholdInstructionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CHKBX_Settings_SoundNotifications, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CHKBX_Settings_RepeatNotificationSound, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CHKBX_Settings_ShowCompareDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -822,7 +822,7 @@ public class DIR_Window extends javax.swing.JFrame {
             PNL_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PNL_SettingsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(LBL_Settings_SimilarityThresholdInstructionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SLDR_MinimumSimilarityThreshold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1197,6 +1197,7 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JLabel LBL_SIaC_DataPath2;
     private javax.swing.JLabel LBL_SIaC_ImageCount1;
     private javax.swing.JLabel LBL_SIaC_ImageCount2;
+    private javax.swing.JLabel LBL_Settings_SimilarityThresholdInstructionLabel;
     private javax.swing.JPanel PNL_CompareInfo;
     private javax.swing.JPanel PNL_Settings;
     private javax.swing.JScrollPane SCRLPN_HighlightedDifferences;
@@ -1207,6 +1208,5 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JSlider SLDR_MinimumSimilarityThreshold;
     private javax.swing.JTabbedPane TBDPN_Images;
     private javax.swing.JTabbedPane TBDPN_UserInput;
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
