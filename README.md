@@ -4,8 +4,8 @@ has been found. The user will then be able to see details about each image, as w
 and choose which one to remove, if either.
 
 # Features
-Displays information about each potential duplicate, including the name of the image, the image path, the 
-image dimensions, the amount of storage space used by the image, and the file extension.
+Displays information about each potential duplicate, including the name of each image, the image paths, the 
+image dimensions, the amount of storage space used by each image, and the file extensions.
 
 Shows where differences between the two matching images are found, both by highlighting pixels that are not 
 exactly the same and by subtracting the images from each other. These can be seen in the "Pixel Differences" 
