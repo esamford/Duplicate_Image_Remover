@@ -37,7 +37,7 @@ distortions are too small to notice, but they do reduce the percentage of simila
 they are always below 100%, which is why they do not get shown to the user at a 100% similarity threshold.
 
 The image in the Pixel Differences tab on the right does not accurately show pixel differences when the program
-is comparing images of different sizes. This is because of the previously mentioned resizing issue, where 
+is comparing two images of different sizes. This is because of the previously mentioned resizing issue, where 
 resizing the image slightly changes the copy the program is comparing. This is enough to make the pixels between 
 the two images different from each other, resulting in the mostly-white image the user sees. If this happens,
 just use the image generated on the Subtracted Differences tab instead.
