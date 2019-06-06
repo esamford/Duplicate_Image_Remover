@@ -34,7 +34,7 @@ different sizes. The reason for this is that the program must resize these image
 a copy of them) so that they have the same height and width before it can compare them pixel-by-pixel.
 Unfortunately, the program cannot scale these images without distorting the image slightly. These distortions
 are too small to notice, but they do reduce the percentage of similarity between the images so that they are
-always below 100%, which is why they do not get shown to the user.
+always below 100%, which is why they do not get shown to the user at a 100% similarity threshold.
 
 The image in the Pixel Differences tab on the right does not accurately show pixel differences when the program
 is comparing images of different sizes. This is because of the previously mentioned resizing issue, where 
