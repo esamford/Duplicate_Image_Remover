@@ -116,6 +116,7 @@ public class CompareImages {
         if (!imgFile.exists()) { throw new IOException("The image file provided does not exist.")}
         if (!isValidExtension(imgFile)) { throw new IOException("The file provided to the 'importImage' function is not valid."); }
         
+        ///Check this spot to see if the imgIcon failed to correctly import a large image.
         ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
         double tempHeight = imgIcon.getIconHeight(), tempWidth = imgIcon.getIconWidth();
         int setWidth = (int)tempWidth, setHeight = (int) tempHeight;
@@ -128,11 +129,15 @@ public class CompareImages {
             tempWidth = Math.sqrt(maxPixCount/sizeRatio);
             tempHeight = (tempWidth * sizeRatio);
             
+            /*
+            I don't think this is necessary, since I don't think it will ever be 0 or below.
             if (tempWidth <= 0 || tempHeight <= 0)
             {
                 tempWidth = imgIcon.getIconWidth();
                 tempHeight = imgIcon.getIconHeight();
             }
+            */
+            
             setWidth = (int) Math.round(tempWidth);
             setHeight = (int) Math.round(tempHeight);
             imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
@@ -146,16 +151,21 @@ public class CompareImages {
             tempWidth = Math.sqrt(minPixCount/sizeRatio);
             tempHeight = (tempWidth * sizeRatio);
             
+            /*
+            I don't think this is necessary, since I don't think it will ever be 0 or below.
             if (tempWidth <= 0 || tempHeight <= 0)
             {
                 tempWidth = imgIcon.getIconWidth();
                 tempHeight = imgIcon.getIconHeight();
             }
+            */
+            
             setWidth = (int) Math.round(tempWidth);
             setHeight = (int) Math.round(tempHeight);
             imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
         }
         
+        //I should also check here. Maybe it's just not being converted to a BufferedImage correctly?
         BufferedImage newIMGBuff = new BufferedImage(setWidth, setHeight, BufferedImage.TYPE_INT_RGB);
         Graphics convert = newIMGBuff.createGraphics();
         imgIcon.paintIcon(null, convert, 0, 0);
