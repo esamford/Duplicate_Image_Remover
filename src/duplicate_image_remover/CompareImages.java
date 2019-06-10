@@ -113,6 +113,7 @@ public class CompareImages {
     public double getHeightWidthRatio(double height, double width) { return height / width; }
     
     public BufferedImage importImage(File imgFile) throws IOException {
+        if (!imgFile.exists()) { throw new IOException("The image file provided does not exist.")}
         if (!isValidExtension(imgFile)) { throw new IOException("The file provided to the 'importImage' function is not valid."); }
         
         ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
@@ -159,6 +160,17 @@ public class CompareImages {
         Graphics convert = newIMGBuff.createGraphics();
         imgIcon.paintIcon(null, convert, 0, 0);
         convert.dispose();
+        
+        /*
+            I could check to see if the image is 100% pure black here and throw an error if it is. This
+            would solve the problem I'm having with extremely large images being imported as black images.
+            However, if I do this, any pure black image will be ignored, which is something I don't want.
+            Maybe I can take the original size into consideration when deciding whether or not to throw
+            an error?
+            
+            I should make this my last resort, and try to find another, more acceptable solution elsewhere.
+        */ 
+        
         
         return newIMGBuff;
    }
