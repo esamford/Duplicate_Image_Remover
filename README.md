@@ -7,7 +7,7 @@ and choose which one to remove, if either.
 * When a potential match has been found...
     * The program displays information about each potential duplicate, including the name of each image, the 
     image paths, the image dimensions, the amount of storage space used by each image, and the file extensions.
-    * The program shows where differences between the two matching images are found, both by highlighting pixels 
+    * The program shows where differences between the two matching images are, both by highlighting pixels 
     that are not exactly the same (can be seen on the "Pixel Differences" tab) and by subtracting the images 
     from each other (can be seen on the "Subtracted Differences" tab).
     * Displays how similar the two images are in a percentage.
