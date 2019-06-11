@@ -113,7 +113,7 @@ public class CompareImages {
     public double getHeightWidthRatio(double height, double width) { return height / width; }
     
     public BufferedImage importImage(File imgFile) throws IOException {
-        if (!imgFile.exists()) { throw new IOException("The image file provided does not exist.")}
+        if (!imgFile.exists()) { throw new IOException("The image file provided does not exist."); }
         if (!isValidExtension(imgFile)) { throw new IOException("The file provided to the 'importImage' function is not valid."); }
         
         ///Check this spot to see if the imgIcon failed to correctly import a large image.
