@@ -12,13 +12,13 @@ as well as the images themselves, and choose which one to remove, if either.
     (can be seen on the "Subtracted Differences" tab).
     * Displays how similar the two images are in a percentage form.
 
-* **Three different options to choose from when deciding how many images to check...
-    * **Two images: Choose two individual images and compare them. Note: The similarity threshold slider on the 
-    **Settings page will be ignored here.
-    * **One folder: Choose a folder with the images you would like to compare, and all possible combinations of
-    **images in that folder will be compared.
-    * **Two folders: Choose two different folders containing images, and all images in the first folder will be
-    **compared with all images in the second.
+* **Three different options to choose from when deciding how many images to check...**
+    * **Two images: Choose two individual images and compare them. Note: The similarity threshold slider on the **
+    **Settings page will be ignored here.**
+    * **One folder: Choose a folder with the images you would like to compare, and all possible combinations of**
+    **images in that folder will be compared.**
+    * **Two folders: Choose two different folders containing images, and all images in the first folder will be**
+    **compared with all images in the second.**
 
 * The program can compare images of different sizes with each other, but only as long as they both have the same
 height/width ratio.
