@@ -27,6 +27,8 @@ height/width ratio.
 periodically repeat this notification sound if the user is AFK and wishes to hear it when they return. This can be
 helpful when the user wishes to have other tabs open while the program is running.
 
+* When choosing to compare images in folders, there is an option to include all images in subfolders as well.
+
 ## Limitations ##
 * When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. Any images deleted
 using this program will skip the Recycle Bin and be deleted *permenantly!*
