@@ -12,11 +12,12 @@ as well as the images themselves, and choose which one to remove, if either.
     (can be seen on the "Subtracted Differences" tab).
     * Displays how similar the two images are in a percentage form.
 
-* Three different options to choose from when deciding how many images to check...**
-    * Two images: Choose two individual images and compare them. (The similarity threshold slider on the Settings
-    page will be ignored here.)
-    * One folder: Choose a folder with the images you would like to compare, and all possible combinations of
-    images in that folder will be compared with each other.
+* Three different options to choose from when deciding how many images to check...
+    * Two images: Choose two individual images and compare them. (Please note that since the user wants to compare 
+    these two specific images, the similarity threshold slider will always be ignored, which means that the program
+    will act as though the images are similar even when they are not.)
+    * One folder: Choose a folder with the images you would like to check, and all possible combinations of
+    images in that folder will be compared.
     * Two folders: Choose two different folders containing images, and each image in the first folder will be
     compared with all images in the second.
 
