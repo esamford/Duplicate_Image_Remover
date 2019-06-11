@@ -4,25 +4,24 @@ has been found. The user will then be able to see details about each image, as w
 and choose which one to remove, if either.
 
 ## Features ##
-* Displays information about each potential duplicate, including the name of each image, the image paths, the 
-image dimensions, the amount of storage space used by each image, and the file extensions.
-
-* Shows where differences between the two matching images are found, both by highlighting pixels that are not 
-exactly the same and by subtracting the images from each other. These can be seen in the "Pixel Differences" 
-and "Subtracted Differences" tabs on the right.
+* When a potential match has been found...
+    * The program displays information about each potential duplicate, including the name of each image, the 
+    image paths, the image dimensions, the amount of storage space used by each image, and the file extensions.
+    * The program shows where differences between the two matching images are found, both by highlighting pixels 
+    that are not exactly the same and by subtracting the images from each other. These can be seen in the 
+    "Pixel Differences" and "Subtracted Differences" tabs on the right.
+    * Displays how similar the two images are in a percentage.
 
 * The program can compare images of different sizes with each other, but only as long as they both have the same
 height/width ratio.
-
-* Displays how similar the two images are in a percentage.
 
 * Has an option to notify the user when a potential match is found with a beeping noise, and another option to
 periodically repeat this notification sound if the user is AFK and wishes to hear it when they return. This can
 be helpful when the user wishes to have other tabs open while the program is running.
 
 ## Limitations ##
-* The program cannot match an image with a cropped, rotated, or otherwise distorted version of itself.
-If, and only if, the images look similar to a human, the program will notify the user of a potential duplicate.
+* The program cannot match an image with a cropped, rotated, or otherwise highly distorted version of itself.
+Most-likely, the program will think these are two unique images and will not mark them as potential duplicates.
 
 * If you are working with a lot of images that have the same background color, the program may come up with
 a lot of false positives and display images that are not supposed to be paired. This is because the 
@@ -40,8 +39,8 @@ they are always below 100%, which is why they do not get shown to the user at a 
 * The image in the Pixel Differences tab on the right does not accurately show pixel differences when the program
 is comparing two images of different sizes. This is because of the previously mentioned resizing issue, where 
 resizing the image slightly changes the copy the program is comparing. This is enough to make the pixels between 
-the two images different from each other, resulting in the mostly-white image the user sees. If this happens,
-just use the image generated on the Subtracted Differences tab instead.
+the two images unique, resulting in the mostly-white image the user sees. If this happens, just use the image 
+generated on the Subtracted Differences tab instead, since it is less effected by this issue.
 
 ## Requirements ##
 ...
