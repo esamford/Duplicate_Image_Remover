@@ -20,7 +20,7 @@ periodically repeat this notification sound if the user is AFK and wishes to hea
 be helpful when the user wishes to have other tabs open while the program is running.
 
 ## Limitations ##
-* The program cannot match an image with a cropped, rotated, or otherwise highly distorted version of itself.
+* The program cannot match an image with a cropped, rotated, or otherwise highly edited version of itself.
 Most-likely, the program will think these are two unique images and will not mark them as potential duplicates.
 
 * If you are working with a lot of images that have the same background color, the program may come up with
@@ -32,15 +32,18 @@ positives.
 * The user cannot set the percent similarity threshold to 100% if they want the program to compare images of
 different sizes. The reason for this is that the program must resize these images (not the originals, just 
 a copy of them) so that they have the same height and width before it can compare them pixel-by-pixel.
-Unfortunately, the program cannot scale these images without distorting the image slightly. Sometimes these
-distortions are too small to notice, but they do reduce the percentage of similarity between the images so that
-they are always below 100%, which is why they do not get shown to the user at a 100% similarity threshold.
+Unfortunately, the program cannot scale these images without distorting the image slightly. Most of the time
+these distortions are too small to notice, but they do reduce the percentage of similarity between the images so
+that they are below 100%, which is why the duplicate does not get shown to the user at a 100% similarity threshold.
 
 * The image in the Pixel Differences tab on the right does not accurately show pixel differences when the program
 is comparing two images of different sizes. This is because of the previously mentioned resizing issue, where 
 resizing the image slightly changes the copy the program is comparing. This is enough to make the pixels between 
 the two images unique, resulting in the mostly-white image the user sees. If this happens, just use the image 
 generated on the Subtracted Differences tab instead, since it is less effected by this issue.
+
+* When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. Any images deleted
+using this program will skip the Recycle Bin and be deleted *permenantly*!
 
 ## Requirements ##
 ...
