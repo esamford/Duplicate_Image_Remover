@@ -33,7 +33,7 @@ public class DIR_Window extends javax.swing.JFrame {
         return this.BTN_CompareInfo_Skip;
     }
     public javax.swing.JCheckBox getCHKBX_SIaC_IncludeSubfolders() {
-        return this.CHKBX_SIaC_IncludeSubfolders;
+        return this.CHKBX_SIaC_IncludeSubfoldersInFolder1;
     }
     public javax.swing.JCheckBox getCHKBX_Settings_RepeatNotificationSound() {
         return this.CHKBX_Settings_RepeatNotificationSound;
@@ -167,8 +167,8 @@ public class DIR_Window extends javax.swing.JFrame {
     }
     public boolean getIncludeSubfolders() {
         System.out.println("Getting boolean for includeSubfolders: ");
-        System.out.println(this.CHKBX_SIaC_IncludeSubfolders == null);
-        return this.CHKBX_SIaC_IncludeSubfolders.isSelected();
+        System.out.println(this.CHKBX_SIaC_IncludeSubfoldersInFolder1 == null);
+        return this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected();
     }
     
     // === === === FUNCTIONS === === ===
@@ -220,7 +220,7 @@ public class DIR_Window extends javax.swing.JFrame {
                     UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
                     countFiles.setLabel(LBL_SIaC_ImageCount1);
                     countFiles.setFolder(targetFolder[0]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfolders.isSelected());
+                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
                     countFiles.setPrefix("Number of images: ");
                     new Thread(countFiles).start();
                 }
@@ -237,7 +237,7 @@ public class DIR_Window extends javax.swing.JFrame {
                     UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
                     countFiles.setLabel(LBL_SIaC_ImageCount1);
                     countFiles.setFolder(targetFolder[0]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfolders.isSelected());
+                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
                     countFiles.setPrefix("Number of images: ");
                     new Thread(countFiles).start();
                 }
@@ -252,7 +252,7 @@ public class DIR_Window extends javax.swing.JFrame {
                     UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
                     countFiles.setLabel(LBL_SIaC_ImageCount2);
                     countFiles.setFolder(targetFolder[1]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfolders.isSelected());
+                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
                     countFiles.setPrefix("Number of images: ");
                     new Thread(countFiles).start();
                 }
@@ -318,6 +318,13 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_CompareInfo_ProgressMax.setText(" ");
         LBL_CompareInfo_ProgressSplit.setText(" ");
         
+        
+        
+        CMBBX_SIaC_SearchType.setSelectedIndex(0);
+        
+        
+        
+        /*
         LBL_SIaC_DataHeader1.setText("Image One Information:");
         LBL_SIaC_DataName2.setText("Name:");
         LBL_SIaC_DataPath1.setText("File path:");
@@ -333,6 +340,8 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_CompareInfo_ComparisonType.setText("Comparison type: Two images");
         LBL_CompareInfo_NumberOfFilesInF1.setVisible(false);
         LBL_CompareInfo_NumberOfFilesInF2.setVisible(false);
+        */
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -351,7 +360,7 @@ public class DIR_Window extends javax.swing.JFrame {
         TBDPN_UserInput = new javax.swing.JTabbedPane();
         JPNL_SIaC = new javax.swing.JPanel();
         CMBBX_SIaC_SearchType = new javax.swing.JComboBox<>();
-        CHKBX_SIaC_IncludeSubfolders = new javax.swing.JCheckBox();
+        CHKBX_SIaC_IncludeSubfoldersInFolder1 = new javax.swing.JCheckBox();
         BTN_SIaC_Data1 = new javax.swing.JButton();
         BTN_SIaC_Data2 = new javax.swing.JButton();
         BTN_SIaC_Compare = new javax.swing.JButton();
@@ -364,6 +373,7 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_SIaC_DataPath2 = new javax.swing.JLabel();
         LBL_SIaC_DataName2 = new javax.swing.JLabel();
         SIaC_Filler = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        CHKBX_SIaC_IncludeSubfoldersInFolder2 = new javax.swing.JCheckBox();
         PNL_CompareInfo = new javax.swing.JPanel();
         JPRGSBR_Choice_TotalProgress = new javax.swing.JProgressBar();
         LBL_CompareInfo_IMG1Info = new javax.swing.JLabel();
@@ -441,12 +451,11 @@ public class DIR_Window extends javax.swing.JFrame {
             }
         });
 
-        CHKBX_SIaC_IncludeSubfolders.setText("Include subfolders");
-        CHKBX_SIaC_IncludeSubfolders.setEnabled(false);
-        CHKBX_SIaC_IncludeSubfolders.setFocusable(false);
-        CHKBX_SIaC_IncludeSubfolders.addActionListener(new java.awt.event.ActionListener() {
+        CHKBX_SIaC_IncludeSubfoldersInFolder1.setText("Include subfolders");
+        CHKBX_SIaC_IncludeSubfoldersInFolder1.setFocusable(false);
+        CHKBX_SIaC_IncludeSubfoldersInFolder1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CHKBX_SIaC_IncludeSubfoldersActionPerformed(evt);
+                CHKBX_SIaC_IncludeSubfoldersInFolder1ActionPerformed(evt);
             }
         });
 
@@ -493,6 +502,14 @@ public class DIR_Window extends javax.swing.JFrame {
 
         LBL_SIaC_DataName2.setText("Name:");
 
+        CHKBX_SIaC_IncludeSubfoldersInFolder2.setText("Include subfolders");
+        CHKBX_SIaC_IncludeSubfoldersInFolder2.setFocusable(false);
+        CHKBX_SIaC_IncludeSubfoldersInFolder2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CHKBX_SIaC_IncludeSubfoldersInFolder2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout JPNL_SIaCLayout = new javax.swing.GroupLayout(JPNL_SIaC);
         JPNL_SIaC.setLayout(JPNL_SIaCLayout);
         JPNL_SIaCLayout.setHorizontalGroup(
@@ -500,20 +517,21 @@ public class DIR_Window extends javax.swing.JFrame {
             .addGroup(JPNL_SIaCLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(JPNL_SIaCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CMBBX_SIaC_SearchType, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BTN_SIaC_Data1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BTN_SIaC_Data2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SIaC_Filler, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CMBBX_SIaC_SearchType, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_SIaC_Data1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTN_SIaC_Compare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CHKBX_SIaC_IncludeSubfolders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CHKBX_SIaC_IncludeSubfoldersInFolder1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTN_SIaC_Data2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBL_SIaC_DataHeader1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LBL_SIaC_DataHeader2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBL_SIaC_DataName1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBL_SIaC_DataPath1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBL_SIaC_ImageCount1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LBL_SIaC_DataHeader2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBL_SIaC_DataName2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBL_SIaC_DataPath2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LBL_SIaC_ImageCount2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SIaC_Filler, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(CHKBX_SIaC_IncludeSubfoldersInFolder2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         JPNL_SIaCLayout.setVerticalGroup(
@@ -521,13 +539,7 @@ public class DIR_Window extends javax.swing.JFrame {
             .addGroup(JPNL_SIaCLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(CMBBX_SIaC_SearchType, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CHKBX_SIaC_IncludeSubfolders)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BTN_SIaC_Data1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BTN_SIaC_Data2)
-                .addGap(18, 18, 18)
                 .addComponent(LBL_SIaC_DataHeader1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LBL_SIaC_DataName1)
@@ -535,6 +547,10 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addComponent(LBL_SIaC_DataPath1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LBL_SIaC_ImageCount1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BTN_SIaC_Data1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CHKBX_SIaC_IncludeSubfoldersInFolder1)
                 .addGap(18, 18, 18)
                 .addComponent(LBL_SIaC_DataHeader2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -543,8 +559,12 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addComponent(LBL_SIaC_DataPath2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LBL_SIaC_ImageCount2)
-                .addGap(18, 18, 18)
-                .addComponent(SIaC_Filler, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BTN_SIaC_Data2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CHKBX_SIaC_IncludeSubfoldersInFolder2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SIaC_Filler, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BTN_SIaC_Compare)
                 .addContainerGap())
@@ -898,10 +918,13 @@ public class DIR_Window extends javax.swing.JFrame {
         switch (CMBBX_SIaC_SearchType.getSelectedIndex())
         {
             case 0: //Compare two images
-                CHKBX_SIaC_IncludeSubfolders.setEnabled(false);
-                CHKBX_SIaC_IncludeSubfolders.setSelected(false);
-                BTN_SIaC_Data2.setEnabled(true);
+                CHKBX_SIaC_IncludeSubfoldersInFolder1.setVisible(false);
+                CHKBX_SIaC_IncludeSubfoldersInFolder1.setSelected(false);
+                CHKBX_SIaC_IncludeSubfoldersInFolder2.setVisible(false);
+                CHKBX_SIaC_IncludeSubfoldersInFolder2.setSelected(false);
+                
                 BTN_SIaC_Data1.setText("Get image one");
+                BTN_SIaC_Data2.setVisible(true);
                 BTN_SIaC_Data2.setText("Get image two");
                 
                 LBL_SIaC_DataHeader1.setText("Image One Information:");
@@ -922,10 +945,11 @@ public class DIR_Window extends javax.swing.JFrame {
                 
                 break;
             case 1: //Compare all images in one folder
-                CHKBX_SIaC_IncludeSubfolders.setEnabled(true);
-                BTN_SIaC_Data2.setEnabled(false);
-                BTN_SIaC_Data1.setText("Get main folder");
-                BTN_SIaC_Data2.setText(" ");
+                CHKBX_SIaC_IncludeSubfoldersInFolder1.setVisible(true);
+                CHKBX_SIaC_IncludeSubfoldersInFolder2.setVisible(false);
+                
+                BTN_SIaC_Data1.setText("Get folder");
+                BTN_SIaC_Data2.setVisible(false);
                 
                 LBL_SIaC_DataHeader1.setText("Folder Information:");
                 LBL_SIaC_DataName1.setText("Name:");
@@ -943,9 +967,12 @@ public class DIR_Window extends javax.swing.JFrame {
                 
                 break;
             case 2: //Compare all images between two folders
-                CHKBX_SIaC_IncludeSubfolders.setEnabled(true);
-                BTN_SIaC_Data2.setEnabled(true);
+                CHKBX_SIaC_IncludeSubfoldersInFolder1.setVisible(true);
+                CHKBX_SIaC_IncludeSubfoldersInFolder2.setVisible(true);
+                
+                
                 BTN_SIaC_Data1.setText("Get folder one");
+                BTN_SIaC_Data2.setVisible(true);
                 BTN_SIaC_Data2.setText("Get folder two");
                 
                 LBL_SIaC_DataHeader1.setText("Folder One Information:");
@@ -1070,7 +1097,7 @@ public class DIR_Window extends javax.swing.JFrame {
         updateSIaCFolderInfoLabels();
         checkIfReadyToCompare();
     }//GEN-LAST:event_BTN_SIaC_Data2ActionPerformed
-    private void CHKBX_SIaC_IncludeSubfoldersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHKBX_SIaC_IncludeSubfoldersActionPerformed
+    private void CHKBX_SIaC_IncludeSubfoldersInFolder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHKBX_SIaC_IncludeSubfoldersInFolder1ActionPerformed
         switch (CMBBX_SIaC_SearchType.getSelectedIndex())
         {
             case 0: //Compare two images
@@ -1082,7 +1109,7 @@ public class DIR_Window extends javax.swing.JFrame {
                     UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
                     countFiles.setLabel(LBL_SIaC_ImageCount1);
                     countFiles.setFolder(targetFolder[0]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfolders.isSelected());
+                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
                     countFiles.setPrefix("Number of images: ");
                     new Thread(countFiles).start();
                 }
@@ -1094,22 +1121,12 @@ public class DIR_Window extends javax.swing.JFrame {
                     UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
                     countFiles.setLabel(LBL_SIaC_ImageCount1);
                     countFiles.setFolder(targetFolder[0]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfolders.isSelected());
-                    countFiles.setPrefix("Number of images: ");
-                    new Thread(countFiles).start();
-                }
-                if (targetFolder[1] != null)
-                {
-                    LBL_SIaC_ImageCount2.setText("Counting images...");
-                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
-                    countFiles.setLabel(LBL_SIaC_ImageCount2);
-                    countFiles.setFolder(targetFolder[1]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfolders.isSelected());
+                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
                     countFiles.setPrefix("Number of images: ");
                     new Thread(countFiles).start();
                 }
         }
-    }//GEN-LAST:event_CHKBX_SIaC_IncludeSubfoldersActionPerformed
+    }//GEN-LAST:event_CHKBX_SIaC_IncludeSubfoldersInFolder1ActionPerformed
     private void BTN_CompareInfo_SkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CompareInfo_SkipActionPerformed
     }//GEN-LAST:event_BTN_CompareInfo_SkipActionPerformed
     private void BTN_CompareInfo_ChangeImage1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTN_CompareInfo_ChangeImage1ActionPerformed
@@ -1131,6 +1148,27 @@ public class DIR_Window extends javax.swing.JFrame {
             this.CHKBX_Settings_RepeatNotificationSound.setSelected(false);
         }
     }//GEN-LAST:event_CHKBX_Settings_SoundNotificationsActionPerformed
+
+    private void CHKBX_SIaC_IncludeSubfoldersInFolder2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHKBX_SIaC_IncludeSubfoldersInFolder2ActionPerformed
+        switch (CMBBX_SIaC_SearchType.getSelectedIndex())
+        {
+            case 0: //Compare two images
+                break;
+            case 1: //Compare all images in one folder
+                break;
+            case 2: //Compare all images between two folders
+                if (targetFolder[1] != null)
+                {
+                    LBL_SIaC_ImageCount2.setText("Counting images...");
+                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
+                    countFiles.setLabel(LBL_SIaC_ImageCount2);
+                    countFiles.setFolder(targetFolder[1]);
+                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
+                    countFiles.setPrefix("Number of images: ");
+                    new Thread(countFiles).start();
+                }
+        }
+    }//GEN-LAST:event_CHKBX_SIaC_IncludeSubfoldersInFolder2ActionPerformed
     
     // === === === OTHER === === ===
     public static void main(String args[]) {
@@ -1155,7 +1193,8 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JButton BTN_SIaC_Compare;
     private javax.swing.JButton BTN_SIaC_Data1;
     private javax.swing.JButton BTN_SIaC_Data2;
-    private javax.swing.JCheckBox CHKBX_SIaC_IncludeSubfolders;
+    private javax.swing.JCheckBox CHKBX_SIaC_IncludeSubfoldersInFolder1;
+    private javax.swing.JCheckBox CHKBX_SIaC_IncludeSubfoldersInFolder2;
     private javax.swing.JCheckBox CHKBX_Settings_RepeatNotificationSound;
     private javax.swing.JCheckBox CHKBX_Settings_ShowCompareDetails;
     private javax.swing.JCheckBox CHKBX_Settings_SoundNotifications;
