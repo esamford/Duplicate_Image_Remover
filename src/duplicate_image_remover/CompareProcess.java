@@ -192,14 +192,14 @@ public class CompareProcess implements Runnable
         checkForCompareOneFolder();
         if (folder.isDirectory())
         {
-            int numberOfFiles = countFilesInFolder(folder);
+            int numberOfFiles = countFilesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(numberOfFiles);
             
             int[] imgInt = new int[2];
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
             
-            ArrayList<File> allImageFiles = getImagesInFolder(folder, this.parentFrame.getIncludeSubfolders());
+            ArrayList<File> allImageFiles = getImagesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
             
             int progressMax = getMaxProgressOneFolder(allImageFiles.size()), progressCurrent;
             setInitialProgressInfo(progressMax);
@@ -313,8 +313,8 @@ public class CompareProcess implements Runnable
         checkForCompareTwoFolders();
         
         int[] numberOfFiles = new int[2];
-        numberOfFiles[0] = countFilesInFolder(folderOne);
-        numberOfFiles[1] = countFilesInFolder(folderTwo);
+        numberOfFiles[0] = countFilesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
+        numberOfFiles[1] = countFilesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected());
         this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(numberOfFiles[0]);
         this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(numberOfFiles[1]);
         
@@ -324,8 +324,8 @@ public class CompareProcess implements Runnable
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
             
-            ArrayList<File> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getIncludeSubfolders());
-            ArrayList<File> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getIncludeSubfolders());
+            ArrayList<File> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
+            ArrayList<File> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected());
             
             int progressMax = allFolderOneImages.size() * allFolderTwoImages.size(), progressCurrent;
             setInitialProgressInfo(progressMax);
@@ -580,14 +580,14 @@ public class CompareProcess implements Runnable
         }
         return files;
     }
-    private int countFilesInFolder(File directory) {
+    private int countFilesInFolder(File directory, boolean includeSubfolders) {
         if (!directory.isDirectory()) { return 0; }
         
         int counter = 0;
         for (File newFile : directory.listFiles())
         {
-            if (newFile.isDirectory() && this.parentFrame.getIncludeSubfolders())
-            { counter += countFilesInFolder(newFile); }
+            if (newFile.isDirectory() && includeSubfolders)
+            { counter += countFilesInFolder(newFile, includeSubfolders); }
             else if (!newFile.isDirectory() && checkImageValidity(newFile))
             { counter++; }
         }

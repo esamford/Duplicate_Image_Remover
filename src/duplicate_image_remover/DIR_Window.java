@@ -32,8 +32,11 @@ public class DIR_Window extends javax.swing.JFrame {
     public javax.swing.JButton getBTN_CompareInfo_Skip() {
         return this.BTN_CompareInfo_Skip;
     }
-    public javax.swing.JCheckBox getCHKBX_SIaC_IncludeSubfolders() {
+    public javax.swing.JCheckBox getCHKBX_SIaC_IncludeSubfoldersInFolder1() {
         return this.CHKBX_SIaC_IncludeSubfoldersInFolder1;
+    }
+    public javax.swing.JCheckBox getCHKBX_SIaC_IncludeSubfoldersInFolder2() {
+        return this.CHKBX_SIaC_IncludeSubfoldersInFolder2;
     }
     public javax.swing.JCheckBox getCHKBX_Settings_RepeatNotificationSound() {
         return this.CHKBX_Settings_RepeatNotificationSound;
@@ -165,11 +168,6 @@ public class DIR_Window extends javax.swing.JFrame {
     public javax.swing.JTabbedPane getTBDPN_UserInput() {
         return this.TBDPN_UserInput;
     }
-    public boolean getIncludeSubfolders() {
-        System.out.println("Getting boolean for includeSubfolders: ");
-        System.out.println(this.CHKBX_SIaC_IncludeSubfoldersInFolder1 == null);
-        return this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected();
-    }
     
     // === === === FUNCTIONS === === ===
     
@@ -252,7 +250,7 @@ public class DIR_Window extends javax.swing.JFrame {
                     UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
                     countFiles.setLabel(LBL_SIaC_ImageCount2);
                     countFiles.setFolder(targetFolder[1]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
+                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder2.isSelected());
                     countFiles.setPrefix("Number of images: ");
                     new Thread(countFiles).start();
                 }
@@ -1160,10 +1158,10 @@ public class DIR_Window extends javax.swing.JFrame {
                 if (targetFolder[1] != null)
                 {
                     LBL_SIaC_ImageCount2.setText("Counting images...");
-                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
+                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();                    
                     countFiles.setLabel(LBL_SIaC_ImageCount2);
                     countFiles.setFolder(targetFolder[1]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
+                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder2.isSelected());
                     countFiles.setPrefix("Number of images: ");
                     new Thread(countFiles).start();
                 }
