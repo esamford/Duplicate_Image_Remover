@@ -166,24 +166,25 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="CMBBX_SIaC_SearchType" alignment="1" max="32767" attributes="0"/>
-                          <Component id="BTN_SIaC_Data1" max="32767" attributes="0"/>
-                          <Component id="BTN_SIaC_Data2" max="32767" attributes="0"/>
+                          <Component id="SIaC_Filler" alignment="1" max="32767" attributes="0"/>
+                          <Component id="CMBBX_SIaC_SearchType" alignment="1" min="-2" pref="271" max="-2" attributes="0"/>
+                          <Component id="BTN_SIaC_Data1" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="BTN_SIaC_Compare" alignment="0" max="32767" attributes="0"/>
-                          <Component id="CHKBX_SIaC_IncludeSubfolders" alignment="0" max="32767" attributes="0"/>
+                          <Component id="CHKBX_SIaC_IncludeSubfoldersInFolder1" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
+                          <Component id="BTN_SIaC_Data2" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="LBL_SIaC_DataHeader1" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
-                          <Component id="LBL_SIaC_DataHeader2" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="LBL_SIaC_DataName1" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
-                          <Component id="LBL_SIaC_DataPath1" min="-2" pref="271" max="-2" attributes="0"/>
+                          <Component id="LBL_SIaC_DataPath1" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="LBL_SIaC_ImageCount1" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
+                          <Component id="LBL_SIaC_DataHeader2" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="LBL_SIaC_DataName2" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="LBL_SIaC_DataPath2" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                           <Component id="LBL_SIaC_ImageCount2" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
-                          <Component id="SIaC_Filler" alignment="0" max="32767" attributes="0"/>
+                          <Component id="CHKBX_SIaC_IncludeSubfoldersInFolder2" alignment="0" min="-2" pref="271" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -192,13 +193,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="CMBBX_SIaC_SearchType" min="-2" pref="20" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="CHKBX_SIaC_IncludeSubfolders" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="BTN_SIaC_Data1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="BTN_SIaC_Data2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="LBL_SIaC_DataHeader1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="LBL_SIaC_DataName1" min="-2" max="-2" attributes="0"/>
@@ -206,6 +201,10 @@
                       <Component id="LBL_SIaC_DataPath1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="LBL_SIaC_ImageCount1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="BTN_SIaC_Data1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="CHKBX_SIaC_IncludeSubfoldersInFolder1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="LBL_SIaC_DataHeader2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -214,8 +213,12 @@
                       <Component id="LBL_SIaC_DataPath2" min="-2" pref="14" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="LBL_SIaC_ImageCount2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="SIaC_Filler" pref="289" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="BTN_SIaC_Data2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="CHKBX_SIaC_IncludeSubfoldersInFolder2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="SIaC_Filler" pref="293" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="BTN_SIaC_Compare" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -242,14 +245,13 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JCheckBox" name="CHKBX_SIaC_IncludeSubfolders">
+            <Component class="javax.swing.JCheckBox" name="CHKBX_SIaC_IncludeSubfoldersInFolder1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Include subfolders"/>
-                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CHKBX_SIaC_IncludeSubfoldersActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CHKBX_SIaC_IncludeSubfoldersInFolder1ActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="BTN_SIaC_Data1">
@@ -335,6 +337,15 @@
               <AuxValues>
                 <AuxValue name="classDetails" type="java.lang.String" value="Box.Filler.Glue"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="CHKBX_SIaC_IncludeSubfoldersInFolder2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Include subfolders"/>
+                <Property name="focusable" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CHKBX_SIaC_IncludeSubfoldersInFolder2ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
