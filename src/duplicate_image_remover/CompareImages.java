@@ -109,6 +109,25 @@ public class CompareImages {
         }
         return extensionValid;
     }
+    public boolean checkIfValidImage(File checkImage) {
+        if (!isValidExtension(checkImage)) { return false; }
+        
+        System.out.println("Make sure the checkIfValidImage function in the CompareImages class can tell if the file is an image. It's still being tested.");
+        
+        //Check to see if the image is valid.
+        //https://stackoverflow.com/questions/9643228/test-if-a-file-is-an-image-file
+        try
+        {
+            if (ImageIO.read(checkImage) == null) { return false; }
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+        
+        
+        return true;
+    }
     
     public double getHeightWidthRatio(double height, double width) { return height / width; }
     
