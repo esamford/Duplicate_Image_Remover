@@ -96,7 +96,7 @@ public class CompareImages {
         SECOND
     }
     
-    public boolean isValidExtension(File checkImage) {
+    private boolean isValidExtension(File checkImage) {
         String[] validFileExtensions = {".jpg", ".png"};
         boolean extensionValid = false;
         for (String ext : validFileExtensions)
@@ -116,6 +116,7 @@ public class CompareImages {
         
         //Check to see if the image is valid.
         //https://stackoverflow.com/questions/9643228/test-if-a-file-is-an-image-file
+        //https://stackoverflow.com/questions/18208359/how-to-check-if-the-file-is-an-image/18208521
         try
         {
             if (ImageIO.read(checkImage) == null) { return false; }
@@ -133,7 +134,7 @@ public class CompareImages {
     
     public BufferedImage importImage(File imgFile) throws IOException {
         if (!imgFile.exists()) { throw new IOException("The image file provided does not exist."); }
-        if (!isValidExtension(imgFile)) { throw new IOException("The file provided to the 'importImage' function is not valid."); }
+        if (!checkIfValidImage(imgFile)) { throw new IOException("The file provided to the 'importImage' function is not valid."); }
         
         ///Check this spot to see if the imgIcon failed to correctly import a large image.
         ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
@@ -205,7 +206,7 @@ public class CompareImages {
    }
     
     public void setImage(File newFile, FileNum num) throws IOException {
-        if (!isValidExtension(newFile)) { throw new IOException("File provided to the 'setImage' function was not valid."); }
+        if (!checkIfValidImage(newFile)) { throw new IOException("File provided to the 'setImage' function was not valid."); }
         switch (num) {
             case FIRST:
                 //if (this.imgBuffer[0] != null) { this.imgBuffer[0].flush(); }
