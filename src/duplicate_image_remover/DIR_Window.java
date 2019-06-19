@@ -945,6 +945,7 @@ public class DIR_Window extends javax.swing.JFrame {
             case 1: //Compare all images in one folder
                 CHKBX_SIaC_IncludeSubfoldersInFolder1.setVisible(true);
                 CHKBX_SIaC_IncludeSubfoldersInFolder2.setVisible(false);
+                CHKBX_SIaC_IncludeSubfoldersInFolder2.setSelected(false);
                 
                 BTN_SIaC_Data1.setText("Get folder");
                 BTN_SIaC_Data2.setVisible(false);
