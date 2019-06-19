@@ -10,7 +10,8 @@ as well as the images themselves, and choose which one to remove, if either.
     * The program shows where differences between the two images are, both by highlighting pixels that are not
     exactly the same (can be seen on the "Pixel Differences" tab) and by subtracting the images from each other
     (can be seen on the "Subtracted Differences" tab).
-    * Displays how similar the two images are in a percentage form.
+    * Displays how similar the two images are in a percentage form, which is calculated by subtracting the image
+    pixel colors from each other.
 
 * Three different options to choose from when deciding how many images to check...
     * Two images: Choose two individual images and compare them. (Please note that since the user wants to compare 
@@ -54,6 +55,9 @@ is comparing two images of different sizes. This is because of the previously me
 resizing the image slightly changes the copy the program is comparing. This is enough to make the pixels between 
 the two images unique, resulting in the mostly-white image the user sees. If this happens, just use the image 
 generated on the Subtracted Differences tab instead, since it is less effected by this issue.
+
+* ***At the moment, the program can only compare JPG and PNG images. You must convert images of any other image format***
+***into one of these two types before comparing them.***
 
 ## Requirements ##
 **Requires the latest version of Java.**
