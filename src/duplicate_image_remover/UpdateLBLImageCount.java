@@ -24,10 +24,11 @@ public class UpdateLBLImageCount implements Runnable {
     private boolean checkImageValidity(File checkFile) {
         if (!checkFile.exists()) { return false; }        
         CompareImages validate = new CompareImages();        
-        return validate.isValidExtension(checkFile);
+        return validate.checkIfValidImage(checkFile);
     }
     private int countFilesInFolder(File directory) {
         if (!directory.isDirectory()) { return 0; }
+        
         int counter = 0;
         for (File newFile : directory.listFiles())
         {

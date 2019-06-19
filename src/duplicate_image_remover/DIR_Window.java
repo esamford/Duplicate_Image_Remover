@@ -278,7 +278,7 @@ public class DIR_Window extends javax.swing.JFrame {
     private boolean checkImageValidity(File checkFile) {
         if (!checkFile.exists()) { return false; }        
         CompareImages validate = new CompareImages();        
-        return validate.isValidExtension(checkFile);
+        return validate.checkIfValidImage(checkFile);
     }
     private void clearCIFileInfo() {
         LBL_CompareInfo_IMGName1.setText("Name: "); //LBL_CompareInfo_IMGName1

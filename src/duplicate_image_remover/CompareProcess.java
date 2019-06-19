@@ -150,7 +150,7 @@ public class CompareProcess implements Runnable
     private boolean checkImageValidity(File checkFile) {
         if (!checkFile.exists()) { return false; }
         CompareImages validate = new CompareImages();        
-        return validate.isValidExtension(checkFile);
+        return validate.checkIfValidImage(checkFile);
     }
     private void checkTwoImages(File file1, File file2) throws IOException {
         checkForCompareTwoImages();

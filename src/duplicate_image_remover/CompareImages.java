@@ -96,7 +96,7 @@ public class CompareImages {
         SECOND
     }
     
-    private boolean isValidExtension(File checkImage) {
+    public boolean checkIfValidImage(File checkImage) {
         String[] validFileExtensions = {".jpg", ".png"};
         boolean extensionValid = false;
         for (String ext : validFileExtensions)
@@ -107,24 +107,22 @@ public class CompareImages {
                 break;
             }
         }
-        return extensionValid;
-    }
-    public boolean checkIfValidImage(File checkImage) {
-        if (!isValidExtension(checkImage)) { return false; }
+        if (!extensionValid) { return false; }
+
+        //Check to see if the file can be read as a valid image.
+        /*
+        Note: For some reason, this portion of the program cannot seem to read the image,
+        resulting in always returning false. This should not be happening, because
+        the files I'm using are real images.
         
-        System.out.println("Make sure the checkIfValidImage function in the CompareImages class can tell if the file is an image. It's still being tested.");
-        
-        //Check to see if the image is valid.
-        //https://stackoverflow.com/questions/9643228/test-if-a-file-is-an-image-file
-        //https://stackoverflow.com/questions/18208359/how-to-check-if-the-file-is-an-image/18208521
         try
         {
-            if (ImageIO.read(checkImage) == null) { return false; }
+            //ImageIcon imgIcon = new ImageIcon(checkImage.getAbsolutePath());
+            Image testImage = ImageIO.read(checkImage);
+            if (testImage == null) { return false; }
         }
-        catch (Exception ex)
-        {
-            return false;
-        }
+        catch (IOException ex) { return false; }
+        //*/
         
         
         return true;
