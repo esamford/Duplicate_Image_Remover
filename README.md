@@ -31,6 +31,12 @@ helpful when the user wishes to have other tabs open while the program is runnin
 
 * When choosing to compare images in folders, there is an option to include all images in subfolders as well.
 
+* ***If the user is comparing a folder (or folders) that have at least 1,000 combinations, the user can choose a***
+***starting position to begin comparing. This is helpful for when the program needs to go through more combinations than***
+***what the user has time for. They can stop comparing, remember the number they stopped at, and start at that same spot***
+***again later. Please note that if the contents in the folder(s) being compared changes in any way (renaming files,***
+***deleting them, etc.), this number will stop matching with the new folder contents.***
+
 ## Limitations ##
 * When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. Any images deleted
 using this program will skip the Recycle Bin and be deleted *permenantly!*
