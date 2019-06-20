@@ -819,7 +819,7 @@ public class DIR_Window extends javax.swing.JFrame {
         });
 
         CHKBX_Settings_ShowCompareDetails.setSelected(true);
-        CHKBX_Settings_ShowCompareDetails.setText("Display compare details once finished.");
+        CHKBX_Settings_ShowCompareDetails.setText("Display general information once finished.");
         CHKBX_Settings_ShowCompareDetails.setFocusable(false);
 
         javax.swing.GroupLayout PNL_SettingsLayout = new javax.swing.GroupLayout(PNL_Settings);
