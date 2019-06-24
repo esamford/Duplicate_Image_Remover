@@ -199,7 +199,7 @@ public class CompareProcess implements Runnable
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
             
-            ArrayList<File> allImageFiles = getImagesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
+            ArrayList<File> allImageFiles = sortFileList(getImagesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected()));
             
             int progressMax = getMaxProgressOneFolder(allImageFiles.size()), progressCurrent;
             setInitialProgressInfo(progressMax);
@@ -324,8 +324,8 @@ public class CompareProcess implements Runnable
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
             
-            ArrayList<File> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
-            ArrayList<File> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected());
+            ArrayList<File> allFolderOneImages = sortFileList(getImagesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected()));
+            ArrayList<File> allFolderTwoImages = sortFileList(getImagesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected()));
             
             int progressMax = allFolderOneImages.size() * allFolderTwoImages.size(), progressCurrent;
             setInitialProgressInfo(progressMax);
@@ -672,6 +672,21 @@ public class CompareProcess implements Runnable
     }
     private int getMaxProgressOneFolder(int imageCount) {
         return (imageCount * (imageCount - 1)) / 2;
+    }
+    private ArrayList<File> sortFileList(ArrayList<File> list) {
+        for (int x = 0; x < list.size() - 1; x++)
+        {
+            for (int y = x + 1; y < list.size(); y++)
+            {
+                if (list.get(x).getName().compareTo(list.get(y).getName()) > 0)
+                {
+                    File tempFile = list.get(x);
+                    list.set(x, list.get(y));
+                    list.set(y, tempFile);
+                }
+            }
+        }
+        return list;
     }
     
     @Override
