@@ -97,7 +97,7 @@ public class CompareImages {
     }
     
     public boolean checkIfValidImage(File checkImage) {
-        String[] validFileExtensions = {".jpg", ".png"};
+        String[] validFileExtensions = {".jpg", ".jpeg", ".png"};
         boolean extensionValid = false;
         for (String ext : validFileExtensions)
         {

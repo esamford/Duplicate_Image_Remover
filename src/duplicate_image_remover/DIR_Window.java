@@ -795,7 +795,7 @@ public class DIR_Window extends javax.swing.JFrame {
         SLDR_MinimumSimilarityThreshold.setPaintTicks(true);
         SLDR_MinimumSimilarityThreshold.setSnapToTicks(true);
         SLDR_MinimumSimilarityThreshold.setToolTipText("");
-        SLDR_MinimumSimilarityThreshold.setValue(90);
+        SLDR_MinimumSimilarityThreshold.setValue(95);
         SLDR_MinimumSimilarityThreshold.setFocusable(false);
         SLDR_MinimumSimilarityThreshold.setRequestFocusEnabled(false);
 
@@ -1001,25 +1001,33 @@ public class DIR_Window extends javax.swing.JFrame {
                 getData.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 if (getData.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
                 {
-                    if (checkImageValidity(getData.getSelectedFile()))
+                    if (!getData.getSelectedFile().exists())
+                    {
+                        String errorMSG = "That file does not exist.";
+                        JOptionPane.showMessageDialog(this, errorMSG, "File Does Not Exist", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if (!checkImageValidity(getData.getSelectedFile()))
+                    {
+                        String errorMSG = "The selected file is not a valid image.";
+                        JOptionPane.showMessageDialog(this, errorMSG, "Invalid File Type", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else
                     {
                         imgFile[0] = getData.getSelectedFile();
-                        try {
+                        try
+                        {
                             CompareImages importIMG = new CompareImages();
                             BufferedImage imgBuff = importIMG.importImage(imgFile[0]);
                             LBL_IMG_Image1.setIcon(new ImageIcon(imgBuff));
-                        } catch (IOException ex) {
+                        }
+                        catch (IOException ex)
+                        {
                             imgFile[0] = null;
                             clearDisplayedImages();
                             String errorMSG = "Unable to import the image.\nError message: ";
                             JOptionPane.showMessageDialog(this, errorMSG + ex.getMessage(), "Unable to Read Image", JOptionPane.ERROR_MESSAGE);
                         }
                         TBDPN_Images.setSelectedIndex(0);
-                    }
-                    else
-                    {
-                        String errorMSG = "The selected file is not a valid image.";
-                        JOptionPane.showMessageDialog(this, errorMSG, "Invalid File Type", JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 break;
@@ -1028,15 +1036,23 @@ public class DIR_Window extends javax.swing.JFrame {
                 getData.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);                
                 if (getData.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
                 {
-                    targetFolder[0] = getData.getSelectedFile();
-                    if (targetFolder[0] != null && targetFolder[1] != null)
+                    if (!getData.getSelectedFile().exists())
                     {
-                        if (targetFolder[0].getAbsolutePath().equals(targetFolder[1].getAbsolutePath()))
+                        String errorMSG = "That file does not exist.";
+                        JOptionPane.showMessageDialog(this, errorMSG, "File Does Not Exist", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else
+                    {
+                        targetFolder[0] = getData.getSelectedFile();
+                        if (targetFolder[0] != null && targetFolder[1] != null)
                         {
-                            targetFolder[0] = null;
-                            String errorMSG = "You cannot choose the same folder twice. ";
-                            errorMSG += "If you would like to compare the images inside this folder, please change the search options.";
-                            JOptionPane.showMessageDialog(this, errorMSG, "Invalid Folder Selection", JOptionPane.ERROR_MESSAGE);
+                            if (targetFolder[0].getAbsolutePath().equals(targetFolder[1].getAbsolutePath()))
+                            {
+                                targetFolder[0] = null;
+                                String errorMSG = "You cannot choose the same folder twice. ";
+                                errorMSG += "If you would like to compare the images inside this folder, please change the search options.";
+                                JOptionPane.showMessageDialog(this, errorMSG, "Invalid Folder Selection", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     }
                 }
@@ -1052,7 +1068,17 @@ public class DIR_Window extends javax.swing.JFrame {
                 getData.setFileSelectionMode(JFileChooser.FILES_ONLY);
                 if (getData.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
                 {
-                    if (checkImageValidity(getData.getSelectedFile()))
+                    if (!getData.getSelectedFile().exists())
+                    {
+                        String errorMSG = "That file does not exist.";
+                        JOptionPane.showMessageDialog(this, errorMSG, "File Does Not Exist", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else if (!checkImageValidity(getData.getSelectedFile()))
+                    {
+                        String errorMSG = "The selected file is not a valid image.";
+                        JOptionPane.showMessageDialog(this, errorMSG, "Invalid File Type", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else
                     {
                         imgFile[1] = getData.getSelectedFile();
                         try {
@@ -1067,11 +1093,6 @@ public class DIR_Window extends javax.swing.JFrame {
                         }
                         TBDPN_Images.setSelectedIndex(1);
                     }
-                    else
-                    {
-                        String errorMSG = "The selected file is not a valid image.";
-                        JOptionPane.showMessageDialog(this, errorMSG, "Invalid File Type", JOptionPane.ERROR_MESSAGE);
-                    }
                 }
                 break;
             case 1: //Compare all images in one folder
@@ -1080,15 +1101,23 @@ public class DIR_Window extends javax.swing.JFrame {
                 getData.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);                
                 if (getData.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
                 {
-                    targetFolder[1] = getData.getSelectedFile();
-                    if (targetFolder[0] != null && targetFolder[1] != null)
+                    if (!getData.getSelectedFile().exists())
                     {
-                        if (targetFolder[0].getAbsolutePath().equals(targetFolder[1].getAbsolutePath()))
+                        String errorMSG = "That file does not exist.";
+                        JOptionPane.showMessageDialog(this, errorMSG, "File Does Not Exist", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else
+                    {
+                        targetFolder[1] = getData.getSelectedFile();
+                        if (targetFolder[0] != null && targetFolder[1] != null)
                         {
-                            targetFolder[1] = null;
-                            String errorMSG = "You cannot choose the same folder twice. ";
-                            errorMSG += "If you would like to compare the images inside this folder, please change the search options.";
-                            JOptionPane.showMessageDialog(this, errorMSG, "Invalid Folder Selection", JOptionPane.ERROR_MESSAGE);
+                            if (targetFolder[0].getAbsolutePath().equals(targetFolder[1].getAbsolutePath()))
+                            {
+                                targetFolder[1] = null;
+                                String errorMSG = "You cannot choose the same folder twice. ";
+                                errorMSG += "If you would like to compare the images inside this folder, please change the search options.";
+                                JOptionPane.showMessageDialog(this, errorMSG, "Invalid Folder Selection", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     }
                 }
