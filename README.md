@@ -63,7 +63,7 @@ the two images unique, resulting in the mostly-white image the user sees. If thi
 generated on the Subtracted Differences tab instead, since it is less effected by this issue.
 
 * ***At the moment, the program can only compare ".jpg", ".jpeg", and ".png" images. You must convert images of any***
-***other image format into one of these two types before comparing them.***
+***other image format into one of these types before comparing them.***
 
 ## Requirements ##
 **Requires the latest version of Java.**
