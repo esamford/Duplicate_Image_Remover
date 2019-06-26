@@ -26,8 +26,8 @@ as well as the images themselves, and choose which one to remove, if either.
 height/width ratio.
 
 * There is an option to notify the user when a potential match is found with a beeping noise, and another option to
-periodically repeat this notification sound if the user is AFK and wishes to hear it when they return. This can be
-helpful when the user wishes to have other tabs open while the program is running.
+periodically repeat this notification sound. This can be helpful when the user wishes to have other tabs open while 
+the program is running, or if the user is AFK and wishes to be notified when they return.
 
 * When choosing to compare images in folders, there is an option to include all images in subfolders as well.
 
