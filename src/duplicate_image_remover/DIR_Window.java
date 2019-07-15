@@ -14,6 +14,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class DIR_Window extends javax.swing.JFrame {
     File[] targetFolder = new File[2];
     File[] imgFile = new File[2];
+    Thread labelUpdate1 = new Thread(new UpdateLBLImageCount());
+    Thread labelUpdate2 = new Thread(new UpdateLBLImageCount());
     
     // === === === GETTERS === === ===
     
@@ -213,14 +215,8 @@ public class DIR_Window extends javax.swing.JFrame {
                     LBL_SIaC_DataName1.setToolTipText(targetFolder[0].getName());
                     LBL_SIaC_DataPath1.setText("Folder path: " + targetFolder[0].getAbsolutePath());
                     LBL_SIaC_DataPath1.setToolTipText(targetFolder[0].getAbsolutePath());
-                    LBL_SIaC_ImageCount1.setText("Counting images...");
                     
-                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
-                    countFiles.setLabel(LBL_SIaC_ImageCount1);
-                    countFiles.setFolder(targetFolder[0]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
-                    countFiles.setPrefix("Number of images: ");
-                    new Thread(countFiles).start();
+                    countImages(true);
                 }
                 break;
             case 2: //Compare all images between two folders
@@ -232,12 +228,7 @@ public class DIR_Window extends javax.swing.JFrame {
                     LBL_SIaC_DataPath1.setToolTipText(targetFolder[0].getAbsolutePath());
                     LBL_SIaC_ImageCount1.setText("Counting images...");
                     
-                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
-                    countFiles.setLabel(LBL_SIaC_ImageCount1);
-                    countFiles.setFolder(targetFolder[0]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
-                    countFiles.setPrefix("Number of images: ");
-                    new Thread(countFiles).start();
+                    countImages(true);
                 }
                 if (targetFolder[1] != null)
                 {
@@ -247,13 +238,44 @@ public class DIR_Window extends javax.swing.JFrame {
                     LBL_SIaC_DataPath2.setToolTipText(targetFolder[1].getAbsolutePath());
                     LBL_SIaC_ImageCount2.setText("Counting images...");
                     
-                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
-                    countFiles.setLabel(LBL_SIaC_ImageCount2);
-                    countFiles.setFolder(targetFolder[1]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder2.isSelected());
-                    countFiles.setPrefix("Number of images: ");
-                    new Thread(countFiles).start();
+                    countImages(false);
                 }
+        }
+    }
+    private void countImages(boolean labelOne) {
+        if (labelOne)
+        {
+            if (labelUpdate1.isAlive())
+            {
+                labelUpdate1.interrupt();
+            }
+
+            LBL_SIaC_ImageCount1.setText("Counting images...");
+            UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
+            countFiles.setLabel(LBL_SIaC_ImageCount1);
+            countFiles.setFolder(targetFolder[0]);
+            countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
+            countFiles.setPrefix("Number of images: ");
+
+            labelUpdate1 = new Thread(countFiles);
+            labelUpdate1.start();
+        }
+        else
+        {
+            if (labelUpdate2.isAlive())
+            {
+                labelUpdate2.interrupt();
+            }
+
+            LBL_SIaC_ImageCount2.setText("Counting images...");
+            UpdateLBLImageCount countFiles = new UpdateLBLImageCount();                    
+            countFiles.setLabel(LBL_SIaC_ImageCount2);
+            countFiles.setFolder(targetFolder[1]);
+            countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder2.isSelected());
+            countFiles.setPrefix("Number of images: ");
+
+            labelUpdate2 = new Thread(countFiles);
+            labelUpdate2.start();
         }
     }
     public void checkIfReadyToCompare() {
@@ -1131,27 +1153,10 @@ public class DIR_Window extends javax.swing.JFrame {
             case 0: //Compare two images
                 break;
             case 1: //Compare all images in one folder
-                if (targetFolder[0] != null)
-                {
-                    LBL_SIaC_ImageCount1.setText("Counting images...");
-                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
-                    countFiles.setLabel(LBL_SIaC_ImageCount1);
-                    countFiles.setFolder(targetFolder[0]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
-                    countFiles.setPrefix("Number of images: ");
-                    new Thread(countFiles).start();
-                }
-                break;
             case 2: //Compare all images between two folders
                 if (targetFolder[0] != null)
                 {
-                    LBL_SIaC_ImageCount1.setText("Counting images...");
-                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();
-                    countFiles.setLabel(LBL_SIaC_ImageCount1);
-                    countFiles.setFolder(targetFolder[0]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder1.isSelected());
-                    countFiles.setPrefix("Number of images: ");
-                    new Thread(countFiles).start();
+                    countImages(true);
                 }
         }
     }//GEN-LAST:event_CHKBX_SIaC_IncludeSubfoldersInFolder1ActionPerformed
@@ -1187,13 +1192,7 @@ public class DIR_Window extends javax.swing.JFrame {
             case 2: //Compare all images between two folders
                 if (targetFolder[1] != null)
                 {
-                    LBL_SIaC_ImageCount2.setText("Counting images...");
-                    UpdateLBLImageCount countFiles = new UpdateLBLImageCount();                    
-                    countFiles.setLabel(LBL_SIaC_ImageCount2);
-                    countFiles.setFolder(targetFolder[1]);
-                    countFiles.setIncludeSubfolders(this.CHKBX_SIaC_IncludeSubfoldersInFolder2.isSelected());
-                    countFiles.setPrefix("Number of images: ");
-                    new Thread(countFiles).start();
+                    countImages(false);
                 }
         }
     }//GEN-LAST:event_CHKBX_SIaC_IncludeSubfoldersInFolder2ActionPerformed

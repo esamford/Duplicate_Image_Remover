@@ -26,12 +26,17 @@ public class UpdateLBLImageCount implements Runnable {
         CompareImages validate = new CompareImages();        
         return validate.checkIfValidImage(checkFile);
     }
-    private int countFilesInFolder(File directory) {
+    private int countFilesInFolder(File directory) throws InterruptedException {
         if (!directory.isDirectory()) { return 0; }
         
         int counter = 0;
         for (File newFile : directory.listFiles())
         {
+            if (Thread.currentThread().isInterrupted())
+            {
+                throw new InterruptedException();
+            }
+            
             if (newFile.isDirectory() && includeSubfolders)
             { counter += countFilesInFolder(newFile); }
             else if (!newFile.isDirectory() && checkImageValidity(newFile))
@@ -52,6 +57,9 @@ public class UpdateLBLImageCount implements Runnable {
         try {
             validateInput();
             label.setText(prefix + String.format("%,d", countFilesInFolder(folder)));
+        }
+        catch (InterruptedException ex) {
+            System.out.println("Image counting thread interrupted.");
         }
         catch (Exception ex) {
             label.setText(prefix + "Failed to get image count.");
