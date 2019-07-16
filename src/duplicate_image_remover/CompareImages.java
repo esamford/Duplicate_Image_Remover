@@ -97,6 +97,12 @@ public class CompareImages {
     }
     
     public boolean checkIfValidImage(File checkImage) {
+        //System.out.println("You left yourself a note in the 'checkIfValidImage' function in the CompareImages class. Read it!");
+        //The function is only looking at the file extensions, not the file itself, to see if it's an image.
+        //I need a fast way to check if it's an image based on the file contents.
+        //I want to be able to use more than just three image types, so having some sort of image reader that throws an error if it fails to read a file could help.
+        //I'm importing them using "new ImageIcon(filePath)", so make sure whatever I do will work with that.
+        
         String[] validFileExtensions = {".jpg", ".jpeg", ".png"};
         boolean extensionValid = false;
         for (String ext : validFileExtensions)
@@ -108,22 +114,48 @@ public class CompareImages {
             }
         }
         if (!extensionValid) { return false; }
-
-        //Check to see if the file can be read as a valid image.
-        /*
-        Note: For some reason, this portion of the program cannot seem to read the image,
-        resulting in always returning false. This should not be happening, because
-        the files I'm using are real images.
         
+        /*
+        //The following code is throwing an error.
+        //Tutorial: https://examples.javacodegeeks.com/desktop-java/imageio/determine-format-of-an-image/
         try
         {
-            //ImageIcon imgIcon = new ImageIcon(checkImage.getAbsolutePath());
-            Image testImage = ImageIO.read(checkImage);
-            if (testImage == null) { return false; }
+            ImageInputStream in = ImageIO.createImageInputStream(imgFile);
+            Iterator<ImageReader> iter = ImageIO.getImageReaders(in);
+            if (iter.hasNext())
+            {
+                ImageReader read = iter.next();
+                System.out.println("Reader format: " + read.getFormatName());
+                if (read.getFormatName().compareToIgnoreCase("JPEG") != 0)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
-        catch (IOException ex) { return false; }
-        //*/
+        catch (Exception ex) { return false; }
         
+        
+        
+        
+        
+        /*
+        //Check to see if the file can be read as a valid image.
+        //Note: This takes way too long to process, especially when checking hundreds of files. Find a better solution.
+        long startTime = System.nanoTime();
+        try
+        {
+            ImageIcon imgIcon = new ImageIcon(checkImage.getAbsolutePath());
+            if (imgIcon == null) { return false; }
+            //if (ImageIO.read(checkImage) == null) { return false; }
+        }
+        //catch (IOException ex) { return false; }
+        catch (Exception ex) { return false; }
+        System.out.println("Time taken to check if the file was an image using ImageIO.read() in nanoseconds = " + String.format("%,d", System.nanoTime() - startTime));
+        //*/
         
         return true;
     }
@@ -136,31 +168,25 @@ public class CompareImages {
         
         ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
         double tempHeight = imgIcon.getIconHeight(), tempWidth = imgIcon.getIconWidth();
-        int setWidth = (int)tempWidth, setHeight = (int) tempHeight;
+        int setWidth = (int) tempWidth, setHeight = (int) tempHeight;
         
         int maxPixCount = 400000, minPixCount = 350000;
+        double sizeRatio = getHeightWidthRatio(tempHeight, tempWidth);
         if (tempHeight * tempWidth > maxPixCount) //Shrink the image if it's too large.
         {
-            double sizeRatio = getHeightWidthRatio(tempHeight, tempWidth);
-            
             tempWidth = Math.sqrt(maxPixCount/sizeRatio);
-            tempHeight = (tempWidth * sizeRatio);
-            
-            setWidth = (int) Math.round(tempWidth);
-            setHeight = (int) Math.round(tempHeight);
-            imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
         }
         else if (tempHeight * tempWidth < minPixCount) //Enlarge the image if it's too small.
         {
-            double sizeRatio = getHeightWidthRatio(tempHeight, tempWidth);
-            
             tempWidth = Math.sqrt(minPixCount/sizeRatio);
-            tempHeight = (tempWidth * sizeRatio);
-            
+        }
+        tempHeight = (tempWidth * sizeRatio);
+        if (tempWidth > 1 && tempHeight > 1)
+        {
             setWidth = (int) Math.round(tempWidth);
             setHeight = (int) Math.round(tempHeight);
-            imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
         }
+        imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
         
         BufferedImage newIMGBuff = new BufferedImage(setWidth, setHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics convert = newIMGBuff.createGraphics();
