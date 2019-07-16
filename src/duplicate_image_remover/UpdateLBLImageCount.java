@@ -46,10 +46,10 @@ public class UpdateLBLImageCount implements Runnable {
     }
     
     private void validateInput() throws Exception {
-        if (folder == null) { throw new Exception(); }
-        if (!folder.exists()) { throw new Exception(); }
-        if (!folder.isDirectory()) { throw new Exception(); }
-        if (label == null) { throw new Exception(); }
+        if (folder == null) { throw new Exception("The folder to count images from is null."); }
+        if (!folder.exists()) { throw new Exception("The folder to count images from does not exist."); }
+        if (!folder.isDirectory()) { throw new Exception("The file provided is not a folder."); }
+        if (label == null) { throw new Exception("The label provided is null."); }
     }
     
     @Override
@@ -62,7 +62,11 @@ public class UpdateLBLImageCount implements Runnable {
             System.out.println("Image counting thread interrupted.");
         }
         catch (Exception ex) {
-            label.setText(prefix + "Failed to get image count.");
+            if (label != null)
+            {
+                label.setText(prefix + "Failed to get image count.");
+            }
+            System.out.println("Failed to count images in folder to display image count. Error message: " + ex.getMessage());
         }
     }
 }

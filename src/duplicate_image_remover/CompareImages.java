@@ -134,71 +134,38 @@ public class CompareImages {
         if (!imgFile.exists()) { throw new IOException("The image file provided does not exist."); }
         if (!checkIfValidImage(imgFile)) { throw new IOException("The file provided to the 'importImage' function is not valid."); }
         
-        ///Check this spot to see if the imgIcon failed to correctly import a large image.
         ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
         double tempHeight = imgIcon.getIconHeight(), tempWidth = imgIcon.getIconWidth();
         int setWidth = (int)tempWidth, setHeight = (int) tempHeight;
         
-        int maxPixCount = 400000;
-        if (tempHeight * tempWidth > maxPixCount)
+        int maxPixCount = 400000, minPixCount = 350000;
+        if (tempHeight * tempWidth > maxPixCount) //Shrink the image if it's too large.
         {
             double sizeRatio = getHeightWidthRatio(tempHeight, tempWidth);
             
             tempWidth = Math.sqrt(maxPixCount/sizeRatio);
             tempHeight = (tempWidth * sizeRatio);
             
-            /*
-            I don't think this is necessary, since I don't think it will ever be 0 or below.
-            if (tempWidth <= 0 || tempHeight <= 0)
-            {
-                tempWidth = imgIcon.getIconWidth();
-                tempHeight = imgIcon.getIconHeight();
-            }
-            */
-            
             setWidth = (int) Math.round(tempWidth);
             setHeight = (int) Math.round(tempHeight);
             imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
         }
-        
-        int minPixCount = 350000;
-        if (tempHeight * tempWidth < minPixCount)
+        else if (tempHeight * tempWidth < minPixCount) //Enlarge the image if it's too small.
         {
             double sizeRatio = getHeightWidthRatio(tempHeight, tempWidth);
             
             tempWidth = Math.sqrt(minPixCount/sizeRatio);
             tempHeight = (tempWidth * sizeRatio);
             
-            /*
-            I don't think this is necessary, since I don't think it will ever be 0 or below.
-            if (tempWidth <= 0 || tempHeight <= 0)
-            {
-                tempWidth = imgIcon.getIconWidth();
-                tempHeight = imgIcon.getIconHeight();
-            }
-            */
-            
             setWidth = (int) Math.round(tempWidth);
             setHeight = (int) Math.round(tempHeight);
             imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
         }
         
-        //I should also check here. Maybe it's just not being converted to a BufferedImage correctly?
-        BufferedImage newIMGBuff = new BufferedImage(setWidth, setHeight, BufferedImage.TYPE_INT_RGB);
+        BufferedImage newIMGBuff = new BufferedImage(setWidth, setHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics convert = newIMGBuff.createGraphics();
         imgIcon.paintIcon(null, convert, 0, 0);
         convert.dispose();
-        
-        /*
-            I could check to see if the image is 100% pure black here and throw an error if it is. This
-            would solve the problem I'm having with extremely large images being imported as black images.
-            However, if I do this, any pure black image will be ignored, which is something I don't want.
-            Maybe I can take the original size into consideration when deciding whether or not to throw
-            an error?
-            
-            I should make this my last resort, and try to find another, more acceptable solution elsewhere.
-        */ 
-        
         
         return newIMGBuff;
    }

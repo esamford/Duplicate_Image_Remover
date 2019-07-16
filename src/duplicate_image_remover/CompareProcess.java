@@ -76,7 +76,7 @@ public class CompareProcess implements Runnable
     
     private void deleteFile(File deleteFile) {
         try {
-            int result = JOptionPane.showConfirmDialog(this.parentFrame, "Warning: This will permenantly delete the image and you will not be able to restore it from the recycle bin.\n\nDo you wish to continue?");
+            int result = JOptionPane.showConfirmDialog(this.parentFrame, "Warning: This will permenantly delete the image and you will not be able to restore it from the Recycle Bin. Are you sure you want to delete this image?", "Delete Image?", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION)
             {
                 long tempByteCount = deleteFile.length();
@@ -789,11 +789,9 @@ public class CompareProcess implements Runnable
                 message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
                 message += "\nTotal bytes freed: " + String.format("%,d", totalBytesRemoved);
                 
-                JOptionPane.showMessageDialog(this.parentFrame, message, "Details", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this.parentFrame, message, "General Information", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         else { System.out.println("Parent frame is null!"); }
-        
-        System.out.println("FINISHED WITH THE COMPAREPROCESS THREAD.");
     }
 }
