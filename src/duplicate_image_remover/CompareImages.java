@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -96,66 +97,21 @@ public class CompareImages {
         SECOND
     }
     
-    public boolean checkIfValidImage(File checkImage) {
-        //System.out.println("You left yourself a note in the 'checkIfValidImage' function in the CompareImages class. Read it!");
-        //The function is only looking at the file extensions, not the file itself, to see if it's an image.
-        //I need a fast way to check if it's an image based on the file contents.
-        //I want to be able to use more than just three image types, so having some sort of image reader that throws an error if it fails to read a file could help.
-        //I'm importing them using "new ImageIcon(filePath)", so make sure whatever I do will work with that.
-        
-        String[] validFileExtensions = {".jpg", ".jpeg", ".png"};
-        boolean extensionValid = false;
-        for (String ext : validFileExtensions)
-        {
-            if (checkImage.getName().endsWith(ext))
-            {
-                extensionValid = true;
-                break;
-            }
-        }
-        if (!extensionValid) { return false; }
-        
-        /*
-        //The following code is throwing an error.
-        //Tutorial: https://examples.javacodegeeks.com/desktop-java/imageio/determine-format-of-an-image/
+    public boolean checkIfValidImage(File checkFile) {
         try
         {
-            ImageInputStream in = ImageIO.createImageInputStream(imgFile);
-            Iterator<ImageReader> iter = ImageIO.getImageReaders(in);
-            if (iter.hasNext())
-            {
-                ImageReader read = iter.next();
-                System.out.println("Reader format: " + read.getFormatName());
-                if (read.getFormatName().compareToIgnoreCase("JPEG") != 0)
-                {
-                    return false;
-                }
-            }
-            else
+            String fileType = Files.probeContentType(checkFile.toPath());
+            System.out.println("File type: " + fileType);
+            if (fileType.compareToIgnoreCase("image/jpeg") != 0 && fileType.compareToIgnoreCase("image/png") != 0)
             {
                 return false;
             }
         }
-        catch (Exception ex) { return false; }
-        
-        
-        
-        
-        
-        /*
-        //Check to see if the file can be read as a valid image.
-        //Note: This takes way too long to process, especially when checking hundreds of files. Find a better solution.
-        long startTime = System.nanoTime();
-        try
+        catch (Exception ex)
         {
-            ImageIcon imgIcon = new ImageIcon(checkImage.getAbsolutePath());
-            if (imgIcon == null) { return false; }
-            //if (ImageIO.read(checkImage) == null) { return false; }
+            System.out.println("An exception occured when getting the file type.");
+            return false;
         }
-        //catch (IOException ex) { return false; }
-        catch (Exception ex) { return false; }
-        System.out.println("Time taken to check if the file was an image using ImageIO.read() in nanoseconds = " + String.format("%,d", System.nanoTime() - startTime));
-        //*/
         
         return true;
     }
