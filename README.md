@@ -62,8 +62,8 @@ resizing the image slightly changes the copy the program is comparing. This is e
 the two images unique, resulting in the mostly-white image the user sees. If this happens, just use the image 
 generated on the Subtracted Differences tab instead, since it is less effected by this issue.
 
-* ***At the moment, the program can only compare ".jpg", ".jpeg", and ".png" images. You must convert images of any***
-***other image format into one of these types before comparing them.***
+* The program can only compare JPEG and PNG images. You must convert images of any other image format into one of these 
+types before comparing them.
 
 ## Requirements ##
 **Requires the latest version of Java.**
