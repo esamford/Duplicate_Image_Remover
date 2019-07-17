@@ -31,6 +31,8 @@ public class CompareProcess implements Runnable
     long timeWaitingForStartNum = 0;
     int numFilesDeleted = 0;
     long totalBytesRemoved = 0;
+    int finalCurrentProgress = 0;
+    int finalMaxProgress = 0;
     
     // === === === SETTERS === === ===
     
@@ -192,11 +194,13 @@ public class CompareProcess implements Runnable
         checkForCompareOneFolder();
         if (folder.isDirectory())
         {
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Collecting image list...");
             ArrayList<File> allImageFiles = getImagesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting list...");
             allImageFiles = sortFileList(allImageFiles);
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(allImageFiles.size());
             
-            int progressMax = getMaxProgressOneFolder(allImageFiles.size()), progressCurrent;
+            int progressMax = getMaxProgressOneFolder(allImageFiles.size()), progressCurrent = 0;
             setProgress(0, progressMax);
             
             int[] startNum = {0, 0};
@@ -305,6 +309,8 @@ public class CompareProcess implements Runnable
                 }
                 System.gc();
             }
+            finalCurrentProgress = progressCurrent;
+            finalMaxProgress = progressMax;
         }
     }
     private void checkTwoFolders(File folderOne, File folderTwo) throws IOException {
@@ -312,15 +318,16 @@ public class CompareProcess implements Runnable
         
         if (folderOne.isDirectory() && folderTwo.isDirectory())
         {
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Collecting image lists...");
             ArrayList<File> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
             ArrayList<File> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected());
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting lists...");
             allFolderOneImages = sortFileList(allFolderOneImages);
             allFolderTwoImages = sortFileList(allFolderTwoImages);
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(allFolderOneImages.size());
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(allFolderTwoImages.size());
             
-            
-            int progressMax = allFolderOneImages.size() * allFolderTwoImages.size(), progressCurrent;
+            int progressMax = allFolderOneImages.size() * allFolderTwoImages.size(), progressCurrent = 0;
             setProgress(0, progressMax);
             
             int[] startNum = {0, 0};
@@ -412,6 +419,8 @@ public class CompareProcess implements Runnable
                 }
                 System.gc();
             }
+            finalCurrentProgress = progressCurrent;
+            finalMaxProgress = progressMax;
         }
     }
     
@@ -771,7 +780,12 @@ public class CompareProcess implements Runnable
                 message += "\n";
                 message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
                 message += "\nTotal bytes freed: " + String.format("%,d", totalBytesRemoved);
-                
+                if (finalCurrentProgress != finalMaxProgress)
+                {
+                    message += "\n";
+                    message += "\nEnding progress: " + String.format("%,d", finalCurrentProgress) + " / " + String.format("%,d", finalMaxProgress);
+                    message += "\nPercent complete: " + String.format("%.2f", ((double) finalCurrentProgress / (double) finalMaxProgress) * 100) + "%";
+                }
                 JOptionPane.showMessageDialog(this.parentFrame, message, "General Information", JOptionPane.INFORMATION_MESSAGE);
             }
         }

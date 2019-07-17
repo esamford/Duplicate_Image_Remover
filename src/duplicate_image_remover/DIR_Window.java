@@ -575,10 +575,13 @@ public class DIR_Window extends javax.swing.JFrame {
 
         PNL_CompareInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        JPRGSBR_Choice_TotalProgress.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         JPRGSBR_Choice_TotalProgress.setFocusable(false);
         JPRGSBR_Choice_TotalProgress.setMaximumSize(new java.awt.Dimension(32767, 20));
-        JPRGSBR_Choice_TotalProgress.setMinimumSize(new java.awt.Dimension(10, 20));
+        JPRGSBR_Choice_TotalProgress.setMinimumSize(new java.awt.Dimension(10, 15));
+        JPRGSBR_Choice_TotalProgress.setPreferredSize(new java.awt.Dimension(146, 16));
         JPRGSBR_Choice_TotalProgress.setRequestFocusEnabled(false);
+        JPRGSBR_Choice_TotalProgress.setString("");
 
         LBL_CompareInfo_IMG1Info.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         LBL_CompareInfo_IMG1Info.setText("Image one information:");
@@ -754,7 +757,7 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(LBL_Choice_DisplayPercentSimilar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Filler_CompareInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                .addComponent(Filler_CompareInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BTN_CompareInfo_Skip)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
