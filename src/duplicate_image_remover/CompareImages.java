@@ -101,7 +101,6 @@ public class CompareImages {
         try
         {
             String fileType = Files.probeContentType(checkFile.toPath());
-            System.out.println("File type: " + fileType);
             if (fileType.compareToIgnoreCase("image/jpeg") != 0 && fileType.compareToIgnoreCase("image/png") != 0)
             {
                 return false;
@@ -109,7 +108,6 @@ public class CompareImages {
         }
         catch (Exception ex)
         {
-            System.out.println("An exception occured when getting the file type.");
             return false;
         }
         

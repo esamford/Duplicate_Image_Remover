@@ -143,15 +143,6 @@ public class DIR_Window extends javax.swing.JFrame {
             LBL_CompareInfo_NumberOfFilesInF2.setText("Number of images in folder two: ");
         }
     }
-    public javax.swing.JLabel getLBL_CompareInfo_ProgressCurrent() {
-        return this.LBL_CompareInfo_ProgressCurrent;
-    }
-    public javax.swing.JLabel getLBL_CompareInfo_ProgressMax() {
-        return this.LBL_CompareInfo_ProgressMax;
-    }
-    public javax.swing.JLabel getLBL_CompareInfo_ProgressSplit() {
-        return this.LBL_CompareInfo_ProgressSplit;
-    }
     public javax.swing.JLabel getLBL_IMG_HighlightedDifferences() {
         return this.LBL_IMG_HighlightedDifferences;
     }
@@ -334,14 +325,7 @@ public class DIR_Window extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         
-        LBL_CompareInfo_ProgressCurrent.setText(" ");
-        LBL_CompareInfo_ProgressMax.setText(" ");
-        LBL_CompareInfo_ProgressSplit.setText(" ");
-        
-        
-        
         CMBBX_SIaC_SearchType.setSelectedIndex(0);
-        
         
         
         /*
@@ -414,9 +398,6 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_CompareInfo_IMGParentFolder1 = new javax.swing.JLabel();
         LBL_CompareInfo_IMGParentFolder2 = new javax.swing.JLabel();
         Filler_CompareInfo = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        LBL_CompareInfo_ProgressCurrent = new javax.swing.JLabel();
-        LBL_CompareInfo_ProgressMax = new javax.swing.JLabel();
-        LBL_CompareInfo_ProgressSplit = new javax.swing.JLabel();
         LBL_CompareInfo_NumberOfFilesInF1 = new javax.swing.JLabel();
         LBL_CompareInfo_FileType2 = new javax.swing.JLabel();
         LBL_CompareInfo_FileType1 = new javax.swing.JLabel();
@@ -595,6 +576,8 @@ public class DIR_Window extends javax.swing.JFrame {
         PNL_CompareInfo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         JPRGSBR_Choice_TotalProgress.setFocusable(false);
+        JPRGSBR_Choice_TotalProgress.setMaximumSize(new java.awt.Dimension(32767, 20));
+        JPRGSBR_Choice_TotalProgress.setMinimumSize(new java.awt.Dimension(10, 20));
         JPRGSBR_Choice_TotalProgress.setRequestFocusEnabled(false);
 
         LBL_CompareInfo_IMG1Info.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -682,14 +665,6 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_CompareInfo_IMGParentFolder2.setMaximumSize(new java.awt.Dimension(271, 14));
         LBL_CompareInfo_IMGParentFolder2.setMinimumSize(new java.awt.Dimension(271, 14));
 
-        LBL_CompareInfo_ProgressCurrent.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        LBL_CompareInfo_ProgressCurrent.setText("CURRENT PROGRESS");
-
-        LBL_CompareInfo_ProgressMax.setText("MAX PROGRESS");
-
-        LBL_CompareInfo_ProgressSplit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LBL_CompareInfo_ProgressSplit.setText("/");
-
         LBL_CompareInfo_NumberOfFilesInF1.setText("Number of files: ");
 
         LBL_CompareInfo_FileType2.setText("File type:");
@@ -734,13 +709,6 @@ public class DIR_Window extends javax.swing.JFrame {
                     .addComponent(LBL_CompareInfo_FileType1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LBL_CompareInfo_ComparisonDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LBL_CompareInfo_ComparisonType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(PNL_CompareInfoLayout.createSequentialGroup()
-                        .addComponent(LBL_CompareInfo_ProgressCurrent, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LBL_CompareInfo_ProgressSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LBL_CompareInfo_ProgressMax, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(LBL_CompareInfo_NumberOfFilesInF2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -786,7 +754,7 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(LBL_Choice_DisplayPercentSimilar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Filler_CompareInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addComponent(Filler_CompareInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BTN_CompareInfo_Skip)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -796,13 +764,7 @@ public class DIR_Window extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BTN_CompareInfo_Cancel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PNL_CompareInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PNL_CompareInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(LBL_CompareInfo_ProgressCurrent)
-                        .addComponent(LBL_CompareInfo_ProgressMax))
-                    .addComponent(LBL_CompareInfo_ProgressSplit, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JPRGSBR_Choice_TotalProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JPRGSBR_Choice_TotalProgress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1248,9 +1210,6 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JLabel LBL_CompareInfo_ImageSize2;
     private javax.swing.JLabel LBL_CompareInfo_NumberOfFilesInF1;
     private javax.swing.JLabel LBL_CompareInfo_NumberOfFilesInF2;
-    private javax.swing.JLabel LBL_CompareInfo_ProgressCurrent;
-    private javax.swing.JLabel LBL_CompareInfo_ProgressMax;
-    private javax.swing.JLabel LBL_CompareInfo_ProgressSplit;
     private javax.swing.JLabel LBL_IMG_HighlightedDifferences;
     private javax.swing.JLabel LBL_IMG_Image1;
     private javax.swing.JLabel LBL_IMG_Image2;

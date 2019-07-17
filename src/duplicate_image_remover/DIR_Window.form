@@ -395,14 +395,6 @@
                           <Component id="LBL_CompareInfo_FileType1" alignment="0" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_ComparisonDetails" alignment="0" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_ComparisonType" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="LBL_CompareInfo_ProgressCurrent" min="-2" pref="125" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="LBL_CompareInfo_ProgressSplit" min="-2" pref="8" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="LBL_CompareInfo_ProgressMax" min="-2" pref="125" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
                           <Component id="LBL_CompareInfo_NumberOfFilesInF2" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -451,7 +443,7 @@
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_Choice_DisplayPercentSimilar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Filler_CompareInfo" pref="32" max="32767" attributes="0"/>
+                      <Component id="Filler_CompareInfo" pref="52" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="BTN_CompareInfo_Skip" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -461,15 +453,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="BTN_CompareInfo_Cancel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="LBL_CompareInfo_ProgressCurrent" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="LBL_CompareInfo_ProgressMax" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="LBL_CompareInfo_ProgressSplit" min="-2" pref="14" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JPRGSBR_Choice_TotalProgress" min="-2" pref="14" max="-2" attributes="0"/>
+                      <Component id="JPRGSBR_Choice_TotalProgress" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -479,6 +463,12 @@
             <Component class="javax.swing.JProgressBar" name="JPRGSBR_Choice_TotalProgress">
               <Properties>
                 <Property name="focusable" type="boolean" value="false"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[32767, 20]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[10, 20]"/>
+                </Property>
                 <Property name="requestFocusEnabled" type="boolean" value="false"/>
               </Properties>
             </Component>
@@ -665,23 +655,6 @@
               <AuxValues>
                 <AuxValue name="classDetails" type="java.lang.String" value="Box.Filler.Glue"/>
               </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="LBL_CompareInfo_ProgressCurrent">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="11"/>
-                <Property name="text" type="java.lang.String" value="CURRENT PROGRESS"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="LBL_CompareInfo_ProgressMax">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="MAX PROGRESS"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="LBL_CompareInfo_ProgressSplit">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="/"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="LBL_CompareInfo_NumberOfFilesInF1">
               <Properties>
