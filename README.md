@@ -7,9 +7,11 @@ as well as the images themselves, and choose which one to remove, if either.
 * When a potential match has been found...
     * The program displays information about each potential duplicate, including the name of each image, the image
     paths, the image dimensions, the amount of storage space used by each image, and the file extensions.
-    * The program shows where differences between the two images are, both by highlighting pixels that are not
-    exactly the same (can be seen on the "Pixel Differences" tab) and by subtracting the images from each other
-    (can be seen on the "Subtracted Differences" tab).
+    * The program shows where differences between the two images are, which are both displayed in the "Pixel Differences"
+    and "Subtracted Differences" tabs on the right.
+      * In the Pixel Differences tab, pixels that are 100% identical are black, while all other pixels are white.
+      * ***In the Subtracted Differences tab, black pixels mean identical or almost identical. The other pixels are a***
+      result of _________
     * Displays how similar the two images are in a percentage form, which is calculated by subtracting the image
     pixel colors from each other.
 
