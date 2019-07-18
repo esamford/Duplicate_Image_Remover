@@ -21,8 +21,10 @@ public class CompareImages {
     int[] rawImgWidth = new int[2];
     BufferedImage[] imgBuffer = new BufferedImage[2];
     
-    private boolean imagesAreEqualSize() {
-        return !(rawImgWidth[0] != rawImgWidth[1] || rawImgHeight[0] != rawImgHeight[1]);
+    private boolean imagesAreEqualSize(int height1, int height2, int width1, int width2) {
+        if (height1 != height2) { return false; }
+        else if (width1 != width2) { return false; }
+        else { return true; }
     }
     public boolean imagesAreProportional() {
         double roomForError = 0.03;
@@ -124,15 +126,11 @@ public class CompareImages {
         double tempHeight = imgIcon.getIconHeight(), tempWidth = imgIcon.getIconWidth();
         int setWidth = (int) tempWidth, setHeight = (int) tempHeight;
         
-        int maxPixCount = 400000, minPixCount = 350000;
+        int maxPixCount = 400000;
         double sizeRatio = getHeightWidthRatio(tempHeight, tempWidth);
-        if (tempHeight * tempWidth > maxPixCount) //Shrink the image if it's too large.
+        if (tempHeight * tempWidth != maxPixCount) //Shrink the image if it's too large.
         {
             tempWidth = Math.sqrt(maxPixCount/sizeRatio);
-        }
-        else if (tempHeight * tempWidth < minPixCount) //Enlarge the image if it's too small.
-        {
-            tempWidth = Math.sqrt(minPixCount/sizeRatio);
         }
         tempHeight = (tempWidth * sizeRatio);
         if (tempWidth > 1 && tempHeight > 1)
@@ -207,7 +205,10 @@ public class CompareImages {
             if (imgFile[1] != null) { this.imgBuffer[1] = importImage(imgFile[1]); }
             else if (imgBuffer[1] == null) { throw new IOException("The second imageBuffer was null, and there was no file to import from."); }
             
-            if (imagesAreEqualSize())
+            if (imagesAreEqualSize(this.imgBuffer[0].getHeight(),
+                    this.imgBuffer[1].getHeight(),
+                    this.imgBuffer[0].getWidth(),
+                    this.imgBuffer[1].getWidth()))
             {
                 switch (methodOfComparison) {
                     case BASIC:
@@ -263,13 +264,15 @@ public class CompareImages {
         float percentSimilar = 0;
         long counter, maxNum;
         try {
-            
             if (imgFile[0] != null) { this.imgBuffer[0] = importImage(imgFile[0]); }
             else if (imgBuffer[0] == null) { throw new IOException("The first imageBuffer was null, and there was no file to import from."); }
             if (imgFile[1] != null) { this.imgBuffer[1] = importImage(imgFile[1]); }
             else if (imgBuffer[1] == null) { throw new IOException("The second imageBuffer was null, and there was no file to import from."); }
             
-            if (imagesAreEqualSize())
+            if (imagesAreEqualSize(this.imgBuffer[0].getHeight(),
+                    this.imgBuffer[1].getHeight(),
+                    this.imgBuffer[0].getWidth(),
+                    this.imgBuffer[1].getWidth()))
             {
                 switch (searchMethod) {
                     case BASIC:
@@ -347,7 +350,10 @@ public class CompareImages {
             if (imgFile[1] != null) { this.imgBuffer[1] = importImage(imgFile[1]); }
             else if (imgBuffer[1] == null) { throw new IOException("The second imageBuffer was null, and there was no file to import from."); }
             
-            if (imagesAreEqualSize())
+            if (imagesAreEqualSize(this.imgBuffer[0].getHeight(),
+                    this.imgBuffer[1].getHeight(),
+                    this.imgBuffer[0].getWidth(),
+                    this.imgBuffer[1].getWidth()))
             {
                 switch (searchMethod) {
                     case BASIC:

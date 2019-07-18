@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -300,12 +301,22 @@ public class CompareProcess implements Runnable
                                     }
                                 }
                                 catch (IOException ex)
-                                { if (ex.getMessage().equals(cancelCompareMessage)) { throw ex; } }
+                                {
+                                    if (ex.getMessage().equals(cancelCompareMessage))
+                                    { throw ex;}
+                                }
                             }
                         }
                     }
                     catch (IOException ex)
-                    { if (ex.getMessage().equals(cancelCompareMessage)) { throw ex; } }
+                    {
+                        if (ex.getMessage().equals(cancelCompareMessage))
+                        {
+                            finalCurrentProgress = progressCurrent;
+                            finalMaxProgress = progressMax;
+                            throw ex;
+                        }
+                    }
                 }
                 System.gc();
             }
@@ -410,12 +421,22 @@ public class CompareProcess implements Runnable
                                     }
                                 }
                                 catch (IOException ex)
-                                { if (ex.getMessage().equals(cancelCompareMessage)) { throw ex; } }
+                                {
+                                    if (ex.getMessage().equals(cancelCompareMessage))
+                                    { throw ex; }
+                                }
                             }
                         }
                     }
                     catch (IOException ex)
-                    { if (ex.getMessage().equals(cancelCompareMessage)) { throw ex; } }
+                    {
+                        if (ex.getMessage().equals(cancelCompareMessage))
+                        {
+                            finalCurrentProgress = progressCurrent;
+                            finalMaxProgress = progressMax;
+                            throw ex;
+                        }
+                    }
                 }
                 System.gc();
             }
@@ -456,7 +477,7 @@ public class CompareProcess implements Runnable
     }
     private void displayFileInfo(File file1, File file2, float percentSimilar) {
         this.parentFrame.getLBL_CompareInfo_IMGName1().setText("Name: " + file1.getName());
-        this.parentFrame.getLBL_CompareInfo_FileType1().setText("File type: " + getFileExt(file1));
+        this.parentFrame.getLBL_CompareInfo_FileType1().setText("File type: " + getFileType(file1));
         this.parentFrame.getLBL_CompareInfo_IMGFileSize1().setText("File size (bytes): " + String.format("%,d", file1.length()));
         this.parentFrame.getLBL_CompareInfo_IMGParentFolder1().setText("Parent folder: " + getParentFolderName(file1));
         this.parentFrame.getLBL_CompareInfo_IMGFilePath1().setText("File path: " + file1.getPath());
@@ -466,7 +487,7 @@ public class CompareProcess implements Runnable
         this.parentFrame.getLBL_CompareInfo_IMGFilePath1().setToolTipText(file1.getPath());
                 
         this.parentFrame.getLBL_CompareInfo_IMGName2().setText("Name: " + file2.getName());
-        this.parentFrame.getLBL_CompareInfo_FileType2().setText("File type: " + getFileExt(file2));
+        this.parentFrame.getLBL_CompareInfo_FileType2().setText("File type: " + getFileType(file2));
         this.parentFrame.getLBL_CompareInfo_IMGFileSize2().setText("File size (bytes): " + String.format("%,d", file2.length()));
         this.parentFrame.getLBL_CompareInfo_IMGParentFolder2().setText("Parent folder: " + getParentFolderName(file2));
         this.parentFrame.getLBL_CompareInfo_IMGFilePath2().setText("File path: " + file2.getPath());
@@ -588,8 +609,31 @@ public class CompareProcess implements Runnable
         File parentFolder = tempFile.getParentFile();
         return parentFolder.getName();
     }
-    private String getFileExt(File tempFile) {
-        return tempFile.getName().substring(tempFile.getName().lastIndexOf("."));
+    private String getFileType(File file) {
+        String fileType = "";
+        try
+        {
+            fileType = Files.probeContentType(file.toPath());
+            fileType = fileType.substring(fileType.lastIndexOf('/') + 1);
+            fileType = fileType.toUpperCase();
+        }
+        catch (Exception ex)
+        {
+            String tempType = file.getName().substring(file.getName().lastIndexOf('.'));
+            switch (tempType)
+            {
+                case ".png":
+                    fileType = "PNG";
+                    break;
+                case ".jpg":
+                case ".jpeg":
+                    fileType = "JPEG";
+                    break;
+                default:
+                    fileType = tempType;
+            }
+        }
+        return fileType;
     }
     private long askUserForStartNum(long maxNum) {
         long startTime = System.currentTimeMillis();
@@ -743,6 +787,8 @@ public class CompareProcess implements Runnable
                 System.out.println("Something went wrong and the comparison had to be canceled.");
                 System.out.println("Error type: " + ex.getClass().toString());
                 System.out.println("Message: " + ex.getMessage());
+                System.out.println("Stack trace:\n");
+                ex.printStackTrace();
             }
             
             this.parentFrame.getBTN_CompareInfo_Skip().removeActionListener(skip);
@@ -780,7 +826,7 @@ public class CompareProcess implements Runnable
                 message += "\n";
                 message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
                 message += "\nTotal bytes freed: " + String.format("%,d", totalBytesRemoved);
-                if (finalCurrentProgress != finalMaxProgress)
+                if (finalCurrentProgress < finalMaxProgress)
                 {
                     message += "\n";
                     message += "\nEnding progress: " + String.format("%,d", finalCurrentProgress) + " / " + String.format("%,d", finalMaxProgress);
