@@ -55,8 +55,7 @@ is to increase the percent similarity threshold, which should reduce the number 
 different sizes. The reason for this is that the program must resize these images (not the originals, just a copy
 of them) so that they have the same height and width before it can compare them pixel-by-pixel. Unfortunately, the
 program cannot scale these images without distorting the image slightly. Most of the time these distortions are
-too small to notice, but they do reduce the percentage of similarity between the images so that they are below 100%,
-which is why the duplicate does not get shown to the user at a 100% similarity threshold.
+too small to for the human eye notice, but they do reduce the percentage of similarity between the images below 100%.
 
 * The image in the Pixel Differences tab on the right does not accurately show pixel differences when the program
 is comparing two images of different sizes. This is because of the previously mentioned resizing issue, where 
