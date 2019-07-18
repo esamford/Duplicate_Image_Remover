@@ -10,8 +10,8 @@ as well as the images themselves, and choose which one to remove, if either.
     * The program shows where differences between the two images are, which are both displayed in the "Pixel Differences"
     and "Subtracted Differences" tabs on the right.
       * In the Pixel Differences tab, pixels that are 100% identical are black, while all other pixels are white.
-      * ***In the Subtracted Differences tab, black pixels mean identical or almost identical. The other pixels are a***
-      result of _________
+      * In the Subtracted Differences tab, what is seen is a result of subtracting the colors from each image. This means
+      that black pixels are more similar to each other, while other colors represent differences between the images.
     * Displays how similar the two images are in a percentage form, which is calculated by subtracting the image
     pixel colors from each other.
 
@@ -40,11 +40,11 @@ the program is running, or if the user is AFK and wishes to be notified when the
 ***deleting them, etc.), this number will stop matching with the new folder contents.***
 
 ## Limitations ##
-* When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. Any images deleted
+* When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. Any files deleted
 using this program will skip the Recycle Bin and be deleted *permenantly!*
 
 * The program cannot match an image with a cropped, rotated, stretched, or otherwise highly edited version of itself.
-Most-likely, the program will think these are two unique images and will not mark them as potential duplicates.
+The program will most-likely think these are two unique images and will not mark them as potential duplicates.
 
 * If you are working with a lot of images that have the same or similar background color, the program may come up 
 with a lot of false positives and display images that are not supposed to be paired. This is because the majority of 
