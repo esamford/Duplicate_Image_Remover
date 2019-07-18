@@ -12,8 +12,7 @@ as well as the images themselves, and choose which one to remove, if either.
       * In the Pixel Differences tab, pixels that are 100% identical are black, while all other pixels are white.
       * In the Subtracted Differences tab, what is seen is a result of subtracting the colors from each image. This means
       that black pixels are more similar to each other, while other colors represent differences between the images.
-    * Displays how similar the two images are in a percentage form, which is calculated by subtracting the image
-    pixel colors from each other.
+    * The program shows how similar the two images are in a percentage form.
 
 * Three different options to choose from when deciding how many images to check...
     * Two images: Choose two individual images and compare them. (Please note that since the user wants to compare 
@@ -33,11 +32,12 @@ the program is running, or if the user is AFK and wishes to be notified when the
 
 * When choosing to compare images in folders, there is an option to include all images in subfolders as well.
 
-* ***If the user is comparing a folder (or folders) that have at least 1,000 combinations, the user can choose a***
-***starting position to begin comparing. This is helpful for when the program needs to go through more combinations than***
-***what the user has time for. They can stop comparing, remember the number they stopped at, and start at that same spot***
-***again later. Please note that if the contents in the folder(s) being compared changes in any way (renaming files,***
-***deleting them, etc.), this number will stop matching with the new folder contents.***
+* If the user is unable to finish going through a folder (or folders) with the amount of time they have, they can
+stop the program and continue where they left off later. Inside the progress bar is a fraction showing your current
+progress for that folder (or folders), with the current progress on the left and total progress on the right. (This
+progress can also be seen if the user has the "Display general information..." checkbox checked in the settings page).
+If the number of possible combinations is above 1,000, the program will ask for a starting position before it begins 
+comparing. All you have to do is remember where you stopped and enter that number to continue.
 
 ## Limitations ##
 * When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. Any files deleted
@@ -55,7 +55,7 @@ is to increase the percent similarity threshold, which should reduce the number 
 different sizes. The reason for this is that the program must resize these images (not the originals, just a copy
 of them) so that they have the same height and width before it can compare them pixel-by-pixel. Unfortunately, the
 program cannot scale these images without distorting the image slightly. Most of the time these distortions are
-too small to for the human eye notice, but they do reduce the percentage of similarity between the images below 100%.
+too small to for the human eye to notice, but they do reduce the percentage of similarity between the images below 100%.
 
 * The image in the Pixel Differences tab on the right does not accurately show pixel differences when the program
 is comparing two images of different sizes. This is because of the previously mentioned resizing issue, where 
