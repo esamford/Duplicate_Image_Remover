@@ -228,13 +228,13 @@ public class CompareProcess implements Runnable
                 }
             }
             
+            CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
+            CompareImages compare = new CompareImages();
+            
             int[] imgInt = new int[2];
             for (imgInt[0] = startNum[0]; imgInt[0] < allImageFiles.size() - 1; imgInt[0]++)
             {
                 if (stopThread) { break; }
-                
-                CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
-                CompareImages compare = new CompareImages();
                 
                 int adjustVal = 0;
                 for (int x = imgInt[0]; x > 0; x--) { adjustVal += x; }
@@ -349,13 +349,13 @@ public class CompareProcess implements Runnable
                 startNum[1] = (int) userNum % allFolderTwoImages.size();
             }
             
+            CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
+            CompareImages compare = new CompareImages();
+            
             int[] imgInt = new int[2];
             for (imgInt[0] = startNum[0]; imgInt[0] < allFolderOneImages.size(); imgInt[0]++)
             {
                 if (stopThread) { break; }
-                
-                CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
-                CompareImages compare = new CompareImages();
                 
                 this.targetFile[0] = allFolderOneImages.get((imgInt[0]));
                 if (!this.targetFile[0].exists())
