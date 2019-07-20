@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicProgressBarUI;
 
 public class DIR_Window extends javax.swing.JFrame {
     File[] targetFolder = new File[2];
@@ -327,25 +329,14 @@ public class DIR_Window extends javax.swing.JFrame {
         
         CMBBX_SIaC_SearchType.setSelectedIndex(0);
         
-        
-        /*
-        LBL_SIaC_DataHeader1.setText("Image One Information:");
-        LBL_SIaC_DataName2.setText("Name:");
-        LBL_SIaC_DataPath1.setText("File path:");
-        LBL_SIaC_ImageCount1.setVisible(false);
-        LBL_SIaC_DataHeader2.setText("Image Two Information:");
-        LBL_SIaC_DataHeader2.setVisible(true);
-        LBL_SIaC_DataName2.setText("Name:");
-        LBL_SIaC_DataName2.setVisible(true);
-        LBL_SIaC_DataPath2.setText("File path:");
-        LBL_SIaC_DataPath2.setVisible(true);
-        LBL_SIaC_ImageCount2.setVisible(false);
-        
-        LBL_CompareInfo_ComparisonType.setText("Comparison type: Two images");
-        LBL_CompareInfo_NumberOfFilesInF1.setVisible(false);
-        LBL_CompareInfo_NumberOfFilesInF2.setVisible(false);
-        */
-        
+        //* Change the text color of the progress bar so that it's black both with and without the progress color.
+        BasicProgressBarUI textColor = new BasicProgressBarUI() {
+            protected Color getSelectionBackground() { return Color.black; }
+            protected Color getSelectionForeground() { return Color.black; }
+        };
+        this.JPRGSBR_Choice_TotalProgress.setUI(textColor);
+        this.JPRGSBR_Choice_TotalProgress.setForeground(new Color(21, 214, 58)); //Change the progress color to a teal-ish green
+        //*/
     }
 
     @SuppressWarnings("unchecked")
