@@ -34,6 +34,7 @@ public class CompareProcess implements Runnable
     long totalBytesRemoved = 0;
     int finalCurrentProgress = 0;
     int finalMaxProgress = 0;
+    boolean invalidFileTypesFound = false;
     
     // === === === SETTERS === === ===
     
@@ -129,7 +130,7 @@ public class CompareProcess implements Runnable
         if (this.parentFrame.getCHKBX_Settings_SoundNotifications().isSelected())
         { Toolkit.getDefaultToolkit().beep(); }
         waitingForUser = true;
-        int timeWaited = 0, sleepTime = 500, notificationSeconds = 60;
+        int timeWaited = 0, sleepTime = 250, notificationSeconds = 60;
         long startTime = System.currentTimeMillis();
         try {
             while (waitingForUser) {
@@ -185,8 +186,12 @@ public class CompareProcess implements Runnable
                 timeWaitingForStartNum += System.currentTimeMillis() - startTime;
             }
         } 
-        catch (Exception ex)
+        catch (IOException ex)
         {
+            if (ex.getMessage().equals("-1"))
+            {
+                invalidFileTypesFound = true;
+            }
             System.out.println("Error when comparing two single images: " + ex.getMessage());
             throw ex;
         }
@@ -274,8 +279,6 @@ public class CompareProcess implements Runnable
                             else
                             {
                                 try {
-                                    
-                                    
                                     compare.setImage(this.targetFile[1], CompareImages.FileNum.SECOND);
                                     
                                     float percentSimilar = compare.getPercentSimilar(compareMethod, this.parentFrame.getSLDR_MinimumSimilarityThreshold());
@@ -304,6 +307,26 @@ public class CompareProcess implements Runnable
                                 {
                                     if (ex.getMessage().equals(cancelCompareMessage))
                                     { throw ex;}
+                                    else if (ex.getMessage().equals("-1")) //If an invalid file had been found, remove it from the list.
+                                    {
+                                        ImageIcon img = new ImageIcon(allImageFiles.get((imgInt[0])).getAbsolutePath());
+                                        if (img.getIconHeight() < 1 || img.getIconWidth() < 1)
+                                        {
+                                            invalidFileTypesFound = true;
+                                            allImageFiles.remove(imgInt[0]--);
+                                            progressMax = getMaxProgressOneFolder(allImageFiles.size());
+                                            this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(allImageFiles.size());
+                                            break;
+                                        }
+                                        img = new ImageIcon(allImageFiles.get((imgInt[1])).getAbsolutePath());
+                                        if (img.getIconHeight() < 1 || img.getIconWidth() < 1)
+                                        {
+                                            invalidFileTypesFound = true;
+                                            allImageFiles.remove(imgInt[1]--);
+                                            progressMax = getMaxProgressOneFolder(allImageFiles.size());
+                                            this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(allImageFiles.size());
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -424,6 +447,26 @@ public class CompareProcess implements Runnable
                                 {
                                     if (ex.getMessage().equals(cancelCompareMessage))
                                     { throw ex; }
+                                    else if (ex.getMessage().equals("-1")) //If an invalid file had been found, remove it from the list.
+                                    {
+                                        ImageIcon img = new ImageIcon(allFolderOneImages.get((imgInt[0])).getAbsolutePath());
+                                        if (img.getIconHeight() < 1 || img.getIconWidth() < 1)
+                                        {
+                                            invalidFileTypesFound = true;
+                                            allFolderOneImages.remove(imgInt[0]--);
+                                            progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
+                                            this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(allFolderOneImages.size());
+                                            break;
+                                        }
+                                        img = new ImageIcon(allFolderTwoImages.get((imgInt[1])).getAbsolutePath());
+                                        if (img.getIconHeight() < 1 || img.getIconWidth() < 1)
+                                        {
+                                            invalidFileTypesFound = true;
+                                            allFolderTwoImages.remove(imgInt[1]--);
+                                            progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
+                                            this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(allFolderTwoImages.size());
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -833,6 +876,15 @@ public class CompareProcess implements Runnable
                     message += "\nPercent complete: " + String.format("%.2f", ((double) finalCurrentProgress / (double) finalMaxProgress) * 100) + "%";
                 }
                 JOptionPane.showMessageDialog(this.parentFrame, message, "General Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            
+            if (invalidFileTypesFound)
+            {
+                String invalidTypeMessage = 
+                        "The program found one or more invalid images. These files may be invalid because their file extensions" +
+                        "\nwere renamed in an attempt to get the program to read them. If this is the case, please instead convert" +
+                        "\nthese using an image converter. You can see which image types are valid in the README file.";
+                JOptionPane.showMessageDialog(parentFrame, invalidTypeMessage, "Invalid Image(s)", JOptionPane.ERROR_MESSAGE);
             }
         }
         else { System.out.println("Parent frame is null!"); }

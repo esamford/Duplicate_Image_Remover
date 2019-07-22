@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 
 public class DIR_Window extends javax.swing.JFrame {
@@ -1002,8 +1001,23 @@ public class DIR_Window extends javax.swing.JFrame {
                         {
                             imgFile[0] = null;
                             clearDisplayedImages();
-                            String errorMSG = "Unable to import the image.\nError message: ";
-                            JOptionPane.showMessageDialog(this, errorMSG + ex.getMessage(), "Unable to Read Image", JOptionPane.ERROR_MESSAGE);
+                            
+                            String errorMSG = "", popupTitle = "";
+                            
+                            ImageIcon img = new ImageIcon(getData.getSelectedFile().getAbsolutePath());
+                            if (img.getIconHeight() < 1 || img.getIconWidth() < 1)
+                            {
+                                errorMSG = "The selected image cannot be read. It may be an invalid file type that was renamed to look" +
+                                           "\nlike a valid image. If this is the case, please instead convert it using an image converter." +
+                                           "\nValid image types can be found in the README file.";
+                                popupTitle = "Invalid Image";
+                            }
+                            else
+                            {
+                                errorMSG = "Unable to import the image.\nError message: " + ex.getMessage();
+                                popupTitle = "Failed to Import Image";
+                            }
+                            JOptionPane.showMessageDialog(this, errorMSG, popupTitle, JOptionPane.ERROR_MESSAGE);
                         }
                         TBDPN_Images.setSelectedIndex(0);
                     }
@@ -1066,8 +1080,23 @@ public class DIR_Window extends javax.swing.JFrame {
                         } catch (IOException ex) {
                             imgFile[1] = null;
                             clearDisplayedImages();
-                            String errorMSG = "Unable to import the image.\nError message: ";
-                            JOptionPane.showMessageDialog(this, errorMSG + ex.getMessage(), "Unable to Read Image", JOptionPane.ERROR_MESSAGE);
+                            
+                            String errorMSG = "", popupTitle = "";
+                            
+                            ImageIcon img = new ImageIcon(getData.getSelectedFile().getAbsolutePath());
+                            if (img.getIconHeight() < 1 || img.getIconWidth() < 1)
+                            {
+                                errorMSG = "The selected image cannot be read. It may be an invalid file type that was renamed to look" +
+                                           "\nlike a valid image. If this is the case, please instead convert it using an image converter." +
+                                           "\nValid image types can be found in the README file.";
+                                popupTitle = "Invalid Image";
+                            }
+                            else
+                            {
+                                errorMSG = "Unable to import the image.\nError message: " + ex.getMessage();
+                                popupTitle = "Failed to Import Image";
+                            }
+                            JOptionPane.showMessageDialog(this, errorMSG, popupTitle, JOptionPane.ERROR_MESSAGE);
                         }
                         TBDPN_Images.setSelectedIndex(1);
                     }

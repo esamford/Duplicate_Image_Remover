@@ -112,7 +112,6 @@ public class CompareImages {
         {
             return false;
         }
-        
         return true;
     }
     
@@ -123,27 +122,38 @@ public class CompareImages {
         if (!checkIfValidImage(imgFile)) { throw new IOException("The file provided to the 'importImage' function is not valid."); }
         
         ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
+        if (imgIcon.getIconWidth() < 1 || imgIcon.getIconHeight() < 1)
+        {
+            //The file could not be imported correctly.
+            //This is probably because it's not a PNG or JPEG, but rather something disguised as one.
+            //Have the file removed from the image list.
+            System.out.println("Invalid file found. Throwing -1.");
+            throw new IOException("-1"); 
+        }
+        
         double tempHeight = imgIcon.getIconHeight(), tempWidth = imgIcon.getIconWidth();
         int setWidth = (int) tempWidth, setHeight = (int) tempHeight;
         
-        int maxPixCount = 400000;
+        int targetPixCount = 400000;
         double sizeRatio = getHeightWidthRatio(tempHeight, tempWidth);
-        if (tempHeight * tempWidth != maxPixCount) //Shrink the image if it's too large.
+        if (tempHeight * tempWidth != targetPixCount) //Shrink the image if it's too large.
         {
-            tempWidth = Math.sqrt(maxPixCount/sizeRatio);
+            tempWidth = Math.sqrt(targetPixCount/sizeRatio);
+            tempHeight = (tempWidth * sizeRatio);
+            if (tempWidth > 1 && tempHeight > 1)
+            {
+                setWidth = (int) Math.round(tempWidth);
+                setHeight = (int) Math.round(tempHeight);
+            }
+            imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
         }
-        tempHeight = (tempWidth * sizeRatio);
-        if (tempWidth > 1 && tempHeight > 1)
-        {
-            setWidth = (int) Math.round(tempWidth);
-            setHeight = (int) Math.round(tempHeight);
-        }
-        imgIcon.setImage(getScaledImage(imgIcon.getImage(), setWidth, setHeight));
         
         BufferedImage newIMGBuff = new BufferedImage(setWidth, setHeight, BufferedImage.TYPE_INT_ARGB);
         Graphics convert = newIMGBuff.createGraphics();
         imgIcon.paintIcon(null, convert, 0, 0);
         convert.dispose();
+        
+        
         
         return newIMGBuff;
    }
@@ -196,7 +206,7 @@ public class CompareImages {
         return newBuff;
     }
     
-    public BufferedImage getDifferenecs(CompareMethod methodOfComparison) {
+    public BufferedImage getDifferenecs(CompareMethod methodOfComparison) throws IOException {
         BufferedImage returnImage;
         try
         {
@@ -253,14 +263,19 @@ public class CompareImages {
                 }
                 return compare.getDifferenecs(methodOfComparison);
             }
-        } catch (Exception ex) {
+        } catch (IOException ex) {
+            if (ex.getMessage().equals("-1"))
+            {
+                throw ex;
+            }
+            
             System.out.println("SOMETHING WENT WRONG WHILE TRYING TO GET DIFFERENCE IMAGES. RETURNING A BLANK IMAGE.");
             System.out.println("\t" + ex.toString());
             System.out.println("\t" + ex.getMessage());
         }
         return new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
     }
-    public float getPercentSimilar(CompareMethod searchMethod) {
+    public float getPercentSimilar(CompareMethod searchMethod) throws IOException {
         float percentSimilar = 0;
         long counter, maxNum;
         try {
@@ -335,13 +350,18 @@ public class CompareImages {
         }
         catch (IOException ex)
         {
+            if (ex.getMessage().equals("-1"))
+            {
+                throw ex;
+            }
+            
             System.out.println("SOMETHING WENT WRONG WHILE TRYING TO GET PERCENTAGE SIMILAR. RETURNING -1.\n\n" + ex.getMessage());
             return -1;
         }
         
         return percentSimilar;
     }
-    public float getPercentSimilar(CompareMethod searchMethod, javax.swing.JSlider percentRequired) {        
+    public float getPercentSimilar(CompareMethod searchMethod, javax.swing.JSlider percentRequired) throws IOException {        
         float percentSimilar = 0;
         long counter, maxNum;
         try {
@@ -420,6 +440,11 @@ public class CompareImages {
         }
         catch (IOException ex)
         {
+            if (ex.getMessage().equals("-1"))
+            {
+                throw ex;
+            }
+            
             System.out.println("SOMETHING WENT WRONG WHILE TRYING TO GET PERCENTAGE SIMILAR. RETURNING -1.\n\n" + ex.getMessage());
             return -1;
         }
