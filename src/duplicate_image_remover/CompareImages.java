@@ -27,13 +27,14 @@ public class CompareImages {
         else { return true; }
     }
     public boolean imagesAreProportional() {
-        double roomForError = 0.03;
+        double roomForError = getProportionError();
         float result = ((float) rawImgHeight[0] / rawImgWidth[0]) -
                        ((float) rawImgHeight[1] / rawImgWidth[1]);
         if (result < 0) { result *= -1; }
         
         return result < roomForError;
     }
+    public double getProportionError() { return 0.03; }
     private boolean firstImageIsLarger() {
         return imgBuffer[0].getWidth() > imgBuffer[1].getWidth();
     }

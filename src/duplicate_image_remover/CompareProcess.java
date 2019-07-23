@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -112,13 +114,13 @@ public class CompareProcess implements Runnable
         }
     }
     private void deleteImageOneButtonClicked() {
-        if (this.targetFolder[0].exists())
+        if (this.currentFiles[0].exists())
         {
             deleteFile(this.currentFiles[0]);
         }
     }
     private void deleteImageTwoButtonClicked() {
-        if (this.targetFolder[1].exists())
+        if (this.currentFiles[1].exists())
         {
             deleteFile(this.currentFiles[1]);
         }
@@ -132,7 +134,6 @@ public class CompareProcess implements Runnable
         displayFileInfo(image1, image2, percentSimilar);
         this.currentFiles[0] = image1;
         this.currentFiles[1] = image2;
-        
         
         System.gc();
         enableChoiceButtons(true);
@@ -277,7 +278,6 @@ public class CompareProcess implements Runnable
                             progressCurrent = (imgInt[0] * (allImageFiles.size())) + imgInt[1] - imgInt[0] - adjustVal;
                             setProgress(progressCurrent, progressMax);
                             
-                            
                             if (!allImageFiles.get((imgInt[1])).file.exists())
                             {
                                 allImageFiles.remove(imgInt[1]--);
@@ -286,17 +286,12 @@ public class CompareProcess implements Runnable
                             }
                             else
                             {
-                                
-                                
-                                //Check the height/width ratio here and decide whether or not to break from the nested loop into
-                                //the larger loop.
-                                
-                                
-                                
-                                
-                                
-                                
-                                
+                                //Make sure that this image pairing is proportional.
+                                double ratioDifference = allImageFiles.get((imgInt[0])).hwRatio - allImageFiles.get((imgInt[1])).hwRatio;
+                                if (ratioDifference < 0) { ratioDifference *= -1; }
+                                if (ratioDifference >= compare.getProportionError()) {
+                                    System.out.println("Skipping some combinations to match proportionality.");
+                                    break; }
                                 
                                 try {
                                     compare.setImage(allImageFiles.get((imgInt[1])).file, CompareImages.FileNum.SECOND);
@@ -434,21 +429,48 @@ public class CompareProcess implements Runnable
                             }
                             else
                             {
-                                //Check the height/width ratio here and decide whether or not to break from the nested loop into
-                                //the larger loop.
-                                
-                                
-                                
-                                
-                                
+                                //Make sure that whatever image pairing is up next is proportional
+                                JOptionPane.showMessageDialog(parentFrame, "Double-check the skip size ratio stuff in the two folder compare.");
+                                double ratio1 = allFolderOneImages.get((imgInt[0])).hwRatio;
+                                double ratio2 = allFolderTwoImages.get((imgInt[1])).hwRatio;
+                                double ratioDifference = ratio1 - ratio2;
+                                if (ratioDifference < 0) { ratioDifference *= -1; }
+                                if (ratioDifference >= compare.getProportionError())
+                                {
+                                    boolean endNestedLoop = false;
+                                    for (int x = imgInt[1]; x < allFolderTwoImages.size(); x++)
+                                    {
+                                        ratio1 = allFolderOneImages.get((imgInt[0])).hwRatio;
+                                        ratio2 = allFolderTwoImages.get((imgInt[1])).hwRatio;
+                                        ratioDifference = ratio1 - ratio2;
+
+                                        if (ratioDifference < 0) { ratioDifference *= -1; }
+                                        if (ratioDifference < compare.getProportionError())
+                                        {
+                                            System.out.println("Skipping some combinations to match proportionality.");
+                                            imgInt[1] = x;
+                                            progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
+                                            setProgress(progressCurrent, progressMax);
+                                            break;
+                                        }
+
+                                        if (ratioDifference < compare.getProportionError() * -1)
+                                        { 
+                                            endNestedLoop = true;
+                                        }
+                                    }
+                                    if (endNestedLoop) { break; }
+                                }
                                 
                                 
                                 
                                 try {
-                                    if (!allFolderOneImages.get((imgInt[0])).file.equals(allFolderTwoImages.get((imgInt[1])).file)) { break; } //Make sure not to compare an image with itself.
+                                    String file1Path = allFolderOneImages.get(imgInt[0]).file.getAbsolutePath();
+                                    String file2Path = allFolderTwoImages.get((imgInt[1])).file.getAbsolutePath();
+                                    if (file1Path.equalsIgnoreCase(file2Path)) { break; } //Make sure not to compare an image with itself.
                                     
                                     compare.setImage(allFolderTwoImages.get((imgInt[1])).file, CompareImages.FileNum.SECOND);
-
+                                    
                                     float percentSimilar = compare.getPercentSimilar(compareMethod, this.parentFrame.getSLDR_MinimumSimilarityThreshold());
 
                                     if (percentSimilar >= 0 && percentSimilar * 100 >= this.parentFrame.getSLDR_MinimumSimilarityThreshold().getValue())
@@ -472,6 +494,8 @@ public class CompareProcess implements Runnable
                                             progressMax = allFolderOneImages.size() * allFolderTwoImages.size();
                                             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(allFolderTwoImages.size());
                                         }
+                                        
+                                        if (progressCurrent == progressMax - 1) { progressCurrent = progressMax; }
                                     }
                                 }
                                 catch (IOException ex)
@@ -843,6 +867,9 @@ public class CompareProcess implements Runnable
     public void run() {
         if (this.parentFrame != null)
         {
+            JOptionPane.showMessageDialog(parentFrame, "Double-check the skip size ratio stuff in the two folder compare.");
+            
+            
             ActionListener skip = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
