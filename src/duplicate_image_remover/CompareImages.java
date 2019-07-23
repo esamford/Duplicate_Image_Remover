@@ -116,6 +116,33 @@ public class CompareImages {
     }
     
     public double getHeightWidthRatio(double height, double width) { return height / width; }
+    public double getHeightWidthRatioFromFile(File imgFile) {
+        if (checkIfValidImage(imgFile))
+        {
+            double ratio = 0.0;
+            try //Get the image height and width quickly.
+            {
+                ImageInputStream in = ImageIO.createImageInputStream(imgFile);
+                Iterator<ImageReader> readers = ImageIO.getImageReaders(in);
+                if (readers.hasNext())
+                {
+                    ImageReader reader = readers.next();
+                    reader.setInput(in);
+                    ratio = (double) reader.getHeight(0) / (double) reader.getWidth(0);
+                }
+            }
+            catch (Exception ex) //If getting the image height and width failed, try again using the slow, more reliable method.
+            {
+                ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
+                ratio = (double) imgIcon.getIconHeight() / (double) imgIcon.getIconWidth();
+            }
+            return ratio;
+        }
+        else
+        {
+            return -1;
+        }
+    }
     
     public BufferedImage importImage(File imgFile) throws IOException {
         if (!imgFile.exists()) { throw new IOException("The image file provided does not exist."); }
