@@ -36,9 +36,9 @@ progress for that folder (or folders), with the current progress on the left and
 progress can also be seen if the user has the "Display general information..." checkbox checked in the settings page).
 If the number of possible combinations is above 1,000, the program will ask for a starting position before it begins 
 comparing. All you have to do is remember where you stopped and enter that number to continue.
-   * Note: If the contents of the folder(s) are changed, whether it is by adding/removing images or by changing the
-   image names, the order the images are compared in will also change. If the user then skips to where they last ended,
-   the program may miss image combinations that have not been tested for similarity yet.
+   * Note: If the contents of the folder(s) are changed by adding/removing images, the order the images are compared 
+   in will also change. If the user then skips to where they last ended, the program may miss image combinations that 
+   have not been tested for similarity yet.
 
 ## Limitations ##
 * When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. Any files deleted
