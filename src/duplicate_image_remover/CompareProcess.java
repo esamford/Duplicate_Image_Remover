@@ -409,15 +409,14 @@ public class CompareProcess implements Runnable
                         for (imgInt[1] = 0; imgInt[1] < allFolderTwoImages.size(); imgInt[1]++)
                         {
                             if (stopThread) { break; }
-                            
-                            progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
-                            setProgress(progressCurrent, progressMax);
-                            
-                            if (startNum[1] > 0)
+                            else if (startNum[1] > 0)
                             {
                                 imgInt[1] = startNum[1];
                                 startNum[1] = -1;
                             }
+                            
+                            progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
+                            setProgress(progressCurrent, progressMax);
                             
                             if (!allFolderTwoImages.get((imgInt[1])).file.exists())
                             {
@@ -428,40 +427,25 @@ public class CompareProcess implements Runnable
                             else
                             {
                                 //Make sure that whatever image pairing is up next is proportional
-                                System.out.println("Make sure that the size ratio stuff is ready for two folder comparing. It's commented out, but I think I need to work on it a little bit more first.");
-                                System.out.println("\tCheck to see if the second folder's image's size ratio is too big, then break. If it's too small, skip until it's within range.");
-//                                double ratio1 = allFolderOneImages.get((imgInt[0])).hwRatio;
-//                                double ratio2 = allFolderTwoImages.get((imgInt[1])).hwRatio;
-//                                double ratioDifference = ratio1 - ratio2;
-//                                if (ratioDifference < 0) { ratioDifference *= -1; }
-//                                if (ratioDifference >= compare.getProportionError())
-//                                {
-//                                    boolean endNestedLoop = false;
-//                                    for (int x = imgInt[1] + 1; x < allFolderTwoImages.size(); x++)
-//                                    {
-//                                        ratio1 = allFolderOneImages.get((imgInt[0])).hwRatio;
-//                                        ratio2 = allFolderTwoImages.get((imgInt[1])).hwRatio;
-//                                        ratioDifference = ratio1 - ratio2;
-//
-//                                        if (ratioDifference < 0) { ratioDifference *= -1; }
-//                                        if (ratioDifference < compare.getProportionError())
-//                                        {
-//                                            System.out.println("Skipping some combinations to match proportionality.");
-//                                            imgInt[1] = x;
-//                                            progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
-//                                            setProgress(progressCurrent, progressMax);
-//                                            break;
-//                                        }
-//
-//                                        if (ratioDifference < compare.getProportionError() * -1)
-//                                        { 
-//                                            endNestedLoop = true;
-//                                        }
-//                                    }
-//                                    if (endNestedLoop) { break; }
-//                                }
-                                
-                                
+                                double ratioDifference = allFolderOneImages.get((imgInt[0])).hwRatio - 
+                                                         allFolderTwoImages.get((imgInt[1])).hwRatio;
+                                if (ratioDifference <= compare.getProportionError() * -1) { break; } //If the second folder's file is too high out of range, break.
+                                else if (ratioDifference >= compare.getProportionError())
+                                {
+                                    System.out.println("Skipping to find a proportional pairing.");
+                                    for (; imgInt[1] < allFolderTwoImages.size(); imgInt[1]++)
+                                    {
+                                        progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
+                                        setProgress(progressCurrent, progressMax);
+                                        
+                                        ratioDifference = allFolderOneImages.get((imgInt[0])).hwRatio - 
+                                                          allFolderTwoImages.get((imgInt[1])).hwRatio;
+                                        if (ratioDifference <= compare.getProportionError() * -1) { break; } //If it's too high, break and exit the nested loop.
+                                        if (ratioDifference < 0) { ratioDifference *= -1; }
+                                        if (ratioDifference < compare.getProportionError()) { break; } //If it falls within range, break and continue the nested loop.
+                                    }
+                                    if (ratioDifference <= compare.getProportionError() * -1) { break; }
+                                }
                                 
                                 try {
                                     String file1Path = allFolderOneImages.get(imgInt[0]).file.getAbsolutePath();
@@ -828,19 +812,6 @@ public class CompareProcess implements Runnable
         return (imageCount * (imageCount - 1)) / 2;
     }
     private ArrayList<fileAndRatio> sortFileList(ArrayList<fileAndRatio> list) {
-//        for (int x = 0; x < list.size() - 1; x++)
-//        {
-//            for (int y = x + 1; y < list.size(); y++)
-//            {
-//                if (list.get(x).getName().compareTo(list.get(y).getName()) > 0)
-//                {
-//                    File tempFile = list.get(x);
-//                    list.set(x, list.get(y));
-//                    list.set(y, tempFile);
-//                }
-//            }
-//        }
-        
         for (int x = 0; x < list.size() - 1; x++)
         {
             for (int y = x + 1; y < list.size(); y++)
