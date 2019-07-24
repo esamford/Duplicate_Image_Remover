@@ -428,6 +428,8 @@ public class CompareProcess implements Runnable
                             else
                             {
                                 //Make sure that whatever image pairing is up next is proportional
+                                System.out.println("Make sure that the size ratio stuff is ready for two folder comparing. It's commented out, but I think I need to work on it a little bit more first.");
+                                System.out.println("\tCheck to see if the second folder's image's size ratio is too big, then break. If it's too small, skip until it's within range.");
 //                                double ratio1 = allFolderOneImages.get((imgInt[0])).hwRatio;
 //                                double ratio2 = allFolderTwoImages.get((imgInt[1])).hwRatio;
 //                                double ratioDifference = ratio1 - ratio2;
