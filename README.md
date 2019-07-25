@@ -4,6 +4,13 @@ when a potential duplicate had been found. The user will then be able to see det
 images themselves, and choose which one to remove, if either.
 
 ## Features ##
+* There are three different options to choose from when deciding how many images to check.
+    * Two images: Choose two individual images and compare them.
+    * One folder: Choose a folder with the images you would like to check, and all possible combinations of images in 
+    that folder will be compared.
+    * Two folders: Choose two different folders containing images, and each image in the first folder will be compared 
+    with all images in the second.
+
 * When the program thinks it has found a duplicate image...
     * ...it displays information about each potential duplicate, including the name of each image, the image paths, the
      image dimensions, the amount of storage space used by each image, and the file type.
@@ -14,13 +21,6 @@ images themselves, and choose which one to remove, if either.
       pixels indicate similarity between the images, while other colors represent differences between the images.
     * ...it shows how similar the two images are in a percentage form. (This is based on the image in the Subtracted
      Differences tab, not the Absolute Differences tab).
-
-* There are three different options to choose from when deciding how many images to check.
-    * Two images: Choose two individual images and compare them.
-    * One folder: Choose a folder with the images you would like to check, and all possible combinations of images in 
-    that folder will be compared.
-    * Two folders: Choose two different folders containing images, and each image in the first folder will be compared 
-    with all images in the second.
 
 * The program can compare images of different sizes with each other, but only as long as they both have the same
 height/width ratio.
