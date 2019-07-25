@@ -144,8 +144,8 @@ public class DIR_Window extends javax.swing.JFrame {
             LBL_CompareInfo_NumberOfFilesInF2.setText("Number of images in folder two: ");
         }
     }
-    public javax.swing.JLabel getLBL_IMG_HighlightedDifferences() {
-        return this.LBL_IMG_HighlightedDifferences;
+    public javax.swing.JLabel getLBL_IMG_AbsoluteDifferences() {
+        return this.LBL_IMG_AbsoluteDifferences;
     }
     public javax.swing.JLabel getLBL_IMG_Image1() {
         return this.LBL_IMG_Image1;
@@ -316,7 +316,7 @@ public class DIR_Window extends javax.swing.JFrame {
         
         LBL_IMG_Image1.setIcon(new ImageIcon(blankImage));
         LBL_IMG_Image2.setIcon(new ImageIcon(blankImage));
-        LBL_IMG_HighlightedDifferences.setIcon(new ImageIcon(blankImage));
+        LBL_IMG_AbsoluteDifferences.setIcon(new ImageIcon(blankImage));
         LBL_IMG_SubtractedDifferences.setIcon(new ImageIcon(blankImage));
     }
     
@@ -348,7 +348,7 @@ public class DIR_Window extends javax.swing.JFrame {
         SCRLPN_Image2 = new javax.swing.JScrollPane();
         LBL_IMG_Image2 = new javax.swing.JLabel();
         SCRLPN_HighlightedDifferences = new javax.swing.JScrollPane();
-        LBL_IMG_HighlightedDifferences = new javax.swing.JLabel();
+        LBL_IMG_AbsoluteDifferences = new javax.swing.JLabel();
         SCRLPN_SubtractedDifferences = new javax.swing.JScrollPane();
         LBL_IMG_SubtractedDifferences = new javax.swing.JLabel();
         TBDPN_UserInput = new javax.swing.JTabbedPane();
@@ -419,10 +419,10 @@ public class DIR_Window extends javax.swing.JFrame {
 
         TBDPN_Images.addTab("Image Two", SCRLPN_Image2);
 
-        LBL_IMG_HighlightedDifferences.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        SCRLPN_HighlightedDifferences.setViewportView(LBL_IMG_HighlightedDifferences);
+        LBL_IMG_AbsoluteDifferences.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        SCRLPN_HighlightedDifferences.setViewportView(LBL_IMG_AbsoluteDifferences);
 
-        TBDPN_Images.addTab("Pixel Differences", SCRLPN_HighlightedDifferences);
+        TBDPN_Images.addTab(" Absolute Differences", SCRLPN_HighlightedDifferences);
 
         LBL_IMG_SubtractedDifferences.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         SCRLPN_SubtractedDifferences.setViewportView(LBL_IMG_SubtractedDifferences);
@@ -1233,7 +1233,7 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JLabel LBL_CompareInfo_ImageSize2;
     private javax.swing.JLabel LBL_CompareInfo_NumberOfFilesInF1;
     private javax.swing.JLabel LBL_CompareInfo_NumberOfFilesInF2;
-    private javax.swing.JLabel LBL_IMG_HighlightedDifferences;
+    private javax.swing.JLabel LBL_IMG_AbsoluteDifferences;
     private javax.swing.JLabel LBL_IMG_Image1;
     private javax.swing.JLabel LBL_IMG_Image2;
     private javax.swing.JLabel LBL_IMG_SubtractedDifferences;

@@ -542,7 +542,7 @@ public class CompareProcess implements Runnable
         
         try
         {
-            this.parentFrame.getLBL_IMG_HighlightedDifferences().setIcon(new ImageIcon(compare.getDifferenecs(CompareImages.CompareMethod.BASIC)));
+            this.parentFrame.getLBL_IMG_AbsoluteDifferences().setIcon(new ImageIcon(compare.getDifferenecs(CompareImages.CompareMethod.BASIC)));
             this.parentFrame.getLBL_IMG_SubtractedDifferences().setIcon(new ImageIcon(compare.getDifferenecs(CompareImages.CompareMethod.SUBTRACT_COLOR)));
         }
         catch (Exception ex) {
@@ -557,7 +557,7 @@ public class CompareProcess implements Runnable
         
         this.parentFrame.getLBL_IMG_Image1().setIcon(new ImageIcon(blankImage));
         this.parentFrame.getLBL_IMG_Image2().setIcon(new ImageIcon(blankImage));
-        this.parentFrame.getLBL_IMG_HighlightedDifferences().setIcon(new ImageIcon(blankImage));
+        this.parentFrame.getLBL_IMG_AbsoluteDifferences().setIcon(new ImageIcon(blankImage));
         this.parentFrame.getLBL_IMG_SubtractedDifferences().setIcon(new ImageIcon(blankImage));
     }
     private void displayFileInfo(File file1, File file2, float percentSimilar) {
