@@ -4,16 +4,16 @@ when a potential duplicate had been found. The user will then be able to see det
 images themselves, and choose which one to remove, if either.
 
 ## Features ##
-* When a potential match has been found...
-    * The program displays information about each potential duplicate, including the name of each image, the image
-    paths, the image dimensions, the amount of storage space used by each image, and the file type.
-    * The program shows where differences between the two images are, which are both displayed in the 
-      "Absolute Differences" and "Subtracted Differences" tabs on the right.
+* When the program thinks it has found a duplicate image...
+    * ...it displays information about each potential duplicate, including the name of each image, the image paths, the
+     image dimensions, the amount of storage space used by each image, and the file type.
+    * ...it shows where differences between the two images are, which are both displayed in the "Absolute Differences"
+       and "Subtracted Differences" tabs on the right.
       * In the Absolute Differences tab, pixels that are 100% identical are black, while all other pixels are white.
       * The Subtracted Differences tab is a result of subtracting the images from each other. This means that darker 
       pixels indicate similarity between the images, while other colors represent differences between the images.
-    * The program shows how similar the two images are in a percentage form. (This is based on the image in the
-    Subtracted Differences tab, not the Absolute Differences tab).
+    * ...it shows how similar the two images are in a percentage form. (This is based on the image in the Subtracted
+     Differences tab, not the Absolute Differences tab).
 
 * There are three different options to choose from when deciding how many images to check.
     * Two images: Choose two individual images and compare them.
