@@ -14,7 +14,7 @@ images themselves, and choose which one to remove, if either.
       pixels indicate similarity between the images, while other colors represent differences between the images.
     * The program shows how similar the two images are in a percentage form.
 
-* Three different options to choose from when deciding how many images to check...
+* There are three different options to choose from when deciding how many images to check.
     * Two images: Choose two individual images and compare them.
     * One folder: Choose a folder with the images you would like to check, and all possible combinations of images in 
     that folder will be compared.
