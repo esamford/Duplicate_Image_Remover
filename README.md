@@ -12,7 +12,8 @@ images themselves, and choose which one to remove, if either.
       * In the Absolute Differences tab, pixels that are 100% identical are black, while all other pixels are white.
       * The Subtracted Differences tab is a result of subtracting the images from each other. This means that darker 
       pixels indicate similarity between the images, while other colors represent differences between the images.
-    * The program shows how similar the two images are in a percentage form.
+    * The program shows how similar the two images are in a percentage form. (This is based on the image in the
+    Subtracted Differences tab, not the Absolute Differences tab).
 
 * There are three different options to choose from when deciding how many images to check.
     * Two images: Choose two individual images and compare them.
