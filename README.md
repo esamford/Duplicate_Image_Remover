@@ -36,9 +36,9 @@ progress for that folder (or folders), with the current progress on the left and
 progress can also be seen if the user has the "Display general information..." checkbox checked in the settings page).
 If the number of possible combinations is above 1,000, the program will ask for a starting position before it begins 
 comparing. All you have to do is remember where you stopped and enter that number to continue.
-   * Note: If the contents of the folder(s) are changed, whether it is by adding/removing images or by changing the
-   image names, the order the images are compared in will also change. If the user then skips to where they last ended,
-   the program may miss image combinations that have not been tested for similarity yet.
+   * Note: If the contents of the folder(s) are changed by adding/removing images, the order the images are compared 
+   in will also change. If the user then skips to where they last ended, the program may miss image combinations that 
+   have not been tested for similarity yet.
 
 ## Limitations ##
 * When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. Any files deleted
@@ -48,7 +48,9 @@ using this program will skip the Recycle Bin and be deleted *permenantly!*
 types before comparing them.
 
 * The program cannot match an image with a cropped, rotated, stretched, or otherwise highly edited version of itself.
-The program will most-likely think these are two unique images and will not mark them as potential duplicates.
+The images *must* have the same height/width ratio and they must meet the percentage requirement set by the user. If
+either of these conditions are not met, the program will think these are two unique images and will not display them
+to the user.
 
 * If you are working with a lot of images that have the same or similar background color, the program may come up 
 with a lot of false positives and display images that are not supposed to be paired. This is because the majority of 
@@ -68,4 +70,4 @@ two images unique, resulting in the mostly-white image the user sees. If this ha
 the Subtracted Differences tab instead, since it is less effected by this issue.
 
 ## Requirements ##
-**Requires the latest version of Java.**
+Requires the latest version of Java.
