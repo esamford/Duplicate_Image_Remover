@@ -7,10 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import static sun.jvm.hotspot.HelloWorld.e;
 
 public class CompareProcess implements Runnable
 {
@@ -185,8 +188,6 @@ public class CompareProcess implements Runnable
                 imgBuff[1] = compare.importImage(file2);
 
                 processUserDecision(imgBuff[0], imgBuff[1], file1, file2, percentSimilar);
-                System.out.println("\tFile 1 name: " + file1.getName());
-                System.out.println("\tFile 2 name: " + file2.getName()); 
             }
             else
             {
@@ -201,7 +202,6 @@ public class CompareProcess implements Runnable
             {
                 invalidFileTypesFound = true;
             }
-            System.out.println("Error when comparing two single images: " + ex.getMessage());
             throw ex;
         }
     }
@@ -288,7 +288,6 @@ public class CompareProcess implements Runnable
                                 double ratioDifference = allImageFiles.get((imgInt[0])).hwRatio - allImageFiles.get((imgInt[1])).hwRatio;
                                 if (ratioDifference < 0) { ratioDifference *= -1; }
                                 if (ratioDifference >= compare.getProportionError()) {
-                                    System.out.println("Skipping some combinations to match proportionality.");
                                     break; }
                                 
                                 try {
@@ -432,7 +431,6 @@ public class CompareProcess implements Runnable
                                 if (ratioDifference <= compare.getProportionError() * -1) { break; } //If the second folder's file is too high out of range, break.
                                 else if (ratioDifference >= compare.getProportionError())
                                 {
-                                    System.out.println("Skipping to find a proportional pairing.");
                                     for (; imgInt[1] < allFolderTwoImages.size(); imgInt[1]++)
                                     {
                                         progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
@@ -543,11 +541,22 @@ public class CompareProcess implements Runnable
         try
         {
             this.parentFrame.getLBL_IMG_AbsoluteDifferences().setIcon(new ImageIcon(compare.getDifferenecs(CompareImages.CompareMethod.BASIC)));
-            this.parentFrame.getLBL_IMG_SubtractedDifferences().setIcon(new ImageIcon(compare.getDifferenecs(CompareImages.CompareMethod.SUBTRACT_COLOR)));
         }
         catch (Exception ex) {
-            System.out.println("\tSOMETHING WENT WRONG WHILE TRYING TO DISPLAY THE IMAGES AND AN EXCEPTION WAS THROWN.");
-            System.out.println("\t\t" + ex.getMessage());
+            String errorMSG = "The program was unable to generate the image for the Absolute Differences page.";
+            errorMSG += "\nError message: " + ex.getMessage();
+            JOptionPane.showMessageDialog(parentFrame, errorMSG, "Problem Generating Image", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        try
+        {
+            this.parentFrame.getLBL_IMG_SubtractedDifferences().setIcon(new ImageIcon(compare.getDifferenecs(CompareImages.CompareMethod.SUBTRACT_COLOR)));
+        }
+        catch (Exception ex)
+        {
+            String errorMSG = "The program was unable to generate the image for the Subtracted Differences page.";
+            errorMSG += "\nError message: " + ex.getMessage();
+            JOptionPane.showMessageDialog(parentFrame, errorMSG, "Problem Generating Image", JOptionPane.ERROR_MESSAGE);
         }
     }
     private void clearDisplayedImages() {
@@ -703,9 +712,6 @@ public class CompareProcess implements Runnable
                 }
             }
         }
-        else {
-            System.out.println("File is not a directory.");
-        }
         return files;
     }
     private String getParentFolderName(File tempFile) {
@@ -824,13 +830,6 @@ public class CompareProcess implements Runnable
                 }
             }
         }
-        
-        //Testing loop
-        for (int x = 0; x < list.size(); x++)
-        {
-            System.out.println("List item #" + String.format("%,d", x) + " h/w ratio: " + String.format("%.8f", list.get(x).hwRatio));
-        }
-        
         return list;
     }
     
@@ -841,28 +840,24 @@ public class CompareProcess implements Runnable
             ActionListener skip = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("The skip button was pressed.");
                     waitingForUser = false;
                 }
             };
             ActionListener delete1 = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("The change file 1 button was clicked.");
                     deleteImageOneButtonClicked();
                 }
             };
             ActionListener delete2 = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("The change file 2 button was clicked.");
                     deleteImageTwoButtonClicked();
                 }
             };
             ActionListener cancel = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("The cancel button was pressed.");
                     stopThread = true;
                     waitingForUser = false;
                 }
@@ -877,7 +872,8 @@ public class CompareProcess implements Runnable
             
             long startTime = System.currentTimeMillis();
             
-            try {
+            try
+            {
                 switch (selectedSearchMethod)
                 {
                     case TWO_IMAGES:
@@ -893,12 +889,18 @@ public class CompareProcess implements Runnable
                         { checkTwoFolders(this.targetFolder[0], this.targetFolder[1]); }
                 }
             }
-            catch (Exception ex) {
-                System.out.println("Something went wrong and the comparison had to be canceled.");
-                System.out.println("Error type: " + ex.getClass().toString());
-                System.out.println("Message: " + ex.getMessage());
-                System.out.println("Stack trace:\n");
-                ex.printStackTrace();
+            catch (Exception ex)
+            {
+                String errorMSG = "Something went wrong and the process had to be canceled. Please send the following information to the";
+                errorMSG += "\nauthor of this program so that they can fix the issue. Contact information can be found in the README file.";
+                errorMSG += "\n\n";
+                
+                StringWriter stringWriter = new StringWriter();
+                PrintWriter printWriter = new PrintWriter(stringWriter);
+                ex.printStackTrace(printWriter);
+                errorMSG += stringWriter.toString();
+                
+                JOptionPane.showMessageDialog(parentFrame, errorMSG, "An Error Occurred", JOptionPane.ERROR_MESSAGE);
             }
             
             this.parentFrame.getBTN_CompareInfo_Skip().removeActionListener(skip);
