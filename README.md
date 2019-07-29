@@ -14,13 +14,13 @@ images themselves, and choose which one to remove, if either.
 * When the program thinks it has found a duplicate image...
     * ...it displays information about each potential duplicate, including the name of each image, the image paths, the
      image dimensions, the amount of storage space used by each image, and the file type.
-    * ...it shows where differences between the two images are, which are both displayed in the "Absolute Differences"
+    * ...it shows where differences between the two images are, which are displayed in both the "Absolute Differences"
        and "Subtracted Differences" tabs on the right.
       * In the Absolute Differences tab, pixels that are 100% identical are black, while all other pixels are white.
       * The Subtracted Differences tab is a result of subtracting the images from each other. This means that darker 
       pixels indicate similarity between the images, while other colors represent differences between the images.
     * ...it shows how similar the two images are in a percentage form. (This is based on the image in the Subtracted
-     Differences tab, not the Absolute Differences tab).
+     Differences tab, not the one in the Absolute Differences tab).
 
 * The program can compare images of different sizes with each other, but only as long as they both have the same
 height/width ratio.
@@ -42,8 +42,8 @@ comparing. All you have to do is remember where you stopped and enter that numbe
    have not been tested for similarity yet.
 
 ## Limitations ##
-* When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. Any files deleted
-using this program will skip the Recycle Bin and be deleted *permenantly!*
+* When choosing to delete a file, the program cannot send the file directly to the Recycle Bin. All files deleted using 
+this program will skip the Recycle Bin and be deleted *permenantly!*
 
 * The program can only compare JPEG and PNG images. You must convert images of any other image format into one of these 
 types before comparing them.
@@ -58,11 +58,11 @@ lot of false positives and display images that are not supposed to be paired. Th
 has the same color in it, which results in a higher percentage of similarity. The best solution to this is to increase 
 the percent similarity threshold, which should reduce the number of false positives.
 
-* The user cannot set the percent similarity threshold to 100% if they want the program to compare images of different
-sizes. The reason for this is that the program must resize these images (not the originals, just a copy of them) so that
-they have the same height and width before it can compare them pixel-by-pixel. Unfortunately, the program cannot scale
-these images without distorting the image slightly. Most of the time these distortions are too small to for the human eye
-to notice, but they do reduce the percentage of similarity between the images below 100%.
+* You cannot set the percent similarity threshold to 100% if you want the program to compare images of different sizes. 
+The reason for this is that the program must resize these images (not the originals, just a copy of them) so that they 
+have the same height and width before it can compare them pixel-by-pixel. Unfortunately, the program cannot scale these 
+images without distorting the image slightly. Most of the time these distortions are too small to for the human eye to 
+notice, but they do reduce the percentage of similarity between the images below 100%.
 
 * The image in the Absolute Differences tab on the right does not accurately show pixel differences when the program is 
 comparing two images of different sizes. This is because of the previously mentioned resizing issue, where resizing the 
