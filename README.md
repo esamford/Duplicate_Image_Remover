@@ -74,5 +74,6 @@ instead, since it is less effected by this issue.
 Requires the latest version of Java.
 
 ## Bug reporting ##
-**You can report any bugs or issues to https://github.com/Foobar-ks/Duplicate_Image_Remover/issues. Please provide as much
-information as possible about the issue, including things like _______________________________________________
+**You can report any bugs or issues to https://github.com/Foobar-ks/Duplicate_Image_Remover/issues. Please provide as much 
+information as possible about the issue, including things like the steps required to recreate the issue and screenshots of 
+error messages (if available). Thank you in advance for your help!
