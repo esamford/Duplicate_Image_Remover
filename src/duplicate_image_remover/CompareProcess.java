@@ -175,6 +175,8 @@ public class CompareProcess implements Runnable
         BufferedImage[] imgBuff = new BufferedImage[2];
         CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
         
+        this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
+        
         try
         {
             compare.setImage(file1, CompareImages.FileNum.FIRST);
@@ -868,8 +870,6 @@ public class CompareProcess implements Runnable
             this.parentFrame.getBTN_CompareInfo_ChangeImage2().addActionListener(delete2);
             this.parentFrame.getBTN_CompareInfo_Cancel().addActionListener(cancel);
             
-            changeApplicationWindow(true);
-            
             long startTime = System.currentTimeMillis();
             
             try
@@ -882,25 +882,34 @@ public class CompareProcess implements Runnable
                         break;
                     case ONE_FOLDER:
                         if (this.targetFolder[0] != null)
-                        { checkOneFolder(this.targetFolder[0]); }
+                        {
+                            changeApplicationWindow(true);
+                            checkOneFolder(this.targetFolder[0]);
+                        }
                         break;
                     case TWO_FOLDERS:
                         if (this.targetFolder[0] != null && this.targetFolder[1] != null)
-                        { checkTwoFolders(this.targetFolder[0], this.targetFolder[1]); }
+                        {
+                            changeApplicationWindow(true);
+                            checkTwoFolders(this.targetFolder[0], this.targetFolder[1]);
+                        }
                 }
             }
             catch (Exception ex)
             {
-                String errorMSG = "Something went wrong and the process had to be canceled. Please send the following information to the";
-                errorMSG += "\nauthor of this program so that they can fix the issue. Contact information can be found in the README file.";
-                errorMSG += "\n\n";
-                
-                StringWriter stringWriter = new StringWriter();
-                PrintWriter printWriter = new PrintWriter(stringWriter);
-                ex.printStackTrace(printWriter);
-                errorMSG += stringWriter.toString();
-                
-                JOptionPane.showMessageDialog(parentFrame, errorMSG, "An Error Occurred", JOptionPane.ERROR_MESSAGE);
+                if (ex.getMessage().compareToIgnoreCase(cancelCompareMessage) != 0)
+                {
+                    String errorMSG = "Something went wrong and the process had to be canceled. Please send the following information to the";
+                    errorMSG += "\nauthor of this program so that they can fix the issue. Contact information can be found in the README file.";
+                    errorMSG += "\n\n";
+
+                    StringWriter stringWriter = new StringWriter();
+                    PrintWriter printWriter = new PrintWriter(stringWriter);
+                    ex.printStackTrace(printWriter);
+                    errorMSG += stringWriter.toString();
+
+                    JOptionPane.showMessageDialog(parentFrame, errorMSG, "An Error Occurred", JOptionPane.ERROR_MESSAGE);
+                }
             }
             
             this.parentFrame.getBTN_CompareInfo_Skip().removeActionListener(skip);
