@@ -13,11 +13,10 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import static sun.jvm.hotspot.HelloWorld.e;
 
 public class CompareProcess implements Runnable
 {
-    String cancelCompareMessage = "Thread has been canceled manually.";
+    String cancelCompareMessage = "The user has ended the thread.";
     volatile boolean stopThread = false;
     
     private class fileAndRatio {
