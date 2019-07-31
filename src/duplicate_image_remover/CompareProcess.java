@@ -211,6 +211,7 @@ public class CompareProcess implements Runnable
         if (folder.isDirectory())
         {
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Collecting image list...");
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(true);
             ArrayList<fileAndRatio> allImageFiles = getImagesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting list...");
             allImageFiles = sortFileList(allImageFiles);
@@ -242,6 +243,8 @@ public class CompareProcess implements Runnable
                     }
                 }
             }
+            
+            this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
             
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
@@ -368,6 +371,7 @@ public class CompareProcess implements Runnable
         if (folderOne.isDirectory() && folderTwo.isDirectory())
         {
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Collecting image lists...");
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(true);
             ArrayList<fileAndRatio> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
             ArrayList<fileAndRatio> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected());
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting lists...");
@@ -386,6 +390,8 @@ public class CompareProcess implements Runnable
                 startNum[0] = (int) userNum / allFolderTwoImages.size();
                 startNum[1] = (int) userNum % allFolderTwoImages.size();
             }
+            
+            this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
             
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
@@ -443,7 +449,15 @@ public class CompareProcess implements Runnable
                                         if (ratioDifference < 0) { ratioDifference *= -1; }
                                         if (ratioDifference < compare.getProportionError()) { break; } //If it falls within range, break and continue the nested loop.
                                     }
-                                    if (ratioDifference <= compare.getProportionError() * -1) { break; }
+                                    if (ratioDifference <= compare.getProportionError() * -1)
+                                    {
+                                        if (imgInt[0] == allFolderOneImages.size() - 1)
+                                        {
+                                            progressCurrent = progressMax;
+                                            setProgress(progressCurrent, progressMax); 
+                                        }
+                                        break;
+                                    }
                                 }
                                 
                                 try {
@@ -652,24 +666,15 @@ public class CompareProcess implements Runnable
         
         this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString(progressMessage);
     }
-    private void changeApplicationWindow(boolean isStarting) {
-        if (isStarting)
-        {
-            this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(true);
-        }
-        else
-        {
-            this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(-1);
-            this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(-1);
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(false);
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(0);
-            this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(false);
-            enableChoiceButtons(false);
-
-            this.parentFrame.getTBDPN_UserInput().setEnabledAt(0, true);
-        }
+    private void resetApplicationWindow() {
+        this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(-1);
+        this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(-1);
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(false);
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(0);
+        this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(false);
+        enableChoiceButtons(false);
         
+        this.parentFrame.getTBDPN_UserInput().setEnabledAt(0, true);
     }
     
     // === === === MISCELLANEOUS FUNCTIONS === === ===
@@ -881,17 +886,11 @@ public class CompareProcess implements Runnable
                         break;
                     case ONE_FOLDER:
                         if (this.targetFolder[0] != null)
-                        {
-                            changeApplicationWindow(true);
-                            checkOneFolder(this.targetFolder[0]);
-                        }
+                        { checkOneFolder(this.targetFolder[0]); }
                         break;
                     case TWO_FOLDERS:
                         if (this.targetFolder[0] != null && this.targetFolder[1] != null)
-                        {
-                            changeApplicationWindow(true);
-                            checkTwoFolders(this.targetFolder[0], this.targetFolder[1]);
-                        }
+                        { checkTwoFolders(this.targetFolder[0], this.targetFolder[1]); }
                 }
             }
             catch (Exception ex)
@@ -916,7 +915,7 @@ public class CompareProcess implements Runnable
             this.parentFrame.getBTN_CompareInfo_ChangeImage2().removeActionListener(delete2);
             this.parentFrame.getBTN_CompareInfo_Cancel().removeActionListener(cancel);
             
-            changeApplicationWindow(false);
+            resetApplicationWindow();
             
             System.gc(); //Call the garbage collector
             
