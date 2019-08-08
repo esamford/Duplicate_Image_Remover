@@ -213,8 +213,15 @@ public class CompareProcess implements Runnable
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Collecting image list...");
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(true);
             ArrayList<fileAndRatio> allImageFiles = getImagesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
+            
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Checking for invalid images...");
+            allImageFiles = removeInvalidImages(allImageFiles);
+            
+            if (invalidFileTypesFound) { displayInvalidFileMessage(); }
+            
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting list...");
             allImageFiles = sortFileList(allImageFiles);
+            
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(allImageFiles.size());
             
             int progressMax = getMaxProgressOneFolder(allImageFiles.size()), progressCurrent = 0;
@@ -374,9 +381,17 @@ public class CompareProcess implements Runnable
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(true);
             ArrayList<fileAndRatio> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
             ArrayList<fileAndRatio> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected());
+            
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Checking for invalid images...");
+            allFolderOneImages = removeInvalidImages(allFolderOneImages);
+            allFolderTwoImages = removeInvalidImages(allFolderTwoImages);
+            
+            if (invalidFileTypesFound) { displayInvalidFileMessage(); }
+            
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting lists...");
             allFolderOneImages = sortFileList(allFolderOneImages);
             allFolderTwoImages = sortFileList(allFolderTwoImages);
+            
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(allFolderOneImages.size());
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(allFolderTwoImages.size());
             
@@ -838,6 +853,30 @@ public class CompareProcess implements Runnable
         }
         return list;
     }
+    private ArrayList<fileAndRatio> removeInvalidImages(ArrayList<fileAndRatio> list) {
+        for (int x = 0; x < list.size(); x++)
+        {
+            ImageIcon imgIcon = new ImageIcon(list.get(x).file.getAbsolutePath());
+            if (imgIcon.getIconWidth() < 1 || imgIcon.getIconHeight() < 1)
+            {
+                //If I wanted to show the user which images were invalid, I would need to keep track of them here.
+                //Create another global ArrayList<File> object to store all of the invalid images, then if the user
+                //wants to know which ones those are, use the list.
+                invalidFileTypesFound = true;
+                list.remove(x);
+                x--;
+            }
+        }
+        return list;
+    }
+    private void displayInvalidFileMessage() {
+        String invalidTypeMessage = 
+        "The program found one or more invalid images and removed them from the search list. These files may" +
+        "\nbe invalid because their file extensions were renamed in an attempt to get the program to read them." +
+        "\nIf this is the case, please instead convert these using an image converter. You can see which image" +
+        "\ntypes are valid in the README file.";
+        JOptionPane.showMessageDialog(parentFrame, invalidTypeMessage, "Invalid Image(s)", JOptionPane.ERROR_MESSAGE);
+    }
     
     @Override
     public void run() {
@@ -954,14 +993,7 @@ public class CompareProcess implements Runnable
                 JOptionPane.showMessageDialog(this.parentFrame, message, "General Information", JOptionPane.INFORMATION_MESSAGE);
             }
             
-            if (invalidFileTypesFound)
-            {
-                String invalidTypeMessage = 
-                        "The program found one or more invalid images. These files may be invalid because their file extensions" +
-                        "\nwere renamed in an attempt to get the program to read them. If this is the case, please instead convert" +
-                        "\nthese using an image converter. You can see which image types are valid in the README file.";
-                JOptionPane.showMessageDialog(parentFrame, invalidTypeMessage, "Invalid Image(s)", JOptionPane.ERROR_MESSAGE);
-            }
+            
         }
         else { System.out.println("Parent frame is null!"); }
     }
