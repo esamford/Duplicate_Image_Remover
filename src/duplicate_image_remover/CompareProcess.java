@@ -38,6 +38,7 @@ public class CompareProcess implements Runnable
     
     long timeWaitingForUser = 0;
     long timeWaitingForStartNum = 0;
+    long timeWaitingForInvalidMessage = 0;
     int numFilesDeleted = 0;
     long totalBytesRemoved = 0;
     int finalCurrentProgress = 0;
@@ -873,15 +874,21 @@ public class CompareProcess implements Runnable
                 x--;
             }
         }
+        
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString(progressMessage + "100%");
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(this.parentFrame.getJPRGSBR_Choice_TotalProgress().getMaximum());
+        
         return list;
     }
     private void displayInvalidFileMessage() {
+        long startTime = System.currentTimeMillis();
         String invalidTypeMessage = 
         "The program found one or more invalid images and removed them from the search list. These files may" +
         "\nbe invalid because their file extensions were renamed in an attempt to get the program to read them." +
         "\nIf this is the case, please instead convert these using an image converter. You can see which image" +
         "\ntypes are valid in the README file.";
         JOptionPane.showMessageDialog(parentFrame, invalidTypeMessage, "Invalid Image(s)", JOptionPane.ERROR_MESSAGE);
+        timeWaitingForInvalidMessage = System.currentTimeMillis() - startTime;
     }
     
     @Override
@@ -966,7 +973,7 @@ public class CompareProcess implements Runnable
             
             if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected())
             {
-                long timeSpentComparing = System.currentTimeMillis() - startTime - timeWaitingForUser - timeWaitingForStartNum;
+                long timeSpentComparing = System.currentTimeMillis() - startTime - timeWaitingForUser - timeWaitingForStartNum - timeWaitingForInvalidMessage;
                 timeSpentComparing /= 1000;
                 timeWaitingForUser /= 1000;
 
