@@ -214,9 +214,7 @@ public class CompareProcess implements Runnable
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(true);
             ArrayList<fileAndRatio> allImageFiles = getImagesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
             
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Checking for invalid images...");
             allImageFiles = removeInvalidImages(allImageFiles);
-            
             if (invalidFileTypesFound) { displayInvalidFileMessage(); }
             
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting list...");
@@ -382,10 +380,8 @@ public class CompareProcess implements Runnable
             ArrayList<fileAndRatio> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
             ArrayList<fileAndRatio> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected());
             
-            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Checking for invalid images...");
             allFolderOneImages = removeInvalidImages(allFolderOneImages);
             allFolderTwoImages = removeInvalidImages(allFolderTwoImages);
-            
             if (invalidFileTypesFound) { displayInvalidFileMessage(); }
             
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting lists...");
@@ -854,8 +850,18 @@ public class CompareProcess implements Runnable
         return list;
     }
     private ArrayList<fileAndRatio> removeInvalidImages(ArrayList<fileAndRatio> list) {
+        
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(list.size());
+        this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMinimum(0);
+        
+        String progressMessage = "Checking for invalid images... ";
         for (int x = 0; x < list.size(); x++)
         {
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString(progressMessage + 
+                                                                         String.format("%.2f", (double) (x * 100) / (double) list.size()) +
+                                                                         "%");
+            this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(x);
+            
             ImageIcon imgIcon = new ImageIcon(list.get(x).file.getAbsolutePath());
             if (imgIcon.getIconWidth() < 1 || imgIcon.getIconHeight() < 1)
             {
