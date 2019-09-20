@@ -19,9 +19,12 @@ public class CompareProcess implements Runnable
     String cancelCompareMessage = "The user has ended the thread.";
     volatile boolean stopThread = false;
     
-    private class fileAndRatio {
+    private class fileAndSize {
         File file;
-        double hwRatio;
+        int height = -1;
+        int width = -1;
+        double getHWRatio() { return (double) height / (double) width; }
+        //double hwRatio;
     }
     
     public enum SearchType {
@@ -44,6 +47,7 @@ public class CompareProcess implements Runnable
     int finalCurrentProgress = 0;
     int finalMaxProgress = 0;
     boolean invalidFileTypesFound = false;
+    boolean showInfoBox = true; //If this is true and if the checkbox is selected, show the info box.
     
     // === === === SETTERS === === ===
     
@@ -175,8 +179,6 @@ public class CompareProcess implements Runnable
         BufferedImage[] imgBuff = new BufferedImage[2];
         CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
         
-        this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
-        
         try
         {
             compare.setImage(file1, CompareImages.FileNum.FIRST);
@@ -213,13 +215,16 @@ public class CompareProcess implements Runnable
         {
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Collecting image list...");
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(true);
-            ArrayList<fileAndRatio> allImageFiles = getImagesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
+            ArrayList<fileAndSize> allImageFiles = getImagesInFolder(folder, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
+            if (stopThread) { showInfoBox = false; return; }
             
             allImageFiles = removeInvalidImages(allImageFiles);
             if (invalidFileTypesFound) { displayInvalidFileMessage(); }
+            if (stopThread) { showInfoBox = false; return; }
             
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting list...");
             allImageFiles = sortFileList(allImageFiles);
+            if (stopThread) { showInfoBox = false; return; }
             
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(allImageFiles.size());
             
@@ -249,8 +254,6 @@ public class CompareProcess implements Runnable
                     }
                 }
             }
-            
-            this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
             
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
@@ -295,7 +298,7 @@ public class CompareProcess implements Runnable
                             else
                             {
                                 //Make sure that this image pairing is proportional.
-                                double ratioDifference = allImageFiles.get((imgInt[0])).hwRatio - allImageFiles.get((imgInt[1])).hwRatio;
+                                double ratioDifference = allImageFiles.get((imgInt[0])).getHWRatio() - allImageFiles.get((imgInt[1])).getHWRatio();
                                 if (ratioDifference < 0) { ratioDifference *= -1; }
                                 if (ratioDifference >= compare.getProportionError()) {
                                     break; }
@@ -378,16 +381,19 @@ public class CompareProcess implements Runnable
         {
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Collecting image lists...");
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setStringPainted(true);
-            ArrayList<fileAndRatio> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
-            ArrayList<fileAndRatio> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected());
+            ArrayList<fileAndSize> allFolderOneImages = getImagesInFolder(folderOne, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder1().isSelected());
+            ArrayList<fileAndSize> allFolderTwoImages = getImagesInFolder(folderTwo, this.parentFrame.getCHKBX_SIaC_IncludeSubfoldersInFolder2().isSelected());
+            if (stopThread) { showInfoBox = false; return; }
             
             allFolderOneImages = removeInvalidImages(allFolderOneImages);
             allFolderTwoImages = removeInvalidImages(allFolderTwoImages);
             if (invalidFileTypesFound) { displayInvalidFileMessage(); }
+            if (stopThread) { showInfoBox = false; return; }
             
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString("Sorting lists...");
             allFolderOneImages = sortFileList(allFolderOneImages);
             allFolderTwoImages = sortFileList(allFolderTwoImages);
+            if (stopThread) { showInfoBox = false; return; }
             
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF1(allFolderOneImages.size());
             this.parentFrame.setLBL_CompareInfo_NumberOfFilesInF2(allFolderTwoImages.size());
@@ -402,8 +408,6 @@ public class CompareProcess implements Runnable
                 startNum[0] = (int) userNum / allFolderTwoImages.size();
                 startNum[1] = (int) userNum % allFolderTwoImages.size();
             }
-            
-            this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
             
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
@@ -445,22 +449,23 @@ public class CompareProcess implements Runnable
                             else
                             {
                                 //Make sure that whatever image pairing is up next is proportional
-                                double ratioDifference = allFolderOneImages.get((imgInt[0])).hwRatio - 
-                                                         allFolderTwoImages.get((imgInt[1])).hwRatio;
+                                double ratioDifference = allFolderOneImages.get((imgInt[0])).getHWRatio() - 
+                                                         allFolderTwoImages.get((imgInt[1])).getHWRatio();
                                 if (ratioDifference <= compare.getProportionError() * -1) { break; } //If the second folder's file is too high out of range, break.
-                                else if (ratioDifference >= compare.getProportionError())
+                                else if (ratioDifference >= compare.getProportionError()) //If the second folder's file is too low, loop until one within range is found.
                                 {
                                     for (; imgInt[1] < allFolderTwoImages.size(); imgInt[1]++)
                                     {
                                         progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
                                         setProgress(progressCurrent, progressMax);
                                         
-                                        ratioDifference = allFolderOneImages.get((imgInt[0])).hwRatio - 
-                                                          allFolderTwoImages.get((imgInt[1])).hwRatio;
+                                        ratioDifference = allFolderOneImages.get((imgInt[0])).getHWRatio() - 
+                                                          allFolderTwoImages.get((imgInt[1])).getHWRatio();
                                         if (ratioDifference <= compare.getProportionError() * -1) { break; } //If it's too high, break and exit the nested loop.
                                         if (ratioDifference < 0) { ratioDifference *= -1; }
                                         if (ratioDifference < compare.getProportionError()) { break; } //If it falls within range, break and continue the nested loop.
                                     }
+                                    if (imgInt[1] >= allFolderTwoImages.size()) { imgInt[1] = allFolderTwoImages.size() - 1; } //Prevent imgInt[1] from becoming too large for folder two.
                                     if (ratioDifference <= compare.getProportionError() * -1)
                                     {
                                         if (imgInt[0] == allFolderOneImages.size() - 1)
@@ -470,6 +475,8 @@ public class CompareProcess implements Runnable
                                         }
                                         break;
                                     }
+                                    
+                                    
                                 }
                                 
                                 try {
@@ -666,7 +673,6 @@ public class CompareProcess implements Runnable
         this.parentFrame.getBTN_CompareInfo_Skip().setEnabled(isEnabled);
         this.parentFrame.getBTN_CompareInfo_ChangeImage1().setEnabled(isEnabled);
         this.parentFrame.getBTN_CompareInfo_ChangeImage2().setEnabled(isEnabled);
-        //this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(isEnabled);
     }
     private void setProgress(int currentProgress, int progressMax) {
         this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(currentProgress);
@@ -691,16 +697,18 @@ public class CompareProcess implements Runnable
     
     // === === === MISCELLANEOUS FUNCTIONS === === ===
     
-    private ArrayList<fileAndRatio> getImagesInFolder(File directory, boolean includeSubfolders) {
-        ArrayList<fileAndRatio> files = new ArrayList<>();
+    private ArrayList<fileAndSize> getImagesInFolder(File directory, boolean includeSubfolders) {
+        ArrayList<fileAndSize> files = new ArrayList<>();
         CompareImages compare = new CompareImages();
         if (directory.isDirectory())
         {
             for (File newFile : directory.listFiles())
             {
+                if (stopThread) { break; }
+                
                 if (newFile.isDirectory() && includeSubfolders)
                 {
-                    ArrayList<fileAndRatio> subFolder = getImagesInFolder(newFile, true);
+                    ArrayList<fileAndSize> subFolder = getImagesInFolder(newFile, true);
                     for (int x = 0; x < subFolder.size(); x++)
                     {
                         File subFile = subFolder.get(x).file;
@@ -708,9 +716,10 @@ public class CompareProcess implements Runnable
                         {
                             try
                             {
-                                fileAndRatio newImage = new fileAndRatio();
+                                fileAndSize newImage = new fileAndSize();
                                 newImage.file = subFile;
-                                newImage.hwRatio = compare.getHeightWidthRatioFromFile(subFile);
+                                newImage.height = compare.getHeightFromFile(subFile);
+                                newImage.width = compare.getWidthFromFile(subFile);
                                 files.add(newImage);
                             }
                             catch (Exception ex) { System.out.println("File was not added to the list: " + subFile.getAbsolutePath()); }
@@ -721,9 +730,10 @@ public class CompareProcess implements Runnable
                 {
                     try
                     {
-                        fileAndRatio newImage = new fileAndRatio();
+                        fileAndSize newImage = new fileAndSize();
                         newImage.file = newFile;
-                        newImage.hwRatio = compare.getHeightWidthRatioFromFile(newFile);
+                        newImage.height = compare.getHeightFromFile(newFile);
+                        newImage.width = compare.getWidthFromFile(newFile);
                         files.add(newImage);
                     }
                     catch (Exception ex) { System.out.println("File was not added to the list: " + newFile.getAbsolutePath()); }
@@ -835,14 +845,15 @@ public class CompareProcess implements Runnable
     private int getMaxProgressOneFolder(int imageCount) {
         return (imageCount * (imageCount - 1)) / 2;
     }
-    private ArrayList<fileAndRatio> sortFileList(ArrayList<fileAndRatio> list) {
+    private ArrayList<fileAndSize> sortFileList(ArrayList<fileAndSize> list) {
         for (int x = 0; x < list.size() - 1; x++)
         {
+            if (stopThread) { break; }
             for (int y = x + 1; y < list.size(); y++)
             {
-                if (list.get(x).hwRatio > list.get(y).hwRatio)
+                if (list.get(x).getHWRatio() > list.get(y).getHWRatio())
                 {
-                    fileAndRatio temp = list.get(x);
+                    fileAndSize temp = list.get(x);
                     list.set(x, list.get(y));
                     list.set(y, temp);
                 }
@@ -850,21 +861,20 @@ public class CompareProcess implements Runnable
         }
         return list;
     }
-    private ArrayList<fileAndRatio> removeInvalidImages(ArrayList<fileAndRatio> list) {
-        
+    private ArrayList<fileAndSize> removeInvalidImages(ArrayList<fileAndSize> list) {
         this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMaximum(list.size());
         this.parentFrame.getJPRGSBR_Choice_TotalProgress().setMinimum(0);
         
         String progressMessage = "Checking for invalid images... ";
         for (int x = 0; x < list.size(); x++)
         {
+            if (stopThread) { break; }
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setString(progressMessage + 
                                                                          String.format("%.2f", (double) (x * 100) / (double) list.size()) +
                                                                          "%");
             this.parentFrame.getJPRGSBR_Choice_TotalProgress().setValue(x);
             
-            ImageIcon imgIcon = new ImageIcon(list.get(x).file.getAbsolutePath());
-            if (imgIcon.getIconWidth() < 1 || imgIcon.getIconHeight() < 1)
+            if (list.get(x).height < 1 || list.get(x).width < 1)
             {
                 //If I wanted to show the user which images were invalid, I would need to keep track of them here.
                 //Create another global ArrayList<File> object to store all of the invalid images, then if the user
@@ -926,6 +936,8 @@ public class CompareProcess implements Runnable
             this.parentFrame.getBTN_CompareInfo_ChangeImage2().addActionListener(delete2);
             this.parentFrame.getBTN_CompareInfo_Cancel().addActionListener(cancel);
             
+            this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
+            
             long startTime = System.currentTimeMillis();
             
             try
@@ -971,7 +983,7 @@ public class CompareProcess implements Runnable
             
             System.gc(); //Call the garbage collector
             
-            if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected())
+            if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected() && showInfoBox)
             {
                 long timeSpentComparing = System.currentTimeMillis() - startTime - timeWaitingForUser - timeWaitingForStartNum - timeWaitingForInvalidMessage;
                 timeSpentComparing /= 1000;
@@ -1005,8 +1017,6 @@ public class CompareProcess implements Runnable
                 }
                 JOptionPane.showMessageDialog(this.parentFrame, message, "General Information", JOptionPane.INFORMATION_MESSAGE);
             }
-            
-            
         }
         else { System.out.println("Parent frame is null!"); }
     }

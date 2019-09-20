@@ -117,6 +117,60 @@ public class CompareImages {
     }
     
     public double getHeightWidthRatio(double height, double width) { return height / width; }
+    public int getHeightFromFile(File imgFile) {
+        if (checkIfValidImage(imgFile))
+        {
+            int ratio = 0;
+            try //Get the image height and width quickly.
+            {
+                ImageInputStream in = ImageIO.createImageInputStream(imgFile);
+                Iterator<ImageReader> readers = ImageIO.getImageReaders(in);
+                if (readers.hasNext())
+                {
+                    ImageReader reader = readers.next();
+                    reader.setInput(in);
+                    ratio = reader.getHeight(0);
+                }
+            }
+            catch (Exception ex) //If getting the image height and width failed, try again using the slow, more reliable method.
+            {
+                ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
+                ratio = imgIcon.getIconHeight();
+            }
+            return ratio;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    public int getWidthFromFile(File imgFile) {
+        if (checkIfValidImage(imgFile))
+        {
+            int ratio = 0;
+            try //Get the image height and width quickly.
+            {
+                ImageInputStream in = ImageIO.createImageInputStream(imgFile);
+                Iterator<ImageReader> readers = ImageIO.getImageReaders(in);
+                if (readers.hasNext())
+                {
+                    ImageReader reader = readers.next();
+                    reader.setInput(in);
+                    ratio = reader.getWidth(0);
+                }
+            }
+            catch (Exception ex) //If getting the image height and width failed, try again using the slow, more reliable method.
+            {
+                ImageIcon imgIcon = new ImageIcon(imgFile.getAbsolutePath());
+                ratio = imgIcon.getIconWidth();
+            }
+            return ratio;
+        }
+        else
+        {
+            return -1;
+        }
+    }
     public double getHeightWidthRatioFromFile(File imgFile) {
         if (checkIfValidImage(imgFile))
         {
