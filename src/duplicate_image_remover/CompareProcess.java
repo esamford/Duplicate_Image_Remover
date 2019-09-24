@@ -39,8 +39,9 @@ public class CompareProcess implements Runnable
     DIR_Window parentFrame;
     volatile boolean waitingForUser;
     
+    long globalStartTime = 0;
     long timeWaitingForUser = 0;
-    long timeWaitingForStartNum = 0;
+    //long timeWaitingForStartNum = 0;
     long timeWaitingForInvalidMessage = 0;
     int numFilesDeleted = 0;
     long totalBytesRemoved = 0;
@@ -197,7 +198,7 @@ public class CompareProcess implements Runnable
             {
                 long startTime = System.currentTimeMillis();
                 JOptionPane.showMessageDialog(this.parentFrame, "You cannot compare two images with different height/width ratios.", "Unequal Size Ratios", JOptionPane.ERROR_MESSAGE);
-                timeWaitingForStartNum += System.currentTimeMillis() - startTime;
+                //timeWaitingForStartNum += System.currentTimeMillis() - startTime;
             }
         } 
         catch (IOException ex)
@@ -254,6 +255,8 @@ public class CompareProcess implements Runnable
                     }
                 }
             }
+            
+            globalStartTime = System.currentTimeMillis();
             
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
@@ -411,6 +414,8 @@ public class CompareProcess implements Runnable
             
             CompareImages.CompareMethod compareMethod = CompareImages.CompareMethod.SUBTRACT_COLOR;
             CompareImages compare = new CompareImages();
+            
+            globalStartTime = System.currentTimeMillis();
             
             int[] imgInt = new int[2];
             for (imgInt[0] = startNum[0]; imgInt[0] < allFolderOneImages.size(); imgInt[0]++)
@@ -773,10 +778,10 @@ public class CompareProcess implements Runnable
         return fileType;
     }
     private long askUserForStartNum(long maxNum) {
-        long startTime = System.currentTimeMillis();
+        //long startTime = System.currentTimeMillis();
         while (true)
         {
-            String message = "There are " + String.format("%,d", maxNum) + " potential combinations to go through, which may take a while.";
+            String message = "There are " + String.format("%,d", maxNum) + " potential combinations to go through.";
             message += "\nWould you like to skip some and start at a specific point?";
             int result = JOptionPane.showConfirmDialog(this.parentFrame, message, "Skip Comparisons", JOptionPane.YES_NO_OPTION);
             
@@ -797,13 +802,13 @@ public class CompareProcess implements Runnable
                         errorMSG += "\n\nWould you like to try again?";
                         if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
                         {
-                            timeWaitingForStartNum = System.currentTimeMillis() - startTime;
+                            //timeWaitingForStartNum = System.currentTimeMillis() - startTime;
                             return 0;
                         }
                     }
                     else
                     {
-                        timeWaitingForStartNum = System.currentTimeMillis() - startTime;
+                        //timeWaitingForStartNum = System.currentTimeMillis() - startTime;
                         return userNum;
                     }
                 }
@@ -812,7 +817,7 @@ public class CompareProcess implements Runnable
                     String errorMSG = "You entered something that was not a number. Would you like to try again?";
                     if (JOptionPane.showConfirmDialog(parentFrame, errorMSG, "Invalid Input", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION)
                     {
-                        timeWaitingForStartNum = System.currentTimeMillis() - startTime;
+                        //timeWaitingForStartNum = System.currentTimeMillis() - startTime;
                         return 0;
                     }
                 }
@@ -820,7 +825,7 @@ public class CompareProcess implements Runnable
             }
             else
             {
-                timeWaitingForStartNum = System.currentTimeMillis() - startTime;
+                //timeWaitingForStartNum = System.currentTimeMillis() - startTime;
                 return 0;
             }
         }
@@ -938,7 +943,8 @@ public class CompareProcess implements Runnable
             
             this.parentFrame.getBTN_CompareInfo_Cancel().setEnabled(true);
             
-            long startTime = System.currentTimeMillis();
+            //long startTime = System.currentTimeMillis();
+            //globalStartTime = System.currentTimeMillis();
             
             try
             {
@@ -985,7 +991,7 @@ public class CompareProcess implements Runnable
             
             if (this.parentFrame.getCHKBX_Settings_ShowCompareDetails().isSelected() && showInfoBox)
             {
-                long timeSpentComparing = System.currentTimeMillis() - startTime - timeWaitingForUser - timeWaitingForStartNum - timeWaitingForInvalidMessage;
+                long timeSpentComparing = System.currentTimeMillis() - globalStartTime - timeWaitingForUser - /*timeWaitingForStartNum -*/ timeWaitingForInvalidMessage;
                 timeSpentComparing /= 1000;
                 timeWaitingForUser /= 1000;
 
