@@ -1,7 +1,5 @@
 # Duplicate Image Remover #
-This program is designed to compare separate images with each other (either in bulk or individually) and notify the user 
-when a potential duplicate had been found. The user will then be able to see details about each image, as well as the 
-images themselves, and choose which one to remove, if either.
+Whether it is because you ________________________________, __________________, or because you forgot you downloaded that cute cat picture five too many times already, this program can help you clear the clutter. The program is entirely designed to remove the tedious work of finding and removing those duplicates manually, and instead does that work for you. It finds those duplicates, displays them to you along with information about each image, and lets you decide which one, if either, you wish to remove.
 
 ## Features ##
 * There are three different options to choose from when deciding how many images to check.
@@ -11,23 +9,23 @@ images themselves, and choose which one to remove, if either.
     * Two folders: Choose two different folders containing images, and each image in the first folder will be compared 
     with all images in the second.
 
-* When the program thinks it has found a duplicate image...
-    * ...it displays information about each potential duplicate, including the name of each image, the image paths, the
+* When the program thinks it has found a duplicate image:
+    * It displays information about each potential duplicate, including the name of each image, the image paths, the
      image dimensions, the amount of storage space used by each image, and the file type.
-    * ...it shows where differences between the two images are, which are displayed in both the "Absolute Differences"
+    * It shows where differences between the two images are, which are displayed in both the "Absolute Differences"
        and "Subtracted Differences" tabs on the right.
       * In the Absolute Differences tab, pixels that are 100% identical are black, while all other pixels are white.
       * The Subtracted Differences tab is a result of subtracting the images from each other. This means that darker 
-      pixels indicate similarity between the images, while other colors represent differences between the images.
-    * ...it shows how similar the two images are in a percentage form. (This is based on the image in the Subtracted
-     Differences tab, not the one in the Absolute Differences tab).
+         pixels indicate similarity between the images, while other colors represent differences between the images.
+    * It shows how similar the two images are in a percentage form. (This is based on the image in the Subtracted
+     Differences tab, not the one in the Absolute Differences tab.)
 
 * The program can compare images of different sizes with each other, but only as long as they both have the same
 height/width ratio.
 
-* There is an option to notify the user when a potential match is found with a beeping noise, and another option to
-periodically repeat this notification sound. This can be helpful when the user wishes to have other tabs open while 
-the program is running, or if the user is AFK and wishes to be notified when they return.
+* There is an option to notify the user with a beeping noise when a potential match is found, and another option to
+periodically repeat this notification sound. This can be helpful when the user has other tabs open while the program 
+is running, or if the user is AFK and wishes to be notified when they return.
 
 * When choosing to compare images in folders, there is an option to include all images in subfolders as well.
 
@@ -59,7 +57,7 @@ has the same color in it, which results in a higher percentage of similarity. Th
 the percent similarity threshold, which should reduce the number of false positives.
 
 * You cannot set the percent similarity threshold to 100% if you want the program to compare images of different sizes. 
-The reason for this is that the program must resize these images (not the originals, just a copy of them) so that they 
+The reason for this is that the program must resize these images (not the originals, but a copy of them) so that they 
 have the same height and width before it can compare them pixel-by-pixel. Unfortunately, the program cannot scale these 
 images without distorting the image slightly. Most of the time these distortions are too small to for the human eye to 
 notice, but they do reduce the percentage of similarity between the images below 100%.
