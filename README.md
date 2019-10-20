@@ -1,5 +1,5 @@
 # Duplicate Image Remover #
-Whether it is because you ________________________________, __________________, or because you forgot you downloaded that cute cat picture five too many times already, this program can help you clear the clutter. The program is entirely designed to remove the tedious work of finding and removing those duplicates manually, and instead does that work for you. It finds those duplicates, displays them to you along with information about each image, and lets you decide which one, if either, you wish to remove.
+Whether it is because you ________________________________, __________________, or because you had not realized you downloaded that cute cat picture five too many times already, this program can help you clear the clutter. The program is entirely designed to remove the tedious work of finding and removing those duplicate images manually, and instead does that work for you. It finds those duplicates, displays them to you along with information about each image, and lets you decide which one, if either, you wish to remove.
 
 ## Features ##
 * There are three different options to choose from when deciding how many images to check.
@@ -64,9 +64,9 @@ notice, but they do reduce the percentage of similarity between the images below
 
 * The image in the Absolute Differences tab on the right does not accurately show pixel differences when the program is 
 comparing two images of different sizes. This is because of the previously mentioned resizing issue, where resizing the 
-image slightly changes the copy the program is comparing. This is enough to make the pixels between the two images unique,
-resulting in the mostly-white image. If this happens, just use the image generated on the Subtracted Differences tab 
-instead, since it is less effected by this issue.
+image slightly changes the copy the program is comparing. This is enough to make the pixels between the two images unique, 
+which results in the mostly-white image the user sees. If this happens, just use the image generated on the Subtracted 
+Differences tab instead, since it is less effected by this issue.
 
 ## Requirements ##
 Requires the latest version of Java.
