@@ -629,9 +629,18 @@ public class CompareProcess implements Runnable
         this.parentFrame.getLBL_CompareInfo_IMGParentFolder2().setToolTipText(getParentFolderName(file2));
         this.parentFrame.getLBL_CompareInfo_IMGFilePath2().setToolTipText(file2.getPath());
         
-        if (percentSimilar >= 0)
-        { this.parentFrame.getLBL_Choice_DisplayPercentSimilar().setText("Percent similar: " + Float.toString(percentSimilar * 100).substring(0, 5) + "%"); }
-        else { this.parentFrame.getLBL_Choice_DisplayPercentSimilar().setText("Percent similar: 0%"); }
+        if (percentSimilar >= 0 && percentSimilar < 1)
+        {
+            this.parentFrame.getLBL_Choice_DisplayPercentSimilar().setText("Percent similar: " + Float.toString(percentSimilar * 100).substring(0, 5) + "%");
+        }
+        else if (percentSimilar == 1)
+        {
+            this.parentFrame.getLBL_Choice_DisplayPercentSimilar().setText("Percent similar: 100%");
+        }
+        else
+        {
+            this.parentFrame.getLBL_Choice_DisplayPercentSimilar().setText("Percent similar: 0%");
+        }
         
         try {
             ImageIcon[] imgIcon = new ImageIcon[2];
