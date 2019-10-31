@@ -235,8 +235,9 @@ public class CompareProcess implements Runnable
             int[] startNum = {0, 0};
             if (progressMax >= 1000)
             {
-                //I would like to calculate this with math to make it run faster, but this should work for now.
                 long userNum = askUserForStartNum(progressMax);
+                
+                //I would like to calculate this with math equations to make it run faster, but this should work for now.
                 boolean exit = false;
                 for (int x = 0; x < allImageFiles.size() - 1; x++)
                 {
@@ -456,35 +457,43 @@ public class CompareProcess implements Runnable
                                 //Make sure that whatever image pairing is up next is proportional
                                 double ratioDifference = allFolderOneImages.get((imgInt[0])).getHWRatio() - 
                                                          allFolderTwoImages.get((imgInt[1])).getHWRatio();
-                                if (ratioDifference <= compare.getProportionError() * -1) { break; } //If the second folder's file is too high out of range, break.
+                                if (ratioDifference <= compare.getProportionError() * -1)
+                                {
+                                    progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
+                                    setProgress(progressCurrent, progressMax);
+                                    break;
+                                } //If the second folder's file is too high out of range, break.
                                 else if (ratioDifference >= compare.getProportionError()) //If the second folder's file is too low, loop until one within range is found.
                                 {
                                     for (; imgInt[1] < allFolderTwoImages.size(); imgInt[1]++)
                                     {
-                                        progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
-                                        setProgress(progressCurrent, progressMax);
-                                        
                                         ratioDifference = allFolderOneImages.get((imgInt[0])).getHWRatio() - 
                                                           allFolderTwoImages.get((imgInt[1])).getHWRatio();
                                         if (ratioDifference <= compare.getProportionError() * -1) { break; } //If it's too high, break and exit the nested loop.
                                         if (ratioDifference < 0) { ratioDifference *= -1; }
                                         if (ratioDifference < compare.getProportionError()) { break; } //If it falls within range, break and continue the nested loop.
                                     }
-                                    if (imgInt[1] >= allFolderTwoImages.size()) { imgInt[1] = allFolderTwoImages.size() - 1; } //Prevent imgInt[1] from becoming too large for folder two.
-                                    if (ratioDifference <= compare.getProportionError() * -1)
+                                    
+                                    //Prevent imgInt[1] from becoming too large for folder two.
+                                    if (imgInt[1] >= allFolderTwoImages.size()) 
                                     {
-                                        if (imgInt[0] == allFolderOneImages.size() - 1)
-                                        {
-                                            progressCurrent = progressMax;
-                                            setProgress(progressCurrent, progressMax); 
-                                        }
-                                        break;
+                                        imgInt[1] = allFolderTwoImages.size() - 1;
                                     }
                                     
-                                    System.out.println("The two-folder line-skipping code is not tracking progress correctly. Make sure this is fixed.");
+                                    //Set the progress variables.
+                                    progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
+                                    setProgress(progressCurrent, progressMax);
+                                    
+                                    //Check if this current pairing is within range. If not, break through the first folder's image and move on to the next.
+                                    if (ratioDifference <= compare.getProportionError() * -1)
+                                    {
+                                        imgInt[1] = allFolderTwoImages.size() - 1; //Increase imgInt[1] to match folder two's size in case this is the final folder one loop.
+                                        break;
+                                    }
                                 }
                                 
-                                try {
+                                try
+                                {
                                     String file1Path = allFolderOneImages.get(imgInt[0]).file.getAbsolutePath();
                                     String file2Path = allFolderTwoImages.get((imgInt[1])).file.getAbsolutePath();
                                     if (file1Path.equalsIgnoreCase(file2Path)) { break; } //Make sure not to compare an image with itself.
@@ -549,6 +558,10 @@ public class CompareProcess implements Runnable
                                 }
                             }
                         }
+                        
+                        //Update the progress since it may not be updated again.
+                        progressCurrent = allFolderTwoImages.size() * imgInt[0] + imgInt[1];
+                        setProgress(progressCurrent, progressMax);
                     }
                     catch (IOException ex)
                     {
@@ -562,8 +575,6 @@ public class CompareProcess implements Runnable
                 }
                 System.gc();
             }
-            finalCurrentProgress = progressCurrent;
-            finalMaxProgress = progressMax;
         }
     }
     
