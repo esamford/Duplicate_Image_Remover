@@ -481,7 +481,7 @@ public class CompareProcess implements Runnable
                                         break;
                                     }
                                     
-                                    
+                                    System.out.println("The two-folder line-skipping code is not tracking progress correctly. Make sure this is fixed.");
                                 }
                                 
                                 try {
