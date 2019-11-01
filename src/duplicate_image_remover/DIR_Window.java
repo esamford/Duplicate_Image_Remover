@@ -391,7 +391,7 @@ public class DIR_Window extends javax.swing.JFrame {
         LBL_CompareInfo_NumberOfFilesInF1 = new javax.swing.JLabel();
         LBL_CompareInfo_FileType2 = new javax.swing.JLabel();
         LBL_CompareInfo_FileType1 = new javax.swing.JLabel();
-        LBL_CompareInfo_ComparisonDetails = new javax.swing.JLabel();
+        LBL_CompareInfo_TaskDetails = new javax.swing.JLabel();
         LBL_CompareInfo_ComparisonType = new javax.swing.JLabel();
         LBL_CompareInfo_NumberOfFilesInF2 = new javax.swing.JLabel();
         PNL_Settings = new javax.swing.JPanel();
@@ -664,8 +664,8 @@ public class DIR_Window extends javax.swing.JFrame {
 
         LBL_CompareInfo_FileType1.setText("File type:");
 
-        LBL_CompareInfo_ComparisonDetails.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        LBL_CompareInfo_ComparisonDetails.setText("Comparison details:");
+        LBL_CompareInfo_TaskDetails.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        LBL_CompareInfo_TaskDetails.setText("Task details:");
 
         LBL_CompareInfo_ComparisonType.setText("Comparison type:");
 
@@ -700,7 +700,7 @@ public class DIR_Window extends javax.swing.JFrame {
                     .addComponent(LBL_CompareInfo_IMGParentFolder1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LBL_CompareInfo_FileType2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LBL_CompareInfo_FileType1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(LBL_CompareInfo_ComparisonDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LBL_CompareInfo_TaskDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LBL_CompareInfo_ComparisonType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LBL_CompareInfo_NumberOfFilesInF2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -709,7 +709,7 @@ public class DIR_Window extends javax.swing.JFrame {
             PNL_CompareInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PNL_CompareInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(LBL_CompareInfo_ComparisonDetails)
+                .addComponent(LBL_CompareInfo_TaskDetails)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LBL_CompareInfo_ComparisonType)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1215,7 +1215,6 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JPanel JPNL_SIaC;
     private javax.swing.JProgressBar JPRGSBR_Choice_TotalProgress;
     private javax.swing.JLabel LBL_Choice_DisplayPercentSimilar;
-    private javax.swing.JLabel LBL_CompareInfo_ComparisonDetails;
     private javax.swing.JLabel LBL_CompareInfo_ComparisonType;
     private javax.swing.JLabel LBL_CompareInfo_FileType1;
     private javax.swing.JLabel LBL_CompareInfo_FileType2;
@@ -1233,6 +1232,7 @@ public class DIR_Window extends javax.swing.JFrame {
     private javax.swing.JLabel LBL_CompareInfo_ImageSize2;
     private javax.swing.JLabel LBL_CompareInfo_NumberOfFilesInF1;
     private javax.swing.JLabel LBL_CompareInfo_NumberOfFilesInF2;
+    private javax.swing.JLabel LBL_CompareInfo_TaskDetails;
     private javax.swing.JLabel LBL_IMG_AbsoluteDifferences;
     private javax.swing.JLabel LBL_IMG_Image1;
     private javax.swing.JLabel LBL_IMG_Image2;

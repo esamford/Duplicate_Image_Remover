@@ -393,7 +393,7 @@
                           <Component id="LBL_CompareInfo_IMGParentFolder1" alignment="0" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_FileType2" alignment="0" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_FileType1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="LBL_CompareInfo_ComparisonDetails" alignment="0" max="32767" attributes="0"/>
+                          <Component id="LBL_CompareInfo_TaskDetails" alignment="0" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_ComparisonType" alignment="0" max="32767" attributes="0"/>
                           <Component id="LBL_CompareInfo_NumberOfFilesInF2" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -405,7 +405,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="LBL_CompareInfo_ComparisonDetails" min="-2" max="-2" attributes="0"/>
+                      <Component id="LBL_CompareInfo_TaskDetails" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="LBL_CompareInfo_ComparisonType" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -678,12 +678,12 @@
                 <Property name="text" type="java.lang.String" value="File type:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="LBL_CompareInfo_ComparisonDetails">
+            <Component class="javax.swing.JLabel" name="LBL_CompareInfo_TaskDetails">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Comparison details:"/>
+                <Property name="text" type="java.lang.String" value="Task details:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="LBL_CompareInfo_ComparisonType">
