@@ -60,6 +60,9 @@ public class CompareImages {
     }
     
     private Color getPixelColor(int pixRGB) {
+        //This code is by Black Shadow on StackOverflow.
+        //https://stackoverflow.com/a/22391906
+        
         int red = (pixRGB & 0x00ff0000) >> 16;
         int green = (pixRGB & 0x0000ff00) >> 8;
         int blue = pixRGB & 0x000000ff;
@@ -77,7 +80,7 @@ public class CompareImages {
     }
     private Image getScaledImage(Image srcImg, int w, int h) {
         //This function's code is by user Suken Shah on StackOverflow.
-        //https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
+        //https://stackoverflow.com/a/6714381
         
         BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = resizedImg.createGraphics();
