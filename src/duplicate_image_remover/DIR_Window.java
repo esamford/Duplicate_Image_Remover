@@ -434,7 +434,7 @@ public class DIR_Window extends javax.swing.JFrame {
 
         JPNL_SIaC.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        CMBBX_SIaC_SearchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Compare two images", "Compare all images in one folder", "Compare all images between two folders" }));
+        CMBBX_SIaC_SearchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Compare two images", "Compare one folder", "Compare two folders" }));
         CMBBX_SIaC_SearchType.setFocusable(false);
         CMBBX_SIaC_SearchType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -884,8 +884,6 @@ public class DIR_Window extends javax.swing.JFrame {
     }//GEN-LAST:event_BTN_SIaC_CompareActionPerformed
     private void CMBBX_SIaC_SearchTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CMBBX_SIaC_SearchTypeActionPerformed
         resetSelectionData();
-        
-        System.out.println("Make sure to update the folder information labels on the CompareInfo page whenever you change the combobox! It's not finished yet.");
         
         setLBL_CompareInfo_NumberOfFilesInF1(-1);
         setLBL_CompareInfo_NumberOfFilesInF2(-1);
