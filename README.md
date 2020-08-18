@@ -1,5 +1,5 @@
 # Duplicate Image Remover #
-Whether it is because you ________________________________, __________________, or because you had not realized you downloaded that cute cat picture five too many times already, this program can help you clear the clutter. The program is entirely designed to remove the tedious work of finding and removing those duplicate images manually, and instead does that work for you. It finds those duplicates, displays them to you along with information about each image, and lets you decide which one, if either, you wish to remove.
+Whether it is because you ________________________________, __________________, or because you had not realized you downloaded that cute cat picture five too many times already, this program can help you clear the clutter. The program is entirely designed to remove the tedious work of finding and removing those duplicate images manually, and instead does that work for you. It finds duplicates, displays them to you along with some basic information about each image, and lets you decide which one, if either, you wish to remove.
 
 ## Features ##
 * There are three different options to choose from when deciding how many images to check.
@@ -9,9 +9,9 @@ Whether it is because you ________________________________, __________________, 
     * Two folders: Choose two different folders containing images, and each image in the first folder will be compared 
     with all images in the second.
 
-* When the program thinks it has found a duplicate image:
-    * It displays information about each potential duplicate, including the name of each image, the image paths, the
-     image dimensions, the amount of storage space used by each image, and the file type.
+* When the program finds a potential duplicate:
+    * It displays information about each image, including the name of each image, the image paths, the image dimensions, 
+    the amount of storage space used by each image, and the file type.
     * It shows where differences between the two images are, which are displayed in both the "Absolute Differences"
        and "Subtracted Differences" tabs on the right.
       * In the Absolute Differences tab, pixels that are 100% identical are black, while all other pixels are white.
@@ -32,7 +32,7 @@ is running, or if the user is AFK and wishes to be notified when they return.
 * If the user is unable to finish going through a folder (or folders) with the amount of time they have, they can
 stop the program and continue where they left off later. Inside the progress bar is a fraction showing your current
 progress for that folder (or folders), with the current progress on the left and total progress on the right. (This
-progress can also be seen if the user has the "Display general information..." checkbox checked in the settings page).
+progress can also be seen if the user has the "Display general information..." checkbox checked in the settings page.)
 If the number of possible combinations is above 1,000, the program will ask for a starting position before it begins 
 comparing. All you have to do is remember where you stopped and enter that number to continue.
    * Note: If the contents of the folder(s) are changed by adding/removing images, the order the images are compared 
@@ -72,6 +72,6 @@ Differences tab instead, since it is less effected by this issue.
 Requires the latest version of Java.
 
 ## Bug reporting ##
-You can report any bugs or issues to https://github.com/ESA-ks/Duplicate_Image_Remover/issues. Please provide as much 
+You can report any bugs or issues to https://github.com/esamford/Duplicate_Image_Remover/issues. Please provide as much 
 information as possible about the issue, including things like the steps required to recreate the issue and screenshots of 
 error messages (if available). Thank you in advance for your help!
