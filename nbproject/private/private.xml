@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="46">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="47">
         <file>
             <url>src/duplicate_image_remover/library/DIR_Window.java</url>
             <bookmark id="25">
@@ -51,6 +51,14 @@
             <bookmark id="13">
                 <name/>
                 <line>1048</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/duplicate_image_remover/CompareProcess.java</url>
+            <bookmark id="47">
+                <name/>
+                <line>111</line>
                 <key/>
             </bookmark>
         </file>

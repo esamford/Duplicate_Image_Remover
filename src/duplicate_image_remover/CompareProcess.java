@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -98,24 +99,38 @@ public class CompareProcess implements Runnable
             if (result == JOptionPane.YES_OPTION)
             {
                 long tempByteCount = deleteFile.length();
-                if (deleteFile.delete())
+                java.nio.file.Files.delete(deleteFile.toPath());
+                if (!deleteFile.exists())
                 {
                     totalBytesRemoved += tempByteCount;
                     numFilesDeleted++;
                     waitingForUser = false;
                 }
-                else
+                else {throw new Exception("deleteFile.delete() returned false. Filepath: " + deleteFile.getAbsolutePath());}
+                
+                /*
+                if (deleteFile.delete() || java.nio.file.Files.deleteIfExists(deleteFile.toPath()))
                 {
-                    String errorMSG = "The program was unable to delete the following file: " + deleteFile.getName();
-                    JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Unable to Delete Image", JOptionPane.ERROR_MESSAGE);
+                    totalBytesRemoved += tempByteCount;
+                    numFilesDeleted++;
+                    waitingForUser = false;
                 }
+                //Error checking.
+                else if (deleteFile.isDirectory() && deleteFile.list().length > 0) {throw new Exception("The directory is not emtpy.");}
+                else {throw new Exception("deleteFile.delete() returned false. Filepath: " + deleteFile.getAbsolutePath());}
+                */
             }
+        }
+        catch (SecurityException ex)
+        {
+            String errorMSG = "The program was unable to delete the following file: " + deleteFile.getName();
+            errorMSG += "\n\nThe program does not have permission to delete that file.";
+            JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Unable to Delete Image", JOptionPane.ERROR_MESSAGE);
         }
         catch (Exception ex)
         {
             String errorMSG = "The program was unable to delete the following file: " + deleteFile.getName();
-            errorMSG += "\n\nThe exception that was thrown is: " + ex.toString();
-            errorMSG += "\nThe error message from that exception is: " + ex.getMessage();
+            errorMSG += "\n\n" + ex.toString();
             JOptionPane.showMessageDialog(this.parentFrame, errorMSG, "Unable to Delete Image", JOptionPane.ERROR_MESSAGE);
         }
     }

@@ -629,7 +629,7 @@ public class DIR_Window extends javax.swing.JFrame {
             }
         });
 
-        BTN_CompareInfo_Skip.setText("Skip");
+        BTN_CompareInfo_Skip.setText("Skip deletion");
         BTN_CompareInfo_Skip.setEnabled(false);
         BTN_CompareInfo_Skip.setFocusable(false);
         BTN_CompareInfo_Skip.addActionListener(new java.awt.event.ActionListener() {

@@ -605,7 +605,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="BTN_CompareInfo_Skip">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Skip"/>
+                <Property name="text" type="java.lang.String" value="Skip deletion"/>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="focusable" type="boolean" value="false"/>
               </Properties>

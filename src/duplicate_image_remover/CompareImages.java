@@ -238,8 +238,6 @@ public class CompareImages {
         imgIcon.paintIcon(null, convert, 0, 0);
         convert.dispose();
         
-        
-        
         return newIMGBuff;
    }
     
