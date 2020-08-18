@@ -57,7 +57,7 @@ has the same color in it, which results in a higher percentage of similarity. Th
 the percent similarity threshold, which should reduce the number of false positives.
 
 * You cannot set the percent similarity threshold to 100% if you want the program to compare images of different sizes. 
-The reason for this is that the program must resize these images (not the originals, but a copy of them) so that they 
+The reason for this is that the program must resize these images (not the originals, just a copy of them) so that they 
 have the same height and width before it can compare them pixel-by-pixel. Unfortunately, the program cannot scale these 
 images without distorting the image slightly. Most of the time these distortions are too small to for the human eye to 
 notice, but they do reduce the percentage of similarity between the images below 100%.
