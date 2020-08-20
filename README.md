@@ -73,5 +73,5 @@ Requires the latest version of Java.
 
 ## Bug reporting ##
 You can report any bugs or issues to https://github.com/esamford/Duplicate_Image_Remover/issues. Please provide as much 
-information as possible about the issue, including things like the steps required to recreate the issue and screenshots of 
-error messages (if available). Thank you in advance for your help!
+information as possible about the issue, including things like the steps required to recreate the issue and screenshots
+of the problem (if applicable). Thank you in advance for your help!
