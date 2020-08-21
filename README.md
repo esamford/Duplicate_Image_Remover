@@ -1,5 +1,5 @@
 # Duplicate Image Remover #
-Whether it is because you want to remove lower-resolution images on your hard drive, you are running low on storage space, or because you had not realized you downloaded that cute cat picture five too many times already, this program can help you clear the clutter. The program is entirely designed to remove the tedious work of finding and removing those duplicate images manually, and instead does that work for you. It finds duplicates, displays them to you along with some basic information about each image, and lets you decide which one, if either, you wish to remove.
+Whether it is because you are running low on storage space, want to remove lower-resolution images on your hard drive, or because you had not realized you downloaded that cute cat picture five too many times already, this program can help you clear the clutter. The program is entirely designed to remove the tedious work of finding and removing those duplicate images manually, and instead does that work for you. It finds duplicates, displays them to you along with some basic information about each image, and lets you decide which one, if either, you wish to remove.
 
 ## Features ##
 * There are three different options to choose from when deciding how many images to check.
