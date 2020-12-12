@@ -1034,9 +1034,12 @@ public class CompareProcess implements Runnable
 
                 String message = "\nComparison type: " + searchType;
                 message += "\n";
-                message += "\nTime spent comparing: " + getTimeString(timeSpentComparing);
-                message += "\nTime spent waiting for user: " + getTimeString(timeWaitingForUser);
-                message += "\n";
+                if (this.selectedSearchMethod != SearchType.TWO_IMAGES) //Don't show time if comparing two images because that process will only take a few seconds.
+                {
+                    message += "\nTime spent comparing: " + getTimeString(timeSpentComparing);
+                    message += "\nTime spent waiting for user: " + getTimeString(timeWaitingForUser);
+                    message += "\n";
+                }
                 message += "\nNumber of files deleted: " + String.format("%,d", numFilesDeleted);
                 message += "\nTotal bytes freed: " + String.format("%,d", totalBytesRemoved);
                 if (finalCurrentProgress < finalMaxProgress)
